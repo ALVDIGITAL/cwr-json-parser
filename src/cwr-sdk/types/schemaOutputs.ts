@@ -1,0 +1,23 @@
+import type { ParsedCwrFile } from './cwr';
+import type { SchemaAOutput } from '../mapper/schemas/schemaA';
+import type { SchemaCOutput } from '../mapper/schemas/schemaC';
+import type { SchemaSpotifyOutput } from '../mapper/schemas/schemaSpotify';
+import type { SchemaSubpublisherIntlOutput } from '../mapper/schemas/schemaSubpublisherIntl';
+import type { SchemaSubpublisherCollOutput } from '../mapper/schemas/schemaSubpublisherColl';
+import type { SchemaGemaOutput } from '../mapper/schemas/schemaGema';
+import type { SchemaAckOutput } from '../mapper/schemas/schemaAck';
+import type { SchemaRelinquishmentOutput } from '../mapper/schemas/schemaRelinquishment';
+import type { SchemaIntlNamesOutput } from '../mapper/schemas/schemaIntlNames';
+import type { SchemaV1Output as SchemaV1OutputType } from './cwr';
+
+export type CanonicalParsedCwrFile = ParsedCwrFile;
+export type CwrJsonSchemaAOutput = SchemaAOutput;
+export type CwrJsonSchemaCOutput = SchemaCOutput;
+export type SpotifyPublishingOutput = SchemaSpotifyOutput;
+export type SubpublisherIntlOutput = SchemaSubpublisherIntlOutput;
+export type SubpublisherCollectionOutput = SchemaSubpublisherCollOutput;
+export type GemaRoleSplitOutput = SchemaGemaOutput;
+export type AckAcknowledgementOutput = SchemaAckOutput;
+export type RelinquishmentOutput = SchemaRelinquishmentOutput;
+export type IntlNamesOutput = SchemaIntlNamesOutput;
+export type SchemaV1Output = SchemaV1OutputType;

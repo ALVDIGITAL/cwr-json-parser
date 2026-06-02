@@ -1,0 +1,42 @@
+{
+  "name": "@alvdigital/cwr-json-parser",
+  "version": "1.1.0",
+  "description": "Framework-agnostic CWR to canonical JSON parser",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "prepare": "node scripts/prepare.js",
+    "prepublishOnly": "npm run build",
+    "test": "npm run build && node scripts/run-tests.js"
+  },
+  "dependencies": {
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1"
+  },
+  "type": "commonjs",
+  "sideEffects": false,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ALVDIGITAL/cwr-json-parser.git"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com",
+    "access": "restricted"
+  },
+  "devDependencies": {
+    "@types/node": "^25.9.1",
+    "tsx": "^4.20.3",
+    "typescript": "^5.8.3"
+  }
+}

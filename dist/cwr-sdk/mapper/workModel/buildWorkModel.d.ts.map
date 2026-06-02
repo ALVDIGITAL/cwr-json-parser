@@ -1,0 +1,1 @@
+{"version":3,"file":"buildWorkModel.d.ts","sourceRoot":"","sources":["../../../../src/cwr-sdk/mapper/workModel/buildWorkModel.ts"],"names":[],"mappings":"AAEA,OAAO,EAAE,iBAAiB,EAAE,MAAM,qBAAqB,CAAC;AACxD,OAAO,KAAK,EACV,SAAS,EAMV,MAAM,SAAS,CAAC;AAIjB,wBAAgB,cAAc,CAAC,KAAK,EAAE,MAAM,EAAE,GAAG,SAAS,CAkazD;AAiBD,yEAAyE;AACzE,wBAAgB,+BAA+B,CAAC,KAAK,EAAE,SAAS,GAAG,iBAAiB,CASnF"}
