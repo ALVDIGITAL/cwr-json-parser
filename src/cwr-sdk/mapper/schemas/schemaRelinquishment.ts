@@ -18,7 +18,7 @@ export interface SchemaRelinquishmentOutput {
 export const schemaRelinquishment: CwrJsonSchema<SchemaRelinquishmentOutput> = {
   id: 'cwr-json-schema-relinquishment',
   label: 'CWR-JSON / Relinquishment Schema',
-  description: 'Schema A extended with CWR 3.x relinquishment support. Demonstrates when an E publisher stops representing a writer for specific rights and territories, with optional Post-Term Collection date.',
+  description: 'Schema A extended with CWR 2.2 Rev3 relinquishment support. Demonstrates when an E publisher stops representing a writer for specific rights and territories, with optional Post-Term Collection date.',
   version: '0.1.0',
   jsonSchema: {
     $schema: 'https://json-schema.org/draft/2020-12/schema',

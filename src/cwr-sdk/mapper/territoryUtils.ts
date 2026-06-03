@@ -58,6 +58,7 @@ export function normalizeSharesKey(shares: ShareEntry[] = []) {
     .join('|');
 }
 
+/** Ownership shares are global to the party — not scoped to TIS include/exclude. */
 export function upsertOwnTerritory(
   participant: any,
   ownShares: ShareEntry[],

@@ -72,7 +72,7 @@ export interface Participant {
   controlled?: "yes" | "no";
   nameDomestic?: string;    // Non-Roman alphabet name (from NWN/NOW/NPN records)
   nameScript?: string;      // Language/script code for nameDomestic (e.g., "JA", "ZH", "KO")
-  relinquishment?: Relinquishment; // CWR 3.x - E publisher stops representing writer for specified scope
+  relinquishment?: Relinquishment; // CWR 2.2 Rev3 (PWR) — E publisher stops representing writer for specified scope
   agreementNumber?: AgreementNumber; // submitter agreement number (especially for SE subpublishers)
   shares?: Share[];
   territories?: ParticipantTerritory[];
