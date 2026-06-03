@@ -1,6 +1,6 @@
 {
   "name": "@alvdigital/cwr-json-parser",
-  "version": "1.3.1",
+  "version": "1.3.2",
   "description": "Framework-agnostic CWR to canonical JSON parser",
   "type": "module",
   "main": "./dist/index.cjs",
