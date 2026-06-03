@@ -151,4 +151,4 @@ Compiled output is written to `dist/`. Registry installs receive `dist/` and `sr
 
 ## Migrating from 1.1.x (Vue / Quasar Playground)
 
-See [MIGRATION-VUE.md](MIGRATION-VUE.md) for removing Vite bridges, sourcemap strip scripts, and deep `dist/cwr-sdk` imports.
+See [MIGRATION-VUE.md](guides/MIGRATION-VUE.md) for removing Vite bridges, sourcemap strip scripts, and deep `dist/cwr-sdk` imports.

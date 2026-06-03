@@ -1,8 +1,18 @@
 export type ValidationMode = 'strict' | 'advisory';
 
+export interface ValidationOptions {
+  /**
+   * Apply layout fixes before validating (ISWC display format, split own/coll territories).
+   * Default: true.
+   */
+  normalize?: boolean;
+}
+
 export interface ValidationResult {
   valid: boolean;
   errors: string[];
+  /** Automatic fixes applied before validation (not failures). */
+  warnings?: string[];
 }
 
 export interface CwrEdiValidationOptions {

@@ -1,10 +1,19 @@
-import { S as SchemaId, a as SchemaV1Output } from './schemaRegistry-DFvRh1rf.cjs';
+import { a as SchemaV1Output, S as SchemaId } from './schemaRegistry-DFvRh1rf.cjs';
 export { H as HdrRecord, P as Participant, R as Recording, b as SchemaV1Messages, c as SchemaV1WorkOutput, W as WorkIdentifier, d as WorkTitle } from './schemaRegistry-DFvRh1rf.cjs';
 
 type ValidationMode = 'strict' | 'advisory';
+interface ValidationOptions {
+    /**
+     * Apply layout fixes before validating (ISWC display format, split own/coll territories).
+     * Default: true.
+     */
+    normalize?: boolean;
+}
 interface ValidationResult {
     valid: boolean;
     errors: string[];
+    /** Automatic fixes applied before validation (not failures). */
+    warnings?: string[];
 }
 interface CwrEdiValidationOptions {
     /** Validate CWR filename convention. Default: true when `filename` is provided. */
@@ -23,12 +32,27 @@ interface CwrEdiValidationResult {
     sequence: ValidationResult | null;
 }
 
+interface NormalizeCwrJsonResult {
+    /** Deep-cloned payload with fixes applied for validation. */
+    data: SchemaV1Output;
+    /** Human-readable notes about automatic fixes (not errors). */
+    notes: string[];
+}
 /**
- * Validate parsed CWR-JSON (Schema v1.0 output) against the bundled JSON Schema.
+ * Apply safe, layout-only fixes before JSON Schema validation.
+ * Does not mutate the input object.
  */
-declare function validateCwrJson(payload: unknown, mode?: ValidationMode, schemaId?: SchemaId): ValidationResult;
+declare function normalizeCwrJson(payload: unknown): NormalizeCwrJsonResult;
+
+/** Format compact / dotted ISWC for JSON Schema (T-NNNNNNNNN-C). Returns null if unrecognized. */
+declare function formatIswcForValidation(value: string): string | null;
+
+/**
+ * Validate CWR-JSON (Schema v1.0) with optional pre-normalization and readable errors.
+ */
+declare function validateCwrJson(payload: unknown, mode?: ValidationMode, schemaId?: SchemaId, options?: ValidationOptions): ValidationResult;
 /** Type guard helper: parse output is expected to satisfy SchemaV1Output. */
-declare function validateParsedCwr(payload: SchemaV1Output, mode?: ValidationMode): ValidationResult;
+declare function validateParsedCwr(payload: SchemaV1Output, mode?: ValidationMode, options?: ValidationOptions): ValidationResult;
 
 /**
  * Validate a CWR filename against the CWyynnnnsss_rrr.Vxx convention.
@@ -56,4 +80,4 @@ declare function validateCwrEdi(cwrContent: string, filename?: string, options?:
  */
 declare function parseCwr(cwrContent: string): SchemaV1Output;
 
-export { type CwrEdiValidationOptions, type CwrEdiValidationResult, SchemaV1Output, type ValidationMode, type ValidationResult, parseCwr, validateCwrEdi, validateCwrFilename, validateCwrJson, validateCwrRecordOrder, validateCwrSequence, validateParsedCwr };
+export { type CwrEdiValidationOptions, type CwrEdiValidationResult, type NormalizeCwrJsonResult, SchemaV1Output, type ValidationMode, type ValidationOptions, type ValidationResult, formatIswcForValidation, normalizeCwrJson, parseCwr, validateCwrEdi, validateCwrFilename, validateCwrJson, validateCwrRecordOrder, validateCwrSequence, validateParsedCwr };

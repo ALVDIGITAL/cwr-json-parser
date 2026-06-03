@@ -1,10 +1,18 @@
-import Ajv, { type ErrorObject, type ValidateFunction } from 'ajv';
+import Ajv, { type ValidateFunction } from 'ajv';
 import addFormats from 'ajv-formats';
 import { getSchemaAsset } from '../cwr-sdk/json-schemas/schemaAssetMap';
 import type { SchemaId } from '../cwr-sdk/mapper/schemaRegistry';
 import type { SchemaV1Output } from '../cwr-sdk/types/cwr';
-import type { ValidationMode, ValidationResult } from './types';
+import {
+  ajvErrorToIssue,
+  dedupeIssues,
+  formatSemanticError,
+  issuesToStrings,
+  type ValidationIssue,
+} from './formatValidationErrors';
+import { normalizeCwrJson } from './normalizeCwrJson';
 import { validateCwrJsonSemantic } from './semanticValidation';
+import type { ValidationMode, ValidationOptions, ValidationResult } from './types';
 
 const DEFAULT_SCHEMA_ID: SchemaId = 'cwr-json-v1-0';
 
@@ -12,75 +20,6 @@ const ajv = new Ajv({ allErrors: true, strict: false, verbose: true });
 addFormats(ajv);
 
 const validatorCache = new Map<SchemaId, ValidateFunction>();
-
-function normalizeErrors(errors: ErrorObject[] | null | undefined): string[] {
-  if (!errors?.length) return [];
-  return errors.map((err, index) => formatAjvError(err, index + 1));
-}
-
-function formatValue(value: unknown): string {
-  if (value === null) return 'null';
-  if (typeof value === 'string') return `"${value}"`;
-  if (Array.isArray(value)) return `[array(${value.length})]`;
-  if (typeof value === 'object') return '[object]';
-  return String(value);
-}
-
-function formatPath(path: string): string {
-  return path.length ? path : '/';
-}
-
-function escapeJsonPointerSegment(segment: string): string {
-  return segment.replace(/~/g, '~0').replace(/\//g, '~1');
-}
-
-function appendPathSegment(basePath: string, segment: string): string {
-  const normalized = formatPath(basePath);
-  const escaped = escapeJsonPointerSegment(segment);
-  return normalized === '/' ? `/${escaped}` : `${normalized}/${escaped}`;
-}
-
-function getExpectedHint(err: ErrorObject): string | null {
-  if (err.keyword === 'type' && typeof err.params === 'object' && err.params && 'type' in err.params) {
-    return `expected type ${(err.params as { type: string }).type}`;
-  }
-  if (err.keyword === 'required' && typeof err.params === 'object' && err.params && 'missingProperty' in err.params) {
-    return `expected required property ${(err.params as { missingProperty: string }).missingProperty}`;
-  }
-  if (
-    err.keyword === 'additionalProperties' &&
-    typeof err.params === 'object' &&
-    err.params &&
-    'additionalProperty' in err.params
-  ) {
-    return `unexpected property ${(err.params as { additionalProperty: string }).additionalProperty}`;
-  }
-  if (err.keyword === 'enum' && typeof err.params === 'object' && err.params && 'allowedValues' in err.params) {
-    const allowed = (err.params as { allowedValues: unknown[] }).allowedValues;
-    if (allowed.length <= 8) {
-      return `expected one of: ${allowed.map(String).join(', ')}`;
-    }
-    return `expected one of ${allowed.length} allowed values`;
-  }
-  if (err.keyword === 'pattern' && typeof err.params === 'object' && err.params && 'pattern' in err.params) {
-    return `expected pattern ${(err.params as { pattern: string }).pattern}`;
-  }
-  return null;
-}
-
-function formatAjvError(err: ErrorObject, order: number): string {
-  let path = formatPath(err.instancePath);
-  if (err.keyword === 'required' && typeof err.params === 'object' && err.params && 'missingProperty' in err.params) {
-    path = appendPathSegment(path, String((err.params as { missingProperty: string }).missingProperty));
-  }
-  const expectedHint = getExpectedHint(err);
-  const keyword = err.keyword ? ` [${err.keyword}]` : '';
-  const message = err.message || 'invalid value';
-  if (expectedHint) {
-    return `${order}. ${path}${keyword}: ${message}; ${expectedHint}`;
-  }
-  return `${order}. ${path}${keyword}: ${message}`;
-}
 
 function getValidator(schemaId: SchemaId = DEFAULT_SCHEMA_ID): ValidateFunction {
   const cached = validatorCache.get(schemaId);
@@ -90,33 +29,51 @@ function getValidator(schemaId: SchemaId = DEFAULT_SCHEMA_ID): ValidateFunction 
   return validator;
 }
 
+function prefixNotes(notes: string[]): string[] {
+  if (!notes.length) return [];
+  const header = notes.length === 1 ? 'Auto-fixed before validation:' : `Auto-fixed ${notes.length} item(s) before validation:`;
+  const body = notes.length <= 5 ? notes : [...notes.slice(0, 5), `…and ${notes.length - 5} more`];
+  return [header, ...body.map((n) => `  • ${n}`)];
+}
+
 /**
- * Validate parsed CWR-JSON (Schema v1.0 output) against the bundled JSON Schema.
+ * Validate CWR-JSON (Schema v1.0) with optional pre-normalization and readable errors.
  */
 export function validateCwrJson(
   payload: unknown,
   mode: ValidationMode = 'strict',
-  schemaId: SchemaId = DEFAULT_SCHEMA_ID
+  schemaId: SchemaId = DEFAULT_SCHEMA_ID,
+  options: ValidationOptions = {}
 ): ValidationResult {
-  try {
-    const validator = getValidator(schemaId);
-    const schemaValid = Boolean(validator(payload));
-    const errors = normalizeErrors(validator.errors);
+  const normalize = options.normalize !== false;
 
-    const semanticErrors = validateCwrJsonSemantic(payload);
-    const allErrors = [...errors, ...semanticErrors];
-    const valid = schemaValid && semanticErrors.length === 0;
+  try {
+    const { data, notes } = normalize ? normalizeCwrJson(payload) : { data: payload, notes: [] as string[] };
+    const validator = getValidator(schemaId);
+    const schemaValid = Boolean(validator(data));
+    const ajvIssues = dedupeIssues((validator.errors || []).map(ajvErrorToIssue));
+    const semanticIssues = dedupeIssues(
+      validateCwrJsonSemantic(data).map((line) => formatSemanticError(line)).filter((x): x is ValidationIssue => x !== null)
+    );
+    const allIssues = dedupeIssues([...ajvIssues, ...semanticIssues]);
+    const errors = issuesToStrings(allIssues);
+    const warnings = prefixNotes(notes);
+    const valid = schemaValid && semanticIssues.length === 0;
 
     if (mode === 'advisory') {
-      return { valid: true, errors: allErrors };
+      return { valid: true, errors, warnings: warnings.length ? warnings : undefined };
     }
 
-    return { valid, errors: allErrors };
+    return {
+      valid,
+      errors,
+      warnings: warnings.length ? warnings : undefined,
+    };
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
     return {
       valid: false,
-      errors: [`/: validation setup error - ${message}`],
+      errors: [`1. / [SETUP]: validation failed to run (${message})`],
     };
   }
 }
@@ -124,7 +81,12 @@ export function validateCwrJson(
 /** Type guard helper: parse output is expected to satisfy SchemaV1Output. */
 export function validateParsedCwr(
   payload: SchemaV1Output,
-  mode: ValidationMode = 'strict'
+  mode: ValidationMode = 'strict',
+  options?: ValidationOptions
 ): ValidationResult {
-  return validateCwrJson(payload, mode);
+  return validateCwrJson(payload, mode, DEFAULT_SCHEMA_ID, options);
 }
+
+export { normalizeCwrJson } from './normalizeCwrJson';
+export type { NormalizeCwrJsonResult } from './normalizeCwrJson';
+export { formatIswcForValidation } from './normalizeIswc';

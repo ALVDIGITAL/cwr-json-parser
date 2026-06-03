@@ -1,3 +1,23 @@
+## [1.3.1] - 2026-06-03
+
+### Added
+
+- **`normalizeCwrJson()`** — layout cleanup before validation (ISWC display format, split `own`/`coll` territories, remove invalid `own` on sub-publishers `SE`/`AM`/`PA`).
+- **`ValidationResult.warnings`** — lists auto-fixes applied when `normalize: true` (default).
+- **`ValidationOptions.normalize`** — set `false` to validate raw JSON without pre-processing.
+- Readable validation errors with rule codes (`ISWC_FORMAT`, `OWN_COLL_MIXED`, `TIS_OVERLAP`, …) and deduplicated AJV messages.
+- CISAC TIS database export (`CISAC-TIS.xlsx`) as primary TIS lookup source; `scripts/parse-tis-xlsx.ts`, `import-tis` refresh path.
+
+### Changed
+
+- TIS lookup rebuilt from official CISAC export (241 territories) instead of ISO-only fallback.
+- Exported `formatIswcForValidation`, `NormalizeCwrJsonResult` from main entry.
+
+### Notes
+
+- Normalization clones input; original payload is not mutated.
+- **CWR-JSON v1.00 r0 format unchanged** — normalization is optional pre-validation cleanup, not a format bump.
+
 ## [1.3.0] - 2026-06-03
 
 ### Added

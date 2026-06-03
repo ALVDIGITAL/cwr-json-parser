@@ -23,6 +23,18 @@ Integrators (including downstream export pipelines) should treat this page and t
 
 ---
 
+## 2026-06-03 — Validation UX & normalization (@1.3.1, no format bump)
+
+> **No change to CWR-JSON v1.00 r0 field shapes.** Validation ergonomics and optional pre-validation cleanup.
+
+**@alvdigital/cwr-json-parser@1.3.1**
+- **`normalizeCwrJson()`** applied by default before `validateCwrJson`: compact ISWC → `T-NNNNNNNNN-C`, split combined `own`/`coll` territory rows, strip invalid `own` on sub-publishers.
+- **`result.warnings`** reports what was auto-fixed; **`{ normalize: false }`** skips cleanup for strict checks on raw exports.
+- Clearer **`result.errors`**: rule codes and deduplicated messages instead of repeated `[if]` / `[maxItems]` noise.
+- TIS lookup sourced from bundled **CISAC TIS.xlsx** export (see [TIS Territory Codes](../tis-territory-codes)).
+
+---
+
 ## 2026-06-03 — Validation 1.1.0 (no format bump)
 
 > **No change to CWR-JSON v1.00 r0 field shapes.** Stricter `validateCwrJson` / JSON Schema only.

@@ -65,6 +65,9 @@ import { validateCwrJson, validateParsedCwr } from '@alvdigital/cwr-json-parser'
 
 const result = validateParsedCwr(playgroundJson);       // strict (default)
 const warn = validateCwrJson(playgroundJson, 'advisory'); // errors listed, valid: true
+
+// result.warnings — auto-fixes applied (ISWC format, territory split, sub-pub own removal)
+// Disable fixes: validateCwrJson(data, 'strict', 'cwr-json-v1-0', { normalize: false })
 ```
 
 ---

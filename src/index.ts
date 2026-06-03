@@ -17,6 +17,7 @@ export type {
 export type {
   ValidationMode,
   ValidationResult,
+  ValidationOptions,
   CwrEdiValidationOptions,
   CwrEdiValidationResult,
 } from './validation/types';
@@ -24,7 +25,10 @@ export type {
 export {
   validateCwrJson,
   validateParsedCwr,
+  normalizeCwrJson,
+  formatIswcForValidation,
 } from './validation/schemaValidation';
+export type { NormalizeCwrJsonResult } from './validation/normalizeCwrJson';
 
 export {
   validateCwrFilename,

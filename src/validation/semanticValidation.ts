@@ -19,8 +19,8 @@ type PartyContext = {
   role: string;
 };
 
-function formatError(order: number, path: string, rule: SemanticRuleId, message: string): string {
-  return `${order}. ${path} [${rule}]: ${message}`;
+function formatError(path: string, rule: SemanticRuleId, message: string): string {
+  return `${path} [${rule}]: ${message}`;
 }
 
 function territoryHasOwn(territoryEntry: {
@@ -36,7 +36,6 @@ function checkTerritoryEntry(
   },
   ctx: PartyContext,
   errors: string[],
-  nextOrder: () => number,
   territoryIndex: number
 ) {
   const base = `${ctx.path}/territories/${territoryIndex}`;
@@ -48,7 +47,6 @@ function checkTerritoryEntry(
     if (include.length > 0 || exclude.length > 0) {
       errors.push(
         formatError(
-          nextOrder(),
           base,
           'OWN_EMPTY_TIS',
           'ownership (own) must not use TIS include/exclude; both arrays must be empty'
@@ -61,7 +59,6 @@ function checkTerritoryEntry(
   if (overlap.length > 0) {
     errors.push(
       formatError(
-        nextOrder(),
         base,
         'TIS_OVERLAP',
         `TIS code(s) appear in both include and exclude: ${overlap.join(', ')}`
@@ -72,12 +69,7 @@ function checkTerritoryEntry(
   for (const code of [...include, ...exclude]) {
     if (code && !hasTisCode(code)) {
       errors.push(
-        formatError(
-          nextOrder(),
-          base,
-          'TIS_UNKNOWN',
-          `unknown TIS numeric code: ${code}`
-        )
+        formatError(base, 'TIS_UNKNOWN', `unknown TIS numeric code: ${code}`)
       );
     }
   }
@@ -85,21 +77,17 @@ function checkTerritoryEntry(
   if (hasOwn && isSubPublisherRole(ctx.role)) {
     errors.push(
       formatError(
-        nextOrder(),
         base,
         'SUBPUB_NO_OWN',
-        `role ${ctx.role} must not have shareTypes type "own"`
+        `role ${ctx.role} must not have shareTypes type "own" (sub-publishers are collection-only)`
       )
     );
-  }
-
-  if (hasOwn && isPublisherRole(ctx.role) && ctx.role !== 'E') {
+  } else if (hasOwn && isPublisherRole(ctx.role) && ctx.role !== 'E') {
     errors.push(
       formatError(
-        nextOrder(),
         base,
         'PUB_OWN_E_ONLY',
-        `publisher role ${ctx.role} must not have ownership (own); only E (original publisher) may`
+        `publisher role ${ctx.role} must not have ownership (own); only original publisher (E) may`
       )
     );
   }
@@ -112,20 +100,14 @@ function walkParty(
     representedBy?: typeof party[];
   },
   ctx: PartyContext,
-  errors: string[],
-  nextOrder: () => number
+  errors: string[]
 ) {
   const territories = party.territories || [];
-  territories.forEach((entry, ti) => checkTerritoryEntry(entry, ctx, errors, nextOrder, ti));
+  territories.forEach((entry, ti) => checkTerritoryEntry(entry, ctx, errors, ti));
 
   const reps = party.representedBy || [];
   reps.forEach((child, ri) => {
-    walkParty(
-      child,
-      { ...ctx, path: `${ctx.path}/representedBy/${ri}`, role: child.role },
-      errors,
-      nextOrder
-    );
+    walkParty(child, { ...ctx, path: `${ctx.path}/representedBy/${ri}`, role: child.role }, errors);
   });
 }
 
@@ -155,8 +137,6 @@ export function validateCwrJsonSemantic(payload: unknown): string[] {
     return [];
   }
   const errors: string[] = [];
-  let order = 0;
-  const nextOrder = () => ++order;
 
   doc.works.forEach((work, wi) => {
     const parties = work.parties || [];
@@ -166,7 +146,7 @@ export function validateCwrJsonSemantic(payload: unknown): string[] {
         path: `/works/${wi}/parties/${pi}`,
         role: party.role,
       };
-      walkParty(party, ctx, errors, nextOrder);
+      walkParty(party, ctx, errors);
     });
   });
 
@@ -176,10 +156,9 @@ export function validateCwrJsonSemantic(payload: unknown): string[] {
     if (unique.length > 1) {
       errors.push(
         formatError(
-          nextOrder(),
           '/',
           'ID_UNIQUE_SUBMITTER',
-          `duplicate submitterWorkNumber "${value}" across works: ${unique.join(', ')}`
+          `duplicate submitterWorkNumber "${value}" in works: ${unique.map((i) => i.toString()).join(', ')}`
         )
       );
     }

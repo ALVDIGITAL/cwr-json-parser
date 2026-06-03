@@ -2676,6 +2676,223 @@ function getSchemaAsset(schemaId) {
 }
 __name(getSchemaAsset, "getSchemaAsset");
 
+// src/validation/formatValidationErrors.ts
+var AJV_RULE_HINTS = {
+  pattern: /* @__PURE__ */ __name((err, path) => {
+    const pattern = err.params?.pattern;
+    if (path.includes("/identifiers/") && pattern?.includes("T-")) {
+      return {
+        path,
+        code: "ISWC_FORMAT",
+        message: "ISWC must use display form T-NNNNNNNNN-C (e.g. T-702160594-9)",
+        detail: err.message || void 0
+      };
+    }
+    if (path.endsWith("/ipi")) {
+      return {
+        path,
+        code: "IPI_FORMAT",
+        message: "IPI must be an 11-digit numeric string"
+      };
+    }
+    if (path.includes("/isrc")) {
+      return {
+        path,
+        code: "ISRC_FORMAT",
+        message: "ISRC must match CC-XXX-YY-NNNNN (compact form accepted after normalize)"
+      };
+    }
+    return {
+      path,
+      code: "PATTERN",
+      message: err.message || "value does not match required format",
+      detail: pattern ? `pattern: ${pattern}` : void 0
+    };
+  }, "pattern"),
+  enum: /* @__PURE__ */ __name((err, path) => {
+    const allowed = err.params?.allowedValues;
+    const field = path.split("/").pop() || "value";
+    if (field === "role") {
+      return {
+        path,
+        code: "ROLE_CODE",
+        message: `invalid party role "${formatValue(err.data)}"`,
+        detail: allowed && allowed.length <= 16 ? `allowed: ${allowed.join(", ")}` : void 0
+      };
+    }
+    if (path.includes("/territory/include") || path.includes("/territory/exclude")) {
+      return {
+        path,
+        code: "TIS_CODE",
+        message: `unknown or invalid TIS code "${formatValue(err.data)}"`
+      };
+    }
+    return {
+      path,
+      code: "ENUM",
+      message: `invalid ${field}: ${formatValue(err.data)}`,
+      detail: allowed && allowed.length <= 8 ? `allowed: ${allowed.join(", ")}` : void 0
+    };
+  }, "enum"),
+  maxItems: /* @__PURE__ */ __name((err, path) => {
+    if (path.endsWith("/territory/include") || path.endsWith("/territory/exclude")) {
+      return {
+        path: territoryBasePath(path),
+        code: "OWN_TERRITORY_TIS",
+        message: 'ownership (shareTypes type "own") must use empty territory.include and territory.exclude',
+        detail: "collection (coll) TIS codes belong on a separate territories[] entry"
+      };
+    }
+    if (path.endsWith("/shareTypes")) {
+      return {
+        path: territoryBasePath(path),
+        code: "OWN_COLL_MIXED",
+        message: 'do not combine "own" and "coll" in the same territories[] entry',
+        detail: "use one shareTypes block per entry (split into two territory rows)"
+      };
+    }
+    return { path, code: "MAX_ITEMS", message: err.message || "too many items" };
+  }, "maxItems"),
+  if: /* @__PURE__ */ __name((err, path) => {
+    if (path.includes("/territories/")) {
+      return {
+        path: territoryBasePath(path),
+        code: "TERRITORY_LAYOUT",
+        message: "territory entry does not satisfy ownership vs collection rules",
+        detail: "see OWN_TERRITORY_TIS / OWN_COLL_MIXED (auto-normalize may fix combined rows)"
+      };
+    }
+    if (path.includes("/identifiers/")) {
+      return {
+        path,
+        code: "IDENTIFIER_RULE",
+        message: "identifier value does not match rules for its source type"
+      };
+    }
+    return { path, code: "IF", message: "conditional schema rule failed", detail: path };
+  }, "if"),
+  required: /* @__PURE__ */ __name((err, path) => {
+    const missing = err.params?.missingProperty;
+    const full = missing ? appendPath(path, missing) : path;
+    return {
+      path: full,
+      code: "REQUIRED",
+      message: `missing required field "${missing || "property"}"`
+    };
+  }, "required"),
+  additionalProperties: /* @__PURE__ */ __name((err, path) => {
+    const extra = err.params?.additionalProperty;
+    return {
+      path,
+      code: "EXTRA_PROPERTY",
+      message: `unexpected property "${extra}"`
+    };
+  }, "additionalProperties"),
+  type: /* @__PURE__ */ __name((err, path) => {
+    const expected = err.params?.type;
+    return {
+      path,
+      code: "TYPE",
+      message: `expected ${expected}, got ${typeof err.data}`
+    };
+  }, "type")
+};
+function formatValue(data) {
+  if (data === void 0) return "(missing)";
+  if (typeof data === "string") return data;
+  return JSON.stringify(data);
+}
+__name(formatValue, "formatValue");
+function appendPath(base, segment) {
+  return base === "/" ? `/${segment}` : `${base}/${segment}`;
+}
+__name(appendPath, "appendPath");
+function territoryBasePath(path) {
+  const idx = path.indexOf("/territories/");
+  if (idx === -1) return path;
+  const rest = path.slice(idx + "/territories/".length);
+  const entryIndex = rest.split("/")[0];
+  return `${path.slice(0, idx)}/territories/${entryIndex}`;
+}
+__name(territoryBasePath, "territoryBasePath");
+function formatPath(instancePath, err) {
+  let path = instancePath.length ? instancePath : "/";
+  if (err.keyword === "required" && err.params?.missingProperty) {
+    path = appendPath(path, err.params.missingProperty);
+  }
+  return path;
+}
+__name(formatPath, "formatPath");
+function ajvErrorToIssue(err) {
+  const path = formatPath(err.instancePath, err);
+  const mapper = AJV_RULE_HINTS[err.keyword];
+  if (mapper) {
+    const mapped = mapper(err, path);
+    if (mapped) return mapped;
+  }
+  return {
+    path,
+    code: (err.keyword || "INVALID").toUpperCase(),
+    message: err.message || "invalid value"
+  };
+}
+__name(ajvErrorToIssue, "ajvErrorToIssue");
+function issueKey(issue) {
+  return `${issue.code}|${issue.path}`;
+}
+__name(issueKey, "issueKey");
+function formatIssue(issue, index) {
+  const detail = issue.detail ? ` (${issue.detail})` : "";
+  return `${index}. ${issue.path} [${issue.code}]: ${issue.message}${detail}`;
+}
+__name(formatIssue, "formatIssue");
+function dedupeIssues(issues) {
+  const seen = /* @__PURE__ */ new Map();
+  for (const issue of issues) {
+    let key = issueKey(issue);
+    if (issue.code === "PUB_OWN_E_ONLY") {
+      const subKey = `${issue.path}|SUBPUB_NO_OWN`;
+      if (seen.has(subKey)) continue;
+    }
+    if (issue.code === "SUBPUB_NO_OWN") {
+      key = `${issue.path}|SUBPUB_NO_OWN`;
+    }
+    if (!seen.has(key)) seen.set(key, issue);
+  }
+  return [...seen.values()];
+}
+__name(dedupeIssues, "dedupeIssues");
+function formatSemanticError(line) {
+  const match = line.match(/^(?:\d+\.\s+)?(\S+)\s+\[([A-Z_]+)\]:\s*(.+)$/);
+  if (!match) return null;
+  return { path: match[1], code: match[2], message: match[3] };
+}
+__name(formatSemanticError, "formatSemanticError");
+function issuesToStrings(issues) {
+  return issues.map((issue, i) => formatIssue(issue, i + 1));
+}
+__name(issuesToStrings, "issuesToStrings");
+
+// src/validation/normalizeIswc.ts
+var DISPLAY_PATTERN = /^T-\d{9}-\d$/;
+function formatIswcForValidation(value) {
+  const raw = value.trim().toUpperCase();
+  if (DISPLAY_PATTERN.test(raw)) return raw;
+  const compact = raw.replace(/[.\s-]/g, "").replace(/^T/, "T");
+  const withT = compact.startsWith("T") ? compact : `T${compact}`;
+  const ninePlusCheck = withT.match(/^T(\d{9})(\d)$/);
+  if (ninePlusCheck) {
+    return `T-${ninePlusCheck[1]}-${ninePlusCheck[2]}`;
+  }
+  const tenDigit = withT.match(/^T(\d{10})$/);
+  if (tenDigit) {
+    const digits = tenDigit[1];
+    return `T-${digits.slice(0, 9)}-${digits.slice(9)}`;
+  }
+  return null;
+}
+__name(formatIswcForValidation, "formatIswcForValidation");
+
 // src/cwr-sdk/lookups/cwr_lookup_data_types_v1.0_r0.json
 var cwr_lookup_data_types_v1_0_r0_default = {
   $id: "cwr_lookup_data_types_v1.0_r0",
@@ -3260,16 +3477,151 @@ function isSubPublisherRole(role) {
 }
 __name(isSubPublisherRole, "isSubPublisherRole");
 
+// src/validation/normalizeTerritories.ts
+function cloneTerritoryEntry(entry) {
+  return {
+    ...entry,
+    territory: {
+      include: [...entry.territory?.include || []],
+      exclude: [...entry.territory?.exclude || []]
+    },
+    shareTypes: (entry.shareTypes || []).map((st) => ({
+      ...st,
+      shares: Array.isArray(st.shares) ? [...st.shares] : st.shares
+    })),
+    ...entry.agreementNumber ? { agreementNumber: { ...entry.agreementNumber } } : {}
+  };
+}
+__name(cloneTerritoryEntry, "cloneTerritoryEntry");
+function territorySignature(entry) {
+  const inc = (entry.territory?.include || []).join(",");
+  const exc = (entry.territory?.exclude || []).join(",");
+  const types = (entry.shareTypes || []).map((st) => st.type).join("+");
+  return `${inc}|${exc}|${types}`;
+}
+__name(territorySignature, "territorySignature");
+function splitMixedTerritoryEntry(entry) {
+  const shareTypes = entry.shareTypes || [];
+  const ownBlock = shareTypes.find((st) => st.type === "own");
+  const collBlocks = shareTypes.filter((st) => st.type === "coll");
+  const otherBlocks = shareTypes.filter((st) => st.type !== "own" && st.type !== "coll");
+  const include = entry.territory?.include || [];
+  const exclude = entry.territory?.exclude || [];
+  const hasTis = include.length > 0 || exclude.length > 0;
+  if (!ownBlock) {
+    return [entry];
+  }
+  const hasColl = collBlocks.length > 0 || otherBlocks.length > 0;
+  const mustSplit = hasColl || hasTis || shareTypes.length > 1;
+  if (!mustSplit) {
+    return [entry];
+  }
+  const rows = [
+    {
+      territory: { include: [], exclude: [] },
+      shareTypes: [ownBlock],
+      agreementNumber: entry.agreementNumber
+    }
+  ];
+  if (hasColl) {
+    rows.push({
+      territory: { include: [...include], exclude: [...exclude] },
+      shareTypes: [...collBlocks, ...otherBlocks],
+      agreementNumber: entry.agreementNumber
+    });
+  }
+  return rows;
+}
+__name(splitMixedTerritoryEntry, "splitMixedTerritoryEntry");
+function stripSubPublisherOwnership(party, notes, path) {
+  if (!party.role || !isSubPublisherRole(party.role)) return;
+  let removed = false;
+  for (const entry of party.territories || []) {
+    const before = entry.shareTypes?.length || 0;
+    entry.shareTypes = (entry.shareTypes || []).filter((st) => st.type !== "own");
+    if ((entry.shareTypes?.length || 0) < before) removed = true;
+  }
+  party.territories = (party.territories || []).filter((t) => (t.shareTypes?.length || 0) > 0);
+  if (removed) {
+    notes.push(
+      `${path}: removed ownership (own) shares for sub-publisher role ${party.role} (collection only in CWR-JSON)`
+    );
+  }
+}
+__name(stripSubPublisherOwnership, "stripSubPublisherOwnership");
+function normalizePartyTerritories(party, notes, path) {
+  stripSubPublisherOwnership(party, notes, path);
+  const territories = party.territories || [];
+  const next = [];
+  territories.forEach((entry, index) => {
+    const before = territorySignature(entry);
+    const split = splitMixedTerritoryEntry(cloneTerritoryEntry(entry));
+    const after = split.map(territorySignature).join("||");
+    if (before !== after) {
+      notes.push(
+        `${path}/territories/${index}: split combined ownership (own) and collection (coll) into separate entries`
+      );
+    }
+    next.push(...split);
+  });
+  party.territories = next;
+  stripSubPublisherOwnership(party, notes, path);
+  for (let i = 0; i < (party.representedBy || []).length; i++) {
+    normalizePartyTerritories(party.representedBy[i], notes, `${path}/representedBy/${i}`);
+  }
+}
+__name(normalizePartyTerritories, "normalizePartyTerritories");
+function normalizeTerritoriesOnDocument(works, notes) {
+  works.forEach((work, wi) => {
+    (work.parties || []).forEach((party, pi) => {
+      normalizePartyTerritories(party, notes, `/works/${wi}/parties/${pi}`);
+    });
+  });
+}
+__name(normalizeTerritoriesOnDocument, "normalizeTerritoriesOnDocument");
+
+// src/validation/normalizeCwrJson.ts
+function deepClone(value) {
+  return JSON.parse(JSON.stringify(value));
+}
+__name(deepClone, "deepClone");
+function isRecord(value) {
+  return typeof value === "object" && value !== null;
+}
+__name(isRecord, "isRecord");
+function normalizeCwrJson(payload) {
+  const notes = [];
+  if (!isRecord(payload) || !Array.isArray(payload.works)) {
+    return { data: payload, notes };
+  }
+  const data = deepClone(payload);
+  data.works.forEach((work, wi) => {
+    for (const id of work.identifiers || []) {
+      if (id.source !== "iswc" || !id.value) continue;
+      const formatted = formatIswcForValidation(id.value);
+      if (formatted && formatted !== id.value) {
+        notes.push(
+          `/works/${wi}/identifiers: ISWC "${id.value}" \u2192 "${formatted}" (display format)`
+        );
+        id.value = formatted;
+      }
+    }
+  });
+  normalizeTerritoriesOnDocument(data.works, notes);
+  return { data, notes };
+}
+__name(normalizeCwrJson, "normalizeCwrJson");
+
 // src/validation/semanticValidation.ts
-function formatError(order, path, rule, message) {
-  return `${order}. ${path} [${rule}]: ${message}`;
+function formatError(path, rule, message) {
+  return `${path} [${rule}]: ${message}`;
 }
 __name(formatError, "formatError");
 function territoryHasOwn(territoryEntry) {
   return (territoryEntry.shareTypes || []).some((st) => st.type === "own");
 }
 __name(territoryHasOwn, "territoryHasOwn");
-function checkTerritoryEntry(territoryEntry, ctx, errors, nextOrder, territoryIndex) {
+function checkTerritoryEntry(territoryEntry, ctx, errors, territoryIndex) {
   const base = `${ctx.path}/territories/${territoryIndex}`;
   const include = territoryEntry.territory?.include || [];
   const exclude = territoryEntry.territory?.exclude || [];
@@ -3278,7 +3630,6 @@ function checkTerritoryEntry(territoryEntry, ctx, errors, nextOrder, territoryIn
     if (include.length > 0 || exclude.length > 0) {
       errors.push(
         formatError(
-          nextOrder(),
           base,
           "OWN_EMPTY_TIS",
           "ownership (own) must not use TIS include/exclude; both arrays must be empty"
@@ -3290,7 +3641,6 @@ function checkTerritoryEntry(territoryEntry, ctx, errors, nextOrder, territoryIn
   if (overlap.length > 0) {
     errors.push(
       formatError(
-        nextOrder(),
         base,
         "TIS_OVERLAP",
         `TIS code(s) appear in both include and exclude: ${overlap.join(", ")}`
@@ -3300,48 +3650,35 @@ function checkTerritoryEntry(territoryEntry, ctx, errors, nextOrder, territoryIn
   for (const code of [...include, ...exclude]) {
     if (code && !hasTisCode(code)) {
       errors.push(
-        formatError(
-          nextOrder(),
-          base,
-          "TIS_UNKNOWN",
-          `unknown TIS numeric code: ${code}`
-        )
+        formatError(base, "TIS_UNKNOWN", `unknown TIS numeric code: ${code}`)
       );
     }
   }
   if (hasOwn && isSubPublisherRole(ctx.role)) {
     errors.push(
       formatError(
-        nextOrder(),
         base,
         "SUBPUB_NO_OWN",
-        `role ${ctx.role} must not have shareTypes type "own"`
+        `role ${ctx.role} must not have shareTypes type "own" (sub-publishers are collection-only)`
       )
     );
-  }
-  if (hasOwn && isPublisherRole(ctx.role) && ctx.role !== "E") {
+  } else if (hasOwn && isPublisherRole(ctx.role) && ctx.role !== "E") {
     errors.push(
       formatError(
-        nextOrder(),
         base,
         "PUB_OWN_E_ONLY",
-        `publisher role ${ctx.role} must not have ownership (own); only E (original publisher) may`
+        `publisher role ${ctx.role} must not have ownership (own); only original publisher (E) may`
       )
     );
   }
 }
 __name(checkTerritoryEntry, "checkTerritoryEntry");
-function walkParty(party, ctx, errors, nextOrder) {
+function walkParty(party, ctx, errors) {
   const territories = party.territories || [];
-  territories.forEach((entry, ti) => checkTerritoryEntry(entry, ctx, errors, nextOrder, ti));
+  territories.forEach((entry, ti) => checkTerritoryEntry(entry, ctx, errors, ti));
   const reps = party.representedBy || [];
   reps.forEach((child, ri) => {
-    walkParty(
-      child,
-      { ...ctx, path: `${ctx.path}/representedBy/${ri}`, role: child.role },
-      errors,
-      nextOrder
-    );
+    walkParty(child, { ...ctx, path: `${ctx.path}/representedBy/${ri}`, role: child.role }, errors);
   });
 }
 __name(walkParty, "walkParty");
@@ -3367,8 +3704,6 @@ function validateCwrJsonSemantic(payload) {
     return [];
   }
   const errors = [];
-  let order = 0;
-  const nextOrder = /* @__PURE__ */ __name(() => ++order, "nextOrder");
   doc.works.forEach((work, wi) => {
     const parties = work.parties || [];
     parties.forEach((party, pi) => {
@@ -3377,7 +3712,7 @@ function validateCwrJsonSemantic(payload) {
         path: `/works/${wi}/parties/${pi}`,
         role: party.role
       };
-      walkParty(party, ctx, errors, nextOrder);
+      walkParty(party, ctx, errors);
     });
   });
   const submitterMap = collectSubmitterIds(doc);
@@ -3386,10 +3721,9 @@ function validateCwrJsonSemantic(payload) {
     if (unique.length > 1) {
       errors.push(
         formatError(
-          nextOrder(),
           "/",
           "ID_UNIQUE_SUBMITTER",
-          `duplicate submitterWorkNumber "${value}" across works: ${unique.join(", ")}`
+          `duplicate submitterWorkNumber "${value}" in works: ${unique.map((i) => i.toString()).join(", ")}`
         )
       );
     }
@@ -3403,62 +3737,6 @@ var DEFAULT_SCHEMA_ID = "cwr-json-v1-0";
 var ajv = new Ajv({ allErrors: true, strict: false, verbose: true });
 addFormats(ajv);
 var validatorCache = /* @__PURE__ */ new Map();
-function normalizeErrors(errors) {
-  if (!errors?.length) return [];
-  return errors.map((err, index) => formatAjvError(err, index + 1));
-}
-__name(normalizeErrors, "normalizeErrors");
-function formatPath(path) {
-  return path.length ? path : "/";
-}
-__name(formatPath, "formatPath");
-function escapeJsonPointerSegment(segment) {
-  return segment.replace(/~/g, "~0").replace(/\//g, "~1");
-}
-__name(escapeJsonPointerSegment, "escapeJsonPointerSegment");
-function appendPathSegment(basePath, segment) {
-  const normalized = formatPath(basePath);
-  const escaped = escapeJsonPointerSegment(segment);
-  return normalized === "/" ? `/${escaped}` : `${normalized}/${escaped}`;
-}
-__name(appendPathSegment, "appendPathSegment");
-function getExpectedHint(err) {
-  if (err.keyword === "type" && typeof err.params === "object" && err.params && "type" in err.params) {
-    return `expected type ${err.params.type}`;
-  }
-  if (err.keyword === "required" && typeof err.params === "object" && err.params && "missingProperty" in err.params) {
-    return `expected required property ${err.params.missingProperty}`;
-  }
-  if (err.keyword === "additionalProperties" && typeof err.params === "object" && err.params && "additionalProperty" in err.params) {
-    return `unexpected property ${err.params.additionalProperty}`;
-  }
-  if (err.keyword === "enum" && typeof err.params === "object" && err.params && "allowedValues" in err.params) {
-    const allowed = err.params.allowedValues;
-    if (allowed.length <= 8) {
-      return `expected one of: ${allowed.map(String).join(", ")}`;
-    }
-    return `expected one of ${allowed.length} allowed values`;
-  }
-  if (err.keyword === "pattern" && typeof err.params === "object" && err.params && "pattern" in err.params) {
-    return `expected pattern ${err.params.pattern}`;
-  }
-  return null;
-}
-__name(getExpectedHint, "getExpectedHint");
-function formatAjvError(err, order) {
-  let path = formatPath(err.instancePath);
-  if (err.keyword === "required" && typeof err.params === "object" && err.params && "missingProperty" in err.params) {
-    path = appendPathSegment(path, String(err.params.missingProperty));
-  }
-  const expectedHint = getExpectedHint(err);
-  const keyword = err.keyword ? ` [${err.keyword}]` : "";
-  const message = err.message || "invalid value";
-  if (expectedHint) {
-    return `${order}. ${path}${keyword}: ${message}; ${expectedHint}`;
-  }
-  return `${order}. ${path}${keyword}: ${message}`;
-}
-__name(formatAjvError, "formatAjvError");
 function getValidator(schemaId = DEFAULT_SCHEMA_ID) {
   const cached = validatorCache.get(schemaId);
   if (cached) return cached;
@@ -3467,29 +3745,46 @@ function getValidator(schemaId = DEFAULT_SCHEMA_ID) {
   return validator;
 }
 __name(getValidator, "getValidator");
-function validateCwrJson(payload, mode = "strict", schemaId = DEFAULT_SCHEMA_ID) {
+function prefixNotes(notes) {
+  if (!notes.length) return [];
+  const header = notes.length === 1 ? "Auto-fixed before validation:" : `Auto-fixed ${notes.length} item(s) before validation:`;
+  const body = notes.length <= 5 ? notes : [...notes.slice(0, 5), `\u2026and ${notes.length - 5} more`];
+  return [header, ...body.map((n) => `  \u2022 ${n}`)];
+}
+__name(prefixNotes, "prefixNotes");
+function validateCwrJson(payload, mode = "strict", schemaId = DEFAULT_SCHEMA_ID, options = {}) {
+  const normalize = options.normalize !== false;
   try {
+    const { data, notes } = normalize ? normalizeCwrJson(payload) : { data: payload, notes: [] };
     const validator = getValidator(schemaId);
-    const schemaValid = Boolean(validator(payload));
-    const errors = normalizeErrors(validator.errors);
-    const semanticErrors = validateCwrJsonSemantic(payload);
-    const allErrors = [...errors, ...semanticErrors];
-    const valid = schemaValid && semanticErrors.length === 0;
+    const schemaValid = Boolean(validator(data));
+    const ajvIssues = dedupeIssues((validator.errors || []).map(ajvErrorToIssue));
+    const semanticIssues = dedupeIssues(
+      validateCwrJsonSemantic(data).map((line) => formatSemanticError(line)).filter((x) => x !== null)
+    );
+    const allIssues = dedupeIssues([...ajvIssues, ...semanticIssues]);
+    const errors = issuesToStrings(allIssues);
+    const warnings = prefixNotes(notes);
+    const valid = schemaValid && semanticIssues.length === 0;
     if (mode === "advisory") {
-      return { valid: true, errors: allErrors };
+      return { valid: true, errors, warnings: warnings.length ? warnings : void 0 };
     }
-    return { valid, errors: allErrors };
+    return {
+      valid,
+      errors,
+      warnings: warnings.length ? warnings : void 0
+    };
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
     return {
       valid: false,
-      errors: [`/: validation setup error - ${message}`]
+      errors: [`1. / [SETUP]: validation failed to run (${message})`]
     };
   }
 }
 __name(validateCwrJson, "validateCwrJson");
-function validateParsedCwr(payload, mode = "strict") {
-  return validateCwrJson(payload, mode);
+function validateParsedCwr(payload, mode = "strict", options) {
+  return validateCwrJson(payload, mode, DEFAULT_SCHEMA_ID, options);
 }
 __name(validateParsedCwr, "validateParsedCwr");
 
@@ -3597,6 +3892,8 @@ function parseCwr(cwrContent) {
 }
 __name(parseCwr, "parseCwr");
 export {
+  formatIswcForValidation,
+  normalizeCwrJson,
   parseCwr,
   validateCwrEdi,
   validateCwrFilename2 as validateCwrFilename,

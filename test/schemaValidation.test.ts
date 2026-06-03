@@ -19,15 +19,21 @@ const validWork = {
 
 describe('schema validation (deep)', () => {
   it('rejects invalid role codes', () => {
-    const r = validateCwrJson({
-      works: [{ ...validWork, parties: [{ role: 'INVALID', territories: [] }] }],
-    });
+    const r = validateCwrJson(
+      {
+      works: [{ ...validWork, parties: [{ role: 'INVALID', territories: [] }] }      ],
+    },
+      'strict',
+      'cwr-json-v1-0',
+      { normalize: false }
+    );
     assert.equal(r.valid, false);
-    assert.ok(r.errors.some((e) => e.includes('role') || e.includes('enum')));
+    assert.ok(r.errors.some((e) => e.includes('role') || e.includes('ROLE')));
   });
 
   it('rejects own territory with TIS include', () => {
-    const r = validateCwrJson({
+    const r = validateCwrJson(
+      {
       works: [
         {
           ...validWork,
@@ -44,20 +50,31 @@ describe('schema validation (deep)', () => {
           ],
         },
       ],
-    });
+    },
+      'strict',
+      'cwr-json-v1-0',
+      { normalize: false }
+    );
     assert.equal(r.valid, false);
+    assert.ok(r.errors.some((e) => e.includes('OWN_TERRITORY') || e.includes('OWN_COLL')));
   });
 
   it('rejects invalid ISWC format', () => {
-    const r = validateCwrJson({
+    const r = validateCwrJson(
+      {
       works: [
         {
           ...validWork,
           identifiers: [{ source: 'iswc', value: 'not-an-iswc' }],
         },
       ],
-    });
+    },
+      'strict',
+      'cwr-json-v1-0',
+      { normalize: false }
+    );
     assert.equal(r.valid, false);
+    assert.ok(r.errors.some((e) => e.includes('ISWC')));
   });
 
   it('accepts minimal valid work', () => {
