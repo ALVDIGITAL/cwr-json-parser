@@ -23,6 +23,19 @@ Integrators (including downstream export pipelines) should treat this page and t
 
 ---
 
+## 2026-06-03 — Validation 1.1.0 (no format bump)
+
+> **No change to CWR-JSON v1.00 r0 field shapes.** Stricter `validateCwrJson` / JSON Schema only.
+
+**Validation 1.1.0** (`@alvdigital/cwr-json-parser@1.3.0`)
+- Bundled `cwr_lookup_data_types_v1.0_r0.json`: role codes, title types, identifier sources, full TIS table (CISAC groups + ISO 3166-1 numeric).
+- JSON Schema (`cwr-json-schema-v1.0.schema.json`) injects enums and patterns via `npm run schema:generate`.
+- Semantic rules in strict mode: TIS include/exclude overlap, sub-publisher no `own`, publisher `own` only for `E`, unique `submitterWorkNumber` per file.
+- `advisory` validation mode unchanged (warnings without failing).
+- See [Schema Validation](../schema-validation) and [TIS Territory Codes](../tis-territory-codes).
+
+---
+
 ## 2026-06-03 — Documentation & npm package (no format bump)
 
 > **No change to CWR-JSON v1.0 output.** Errata and reference-implementation packaging only.

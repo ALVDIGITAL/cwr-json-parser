@@ -4,6 +4,7 @@
 export type RoleCode =
   | 'C'   // Compositeur
   | 'A'   // Auteur
+  | 'CA'  // Composer-Author
   | 'AR'  // Arrangeur
   | 'E'   // Éditeur
   | 'SE'  // Sous-Éditeur
@@ -13,8 +14,7 @@ export type RoleCode =
   | 'ES'  // Éditeur (société)
   | 'WR'  // Writer (generic, if needed)
   | 'OP'  // Other publisher (generic)
-  | 'PRF' // Performing artist (if needed for REC context)
-  | string; // allow extension
+  | 'PRF'; // Performing artist (if needed for REC context)
 
 export type RightsType = 'pr' | 'mr' | 'sr';
 

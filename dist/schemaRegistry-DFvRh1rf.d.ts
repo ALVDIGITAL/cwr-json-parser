@@ -1,4 +1,4 @@
-type RoleCode = 'C' | 'A' | 'AR' | 'E' | 'SE' | 'PA' | 'AM' | 'AQ' | 'ES' | 'WR' | 'OP' | 'PRF' | string;
+type RoleCode = 'C' | 'A' | 'CA' | 'AR' | 'E' | 'SE' | 'PA' | 'AM' | 'AQ' | 'ES' | 'WR' | 'OP' | 'PRF';
 type RightsType = 'pr' | 'mr' | 'sr';
 interface Share {
     rightsType: RightsType;

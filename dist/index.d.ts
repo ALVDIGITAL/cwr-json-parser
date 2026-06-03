@@ -1,5 +1,5 @@
-import { S as SchemaId, a as SchemaV1Output } from './schemaRegistry-BinhPabU.js';
-export { H as HdrRecord, P as Participant, R as Recording, b as SchemaV1Messages, c as SchemaV1WorkOutput, W as WorkIdentifier, d as WorkTitle } from './schemaRegistry-BinhPabU.js';
+import { S as SchemaId, a as SchemaV1Output } from './schemaRegistry-DFvRh1rf.js';
+export { H as HdrRecord, P as Participant, R as Recording, b as SchemaV1Messages, c as SchemaV1WorkOutput, W as WorkIdentifier, d as WorkTitle } from './schemaRegistry-DFvRh1rf.js';
 
 type ValidationMode = 'strict' | 'advisory';
 interface ValidationResult {

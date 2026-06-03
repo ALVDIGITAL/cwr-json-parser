@@ -1,0 +1,32 @@
+{
+  "description": "Merged by scripts/generate-schema.ts — do not edit cwr-json-schema-v1.0.schema.json ParticipantTerritory by hand",
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "shareTypes": {
+            "type": "array",
+            "contains": {
+              "type": "object",
+              "properties": {
+                "type": { "const": "own" }
+              },
+              "required": ["type"]
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "territory": {
+            "properties": {
+              "include": { "maxItems": 0 },
+              "exclude": { "maxItems": 0 }
+            }
+          },
+          "shareTypes": { "maxItems": 1 }
+        }
+      }
+    }
+  ]
+}

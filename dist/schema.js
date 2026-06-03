@@ -70,7 +70,7 @@ var cwr_json_schema_v1_0_schema_default = {
       additionalProperties: {},
       properties: {
         aiUsage: {
-          type: "string"
+          $ref: "#/definitions/AiUsageIndicator"
         },
         anomalous: {
           type: "boolean"
@@ -88,10 +88,12 @@ var cwr_json_schema_v1_0_schema_default = {
           type: "string"
         },
         creationDate: {
-          type: "string"
+          type: "string",
+          pattern: "^\\d{8}$"
         },
         creationTime: {
-          type: "string"
+          type: "string",
+          pattern: "^\\d{6}$"
         },
         revision: {
           type: "string"
@@ -109,7 +111,8 @@ var cwr_json_schema_v1_0_schema_default = {
           type: "string"
         },
         transmissionDate: {
-          type: "string"
+          type: "string",
+          pattern: "^\\d{8}$"
         },
         version: {
           type: "string"
@@ -179,7 +182,7 @@ var cwr_json_schema_v1_0_schema_default = {
           type: "object"
         },
         type: {
-          type: "string"
+          $ref: "#/definitions/MessageType"
         }
       },
       type: "object"
@@ -209,14 +212,11 @@ var cwr_json_schema_v1_0_schema_default = {
           $ref: "#/definitions/AgreementNumber"
         },
         controlled: {
-          enum: [
-            "yes",
-            "no"
-          ],
-          type: "string"
+          $ref: "#/definitions/ControlledFlag"
         },
         ipi: {
-          type: "string"
+          type: "string",
+          pattern: "^\\d{11}$"
         },
         name: {
           type: "string"
@@ -246,10 +246,14 @@ var cwr_json_schema_v1_0_schema_default = {
           type: "string"
         },
         roleSplitM: {
-          type: "number"
+          type: "number",
+          minimum: 0,
+          maximum: 100
         },
         roleSplitT: {
-          type: "number"
+          type: "number",
+          minimum: 0,
+          maximum: 100
         },
         shares: {
           items: {
@@ -285,16 +289,16 @@ var cwr_json_schema_v1_0_schema_default = {
           additionalProperties: false,
           properties: {
             exclude: {
+              type: "array",
               items: {
-                type: "string"
-              },
-              type: "array"
+                $ref: "#/definitions/TisNumericCode"
+              }
             },
             include: {
+              type: "array",
               items: {
-                type: "string"
-              },
-              type: "array"
+                $ref: "#/definitions/TisNumericCode"
+              }
             }
           },
           required: [
@@ -308,13 +312,53 @@ var cwr_json_schema_v1_0_schema_default = {
         "territory",
         "shareTypes"
       ],
-      type: "object"
+      type: "object",
+      allOf: [
+        {
+          if: {
+            properties: {
+              shareTypes: {
+                type: "array",
+                contains: {
+                  type: "object",
+                  properties: {
+                    type: {
+                      const: "own"
+                    }
+                  },
+                  required: [
+                    "type"
+                  ]
+                }
+              }
+            }
+          },
+          then: {
+            properties: {
+              territory: {
+                properties: {
+                  include: {
+                    maxItems: 0
+                  },
+                  exclude: {
+                    maxItems: 0
+                  }
+                }
+              },
+              shareTypes: {
+                maxItems: 1
+              }
+            }
+          }
+        }
+      ]
     },
     Recording: {
       additionalProperties: false,
       properties: {
         isrc: {
-          type: "string"
+          type: "string",
+          pattern: "^[A-Z]{2}[A-Z0-9]{3}\\d{7}$"
         },
         releases: {
           items: {
@@ -338,7 +382,8 @@ var cwr_json_schema_v1_0_schema_default = {
           type: "string"
         },
         ean: {
-          type: "string"
+          type: "string",
+          pattern: "^\\d{13}$"
         },
         identifiers: {
           items: {
@@ -350,7 +395,8 @@ var cwr_json_schema_v1_0_schema_default = {
           type: "string"
         },
         releaseDate: {
-          type: "string"
+          type: "string",
+          pattern: "^\\d{8}$"
         },
         title: {
           type: "string"
@@ -362,13 +408,15 @@ var cwr_json_schema_v1_0_schema_default = {
       additionalProperties: false,
       properties: {
         effectiveFrom: {
-          type: "string"
+          type: "string",
+          pattern: "^\\d{8}$"
         },
         note: {
           type: "string"
         },
         postTermCollectionUntil: {
-          type: "string"
+          type: "string",
+          pattern: "^\\d{8}$"
         },
         scope: {
           additionalProperties: false,
@@ -383,16 +431,16 @@ var cwr_json_schema_v1_0_schema_default = {
               additionalProperties: false,
               properties: {
                 exclude: {
+                  type: "array",
                   items: {
-                    type: "string"
-                  },
-                  type: "array"
+                    $ref: "#/definitions/TisNumericCode"
+                  }
                 },
                 include: {
+                  type: "array",
                   items: {
-                    type: "string"
-                  },
-                  type: "array"
+                    $ref: "#/definitions/TisNumericCode"
+                  }
                 }
               },
               required: [
@@ -416,15 +464,30 @@ var cwr_json_schema_v1_0_schema_default = {
       type: "object"
     },
     RightsType: {
+      type: "string",
       enum: [
         "pr",
         "mr",
         "sr"
-      ],
-      type: "string"
+      ]
     },
     RoleCode: {
-      type: "string"
+      type: "string",
+      enum: [
+        "C",
+        "A",
+        "CA",
+        "AR",
+        "E",
+        "SE",
+        "AM",
+        "PA",
+        "AQ",
+        "ES",
+        "WR",
+        "OP",
+        "PRF"
+      ]
     },
     SchemaV1Messages: {
       allOf: [
@@ -516,7 +579,9 @@ var cwr_json_schema_v1_0_schema_default = {
           type: "string"
         },
         value: {
-          type: "number"
+          type: "number",
+          minimum: 0,
+          maximum: 100
         }
       },
       required: [
@@ -550,19 +615,61 @@ var cwr_json_schema_v1_0_schema_default = {
     },
     WorkIdentifier: {
       additionalProperties: false,
+      type: "object",
+      required: [
+        "source",
+        "value"
+      ],
       properties: {
         source: {
-          type: "string"
+          $ref: "#/definitions/IdentifierSource"
         },
         value: {
           type: "string"
         }
       },
-      required: [
-        "source",
-        "value"
-      ],
-      type: "object"
+      allOf: [
+        {
+          if: {
+            properties: {
+              source: {
+                const: "iswc"
+              }
+            },
+            required: [
+              "source"
+            ]
+          },
+          then: {
+            properties: {
+              value: {
+                type: "string",
+                pattern: "^T-\\d{9}-\\d$"
+              }
+            }
+          }
+        },
+        {
+          if: {
+            properties: {
+              source: {
+                const: "ean"
+              }
+            },
+            required: [
+              "source"
+            ]
+          },
+          then: {
+            properties: {
+              value: {
+                type: "string",
+                pattern: "^\\d{13}$"
+              }
+            }
+          }
+        }
+      ]
     },
     WorkTitle: {
       additionalProperties: false,
@@ -571,7 +678,7 @@ var cwr_json_schema_v1_0_schema_default = {
           type: "string"
         },
         type: {
-          type: "string"
+          $ref: "#/definitions/TitleTypeCode"
         },
         value: {
           type: "string"
@@ -581,6 +688,524 @@ var cwr_json_schema_v1_0_schema_default = {
         "value"
       ],
       type: "object"
+    },
+    TisNumericCode: {
+      type: "string",
+      enum: [
+        "0004",
+        "004",
+        "4",
+        "0008",
+        "008",
+        "8",
+        "0012",
+        "012",
+        "12",
+        "0020",
+        "020",
+        "20",
+        "0024",
+        "024",
+        "24",
+        "0028",
+        "028",
+        "28",
+        "0031",
+        "031",
+        "31",
+        "0032",
+        "032",
+        "32",
+        "0036",
+        "036",
+        "36",
+        "0040",
+        "040",
+        "40",
+        "0044",
+        "044",
+        "44",
+        "0048",
+        "048",
+        "48",
+        "0050",
+        "050",
+        "50",
+        "0051",
+        "051",
+        "51",
+        "0052",
+        "052",
+        "52",
+        "0056",
+        "056",
+        "56",
+        "0064",
+        "064",
+        "64",
+        "0068",
+        "068",
+        "68",
+        "0070",
+        "070",
+        "70",
+        "0072",
+        "072",
+        "72",
+        "0076",
+        "076",
+        "76",
+        "0084",
+        "084",
+        "84",
+        "0090",
+        "090",
+        "90",
+        "0096",
+        "096",
+        "96",
+        "0100",
+        "100",
+        "0104",
+        "104",
+        "0108",
+        "108",
+        "0112",
+        "112",
+        "0116",
+        "116",
+        "0120",
+        "120",
+        "0124",
+        "124",
+        "0132",
+        "132",
+        "0140",
+        "140",
+        "0144",
+        "144",
+        "0148",
+        "148",
+        "0152",
+        "152",
+        "0156",
+        "156",
+        "0158",
+        "158",
+        "0170",
+        "170",
+        "0174",
+        "174",
+        "0178",
+        "178",
+        "0180",
+        "180",
+        "0188",
+        "188",
+        "0191",
+        "191",
+        "0192",
+        "192",
+        "0196",
+        "196",
+        "0203",
+        "203",
+        "0204",
+        "204",
+        "0208",
+        "208",
+        "0212",
+        "212",
+        "0214",
+        "214",
+        "0218",
+        "218",
+        "0222",
+        "222",
+        "0226",
+        "226",
+        "0231",
+        "231",
+        "0232",
+        "232",
+        "0233",
+        "233",
+        "0242",
+        "242",
+        "0246",
+        "246",
+        "0250",
+        "250",
+        "0258",
+        "258",
+        "0262",
+        "262",
+        "0266",
+        "266",
+        "0268",
+        "268",
+        "0270",
+        "270",
+        "0276",
+        "276",
+        "0288",
+        "288",
+        "0296",
+        "296",
+        "0300",
+        "300",
+        "0308",
+        "308",
+        "0320",
+        "320",
+        "0324",
+        "324",
+        "0328",
+        "328",
+        "0332",
+        "332",
+        "0336",
+        "336",
+        "0340",
+        "340",
+        "0344",
+        "344",
+        "0348",
+        "348",
+        "0352",
+        "352",
+        "0356",
+        "356",
+        "0360",
+        "360",
+        "0364",
+        "364",
+        "0368",
+        "368",
+        "0372",
+        "372",
+        "0376",
+        "376",
+        "0380",
+        "380",
+        "0384",
+        "384",
+        "0388",
+        "388",
+        "0392",
+        "392",
+        "0398",
+        "398",
+        "0400",
+        "400",
+        "0404",
+        "404",
+        "0408",
+        "408",
+        "0410",
+        "410",
+        "0414",
+        "414",
+        "0417",
+        "417",
+        "0418",
+        "418",
+        "0422",
+        "422",
+        "0426",
+        "426",
+        "0428",
+        "428",
+        "0430",
+        "430",
+        "0434",
+        "434",
+        "0438",
+        "438",
+        "0440",
+        "440",
+        "0442",
+        "442",
+        "0446",
+        "446",
+        "0450",
+        "450",
+        "0454",
+        "454",
+        "0458",
+        "458",
+        "0462",
+        "462",
+        "0466",
+        "466",
+        "0470",
+        "470",
+        "0478",
+        "478",
+        "0480",
+        "480",
+        "0484",
+        "484",
+        "0492",
+        "492",
+        "0496",
+        "496",
+        "0498",
+        "498",
+        "0499",
+        "499",
+        "0504",
+        "504",
+        "0508",
+        "508",
+        "0512",
+        "512",
+        "0516",
+        "516",
+        "0520",
+        "520",
+        "0524",
+        "524",
+        "0528",
+        "528",
+        "0540",
+        "540",
+        "0548",
+        "548",
+        "0554",
+        "554",
+        "0558",
+        "558",
+        "0562",
+        "562",
+        "0566",
+        "566",
+        "0578",
+        "578",
+        "0583",
+        "583",
+        "0584",
+        "584",
+        "0585",
+        "585",
+        "0586",
+        "586",
+        "0591",
+        "591",
+        "0598",
+        "598",
+        "0600",
+        "600",
+        "0604",
+        "604",
+        "0608",
+        "608",
+        "0616",
+        "616",
+        "0620",
+        "620",
+        "0624",
+        "624",
+        "0626",
+        "626",
+        "0630",
+        "630",
+        "0634",
+        "634",
+        "0642",
+        "642",
+        "0643",
+        "643",
+        "0646",
+        "646",
+        "0659",
+        "659",
+        "0662",
+        "662",
+        "0670",
+        "670",
+        "0674",
+        "674",
+        "0678",
+        "678",
+        "0682",
+        "682",
+        "0686",
+        "686",
+        "0688",
+        "688",
+        "0690",
+        "690",
+        "0694",
+        "694",
+        "0702",
+        "702",
+        "0703",
+        "703",
+        "0704",
+        "704",
+        "0705",
+        "705",
+        "0706",
+        "706",
+        "0710",
+        "710",
+        "0716",
+        "716",
+        "0724",
+        "724",
+        "0728",
+        "728",
+        "0729",
+        "729",
+        "0732",
+        "732",
+        "0740",
+        "740",
+        "0748",
+        "748",
+        "0752",
+        "752",
+        "0756",
+        "756",
+        "0760",
+        "760",
+        "0762",
+        "762",
+        "0764",
+        "764",
+        "0768",
+        "768",
+        "0776",
+        "776",
+        "0780",
+        "780",
+        "0784",
+        "784",
+        "0788",
+        "788",
+        "0792",
+        "792",
+        "0795",
+        "795",
+        "0798",
+        "798",
+        "0800",
+        "800",
+        "0804",
+        "804",
+        "0807",
+        "807",
+        "0818",
+        "818",
+        "0826",
+        "826",
+        "0834",
+        "834",
+        "0840",
+        "840",
+        "0854",
+        "854",
+        "0858",
+        "858",
+        "0860",
+        "860",
+        "0862",
+        "862",
+        "0882",
+        "882",
+        "0887",
+        "887",
+        "0894",
+        "894",
+        "2100",
+        "2101",
+        "2102",
+        "2103",
+        "2104",
+        "2105",
+        "2106",
+        "2107",
+        "2108",
+        "2109",
+        "2110",
+        "2111",
+        "2112",
+        "2113",
+        "2114",
+        "2115",
+        "2116",
+        "2117",
+        "2118",
+        "2119",
+        "2120",
+        "2121",
+        "2122",
+        "2123",
+        "2124",
+        "2125",
+        "2126",
+        "2127",
+        "2128",
+        "2129",
+        "2130",
+        "2131",
+        "2132",
+        "2133",
+        "2134",
+        "2136"
+      ]
+    },
+    ControlledFlag: {
+      type: "string",
+      enum: [
+        "yes",
+        "no"
+      ]
+    },
+    TitleTypeCode: {
+      type: "string",
+      enum: [
+        "TT",
+        "ALT",
+        "NAT",
+        "AT",
+        "FT",
+        "IT",
+        "OT",
+        "PT",
+        "RT",
+        "TE",
+        "UT"
+      ]
+    },
+    IdentifierSource: {
+      type: "string",
+      enum: [
+        "iswc",
+        "submitterWorkNumber",
+        "proprietary",
+        "ean",
+        "catalogNumber"
+      ]
+    },
+    MessageType: {
+      type: "string",
+      enum: [
+        "nwr",
+        "rev"
+      ]
+    },
+    AiUsageIndicator: {
+      type: "string",
+      enum: [
+        "M",
+        "T",
+        "B",
+        "N",
+        "U",
+        "Y"
+      ]
     }
   }
 };
@@ -597,8 +1222,615 @@ function getSchemaAsset(schemaId) {
   return schema;
 }
 __name(getSchemaAsset, "getSchemaAsset");
+
+// src/cwr-sdk/lookups/cwr_lookup_data_types_v1.0_r0.json
+var cwr_lookup_data_types_v1_0_r0_default = {
+  $id: "cwr_lookup_data_types_v1.0_r0",
+  version: "1.0.0",
+  revision: "r0",
+  source: "CISAC TIS database export (C:\\Users\\Miroslav\\Desktop\\work\\upWork\\cwr-json-parser\\src\\cwr-sdk\\lookups\\data\\CISAC-TIS.xlsx, sheet en, 241 territories)",
+  generatedAt: "2026-06-03",
+  tisEntryCount: 241,
+  sets: {
+    roleCodes: [
+      "C",
+      "A",
+      "CA",
+      "AR",
+      "E",
+      "SE",
+      "AM",
+      "PA",
+      "AQ",
+      "ES",
+      "WR",
+      "OP",
+      "PRF"
+    ],
+    rightsTypes: [
+      "pr",
+      "mr",
+      "sr"
+    ],
+    shareTypes: [
+      "own",
+      "coll"
+    ],
+    controlled: [
+      "yes",
+      "no"
+    ],
+    titleTypes: [
+      "TT",
+      "ALT",
+      "NAT",
+      "AT",
+      "FT",
+      "IT",
+      "OT",
+      "PT",
+      "RT",
+      "TE",
+      "UT"
+    ],
+    identifierSources: [
+      "iswc",
+      "submitterWorkNumber",
+      "proprietary",
+      "ean",
+      "catalogNumber"
+    ],
+    messageTypes: [
+      "nwr",
+      "rev"
+    ],
+    aiUsageIndicators: [
+      "M",
+      "T",
+      "B",
+      "N",
+      "U",
+      "Y"
+    ],
+    publisherRoles: [
+      "E",
+      "SE",
+      "AM",
+      "PA",
+      "AQ",
+      "ES",
+      "OP"
+    ],
+    subPublisherRoles: [
+      "SE",
+      "AM",
+      "PA"
+    ],
+    writerRoles: [
+      "C",
+      "A",
+      "CA",
+      "AR",
+      "WR",
+      "PRF"
+    ],
+    tisNumericCodes: [
+      "0004",
+      "004",
+      "4",
+      "0008",
+      "008",
+      "8",
+      "0012",
+      "012",
+      "12",
+      "0020",
+      "020",
+      "20",
+      "0024",
+      "024",
+      "24",
+      "0028",
+      "028",
+      "28",
+      "0031",
+      "031",
+      "31",
+      "0032",
+      "032",
+      "32",
+      "0036",
+      "036",
+      "36",
+      "0040",
+      "040",
+      "40",
+      "0044",
+      "044",
+      "44",
+      "0048",
+      "048",
+      "48",
+      "0050",
+      "050",
+      "50",
+      "0051",
+      "051",
+      "51",
+      "0052",
+      "052",
+      "52",
+      "0056",
+      "056",
+      "56",
+      "0064",
+      "064",
+      "64",
+      "0068",
+      "068",
+      "68",
+      "0070",
+      "070",
+      "70",
+      "0072",
+      "072",
+      "72",
+      "0076",
+      "076",
+      "76",
+      "0084",
+      "084",
+      "84",
+      "0090",
+      "090",
+      "90",
+      "0096",
+      "096",
+      "96",
+      "0100",
+      "100",
+      "0104",
+      "104",
+      "0108",
+      "108",
+      "0112",
+      "112",
+      "0116",
+      "116",
+      "0120",
+      "120",
+      "0124",
+      "124",
+      "0132",
+      "132",
+      "0140",
+      "140",
+      "0144",
+      "144",
+      "0148",
+      "148",
+      "0152",
+      "152",
+      "0156",
+      "156",
+      "0158",
+      "158",
+      "0170",
+      "170",
+      "0174",
+      "174",
+      "0178",
+      "178",
+      "0180",
+      "180",
+      "0188",
+      "188",
+      "0191",
+      "191",
+      "0192",
+      "192",
+      "0196",
+      "196",
+      "0203",
+      "203",
+      "0204",
+      "204",
+      "0208",
+      "208",
+      "0212",
+      "212",
+      "0214",
+      "214",
+      "0218",
+      "218",
+      "0222",
+      "222",
+      "0226",
+      "226",
+      "0231",
+      "231",
+      "0232",
+      "232",
+      "0233",
+      "233",
+      "0242",
+      "242",
+      "0246",
+      "246",
+      "0250",
+      "250",
+      "0258",
+      "258",
+      "0262",
+      "262",
+      "0266",
+      "266",
+      "0268",
+      "268",
+      "0270",
+      "270",
+      "0276",
+      "276",
+      "0288",
+      "288",
+      "0296",
+      "296",
+      "0300",
+      "300",
+      "0308",
+      "308",
+      "0320",
+      "320",
+      "0324",
+      "324",
+      "0328",
+      "328",
+      "0332",
+      "332",
+      "0336",
+      "336",
+      "0340",
+      "340",
+      "0344",
+      "344",
+      "0348",
+      "348",
+      "0352",
+      "352",
+      "0356",
+      "356",
+      "0360",
+      "360",
+      "0364",
+      "364",
+      "0368",
+      "368",
+      "0372",
+      "372",
+      "0376",
+      "376",
+      "0380",
+      "380",
+      "0384",
+      "384",
+      "0388",
+      "388",
+      "0392",
+      "392",
+      "0398",
+      "398",
+      "0400",
+      "400",
+      "0404",
+      "404",
+      "0408",
+      "408",
+      "0410",
+      "410",
+      "0414",
+      "414",
+      "0417",
+      "417",
+      "0418",
+      "418",
+      "0422",
+      "422",
+      "0426",
+      "426",
+      "0428",
+      "428",
+      "0430",
+      "430",
+      "0434",
+      "434",
+      "0438",
+      "438",
+      "0440",
+      "440",
+      "0442",
+      "442",
+      "0446",
+      "446",
+      "0450",
+      "450",
+      "0454",
+      "454",
+      "0458",
+      "458",
+      "0462",
+      "462",
+      "0466",
+      "466",
+      "0470",
+      "470",
+      "0478",
+      "478",
+      "0480",
+      "480",
+      "0484",
+      "484",
+      "0492",
+      "492",
+      "0496",
+      "496",
+      "0498",
+      "498",
+      "0499",
+      "499",
+      "0504",
+      "504",
+      "0508",
+      "508",
+      "0512",
+      "512",
+      "0516",
+      "516",
+      "0520",
+      "520",
+      "0524",
+      "524",
+      "0528",
+      "528",
+      "0540",
+      "540",
+      "0548",
+      "548",
+      "0554",
+      "554",
+      "0558",
+      "558",
+      "0562",
+      "562",
+      "0566",
+      "566",
+      "0578",
+      "578",
+      "0583",
+      "583",
+      "0584",
+      "584",
+      "0585",
+      "585",
+      "0586",
+      "586",
+      "0591",
+      "591",
+      "0598",
+      "598",
+      "0600",
+      "600",
+      "0604",
+      "604",
+      "0608",
+      "608",
+      "0616",
+      "616",
+      "0620",
+      "620",
+      "0624",
+      "624",
+      "0626",
+      "626",
+      "0630",
+      "630",
+      "0634",
+      "634",
+      "0642",
+      "642",
+      "0643",
+      "643",
+      "0646",
+      "646",
+      "0659",
+      "659",
+      "0662",
+      "662",
+      "0670",
+      "670",
+      "0674",
+      "674",
+      "0678",
+      "678",
+      "0682",
+      "682",
+      "0686",
+      "686",
+      "0688",
+      "688",
+      "0690",
+      "690",
+      "0694",
+      "694",
+      "0702",
+      "702",
+      "0703",
+      "703",
+      "0704",
+      "704",
+      "0705",
+      "705",
+      "0706",
+      "706",
+      "0710",
+      "710",
+      "0716",
+      "716",
+      "0724",
+      "724",
+      "0728",
+      "728",
+      "0729",
+      "729",
+      "0732",
+      "732",
+      "0740",
+      "740",
+      "0748",
+      "748",
+      "0752",
+      "752",
+      "0756",
+      "756",
+      "0760",
+      "760",
+      "0762",
+      "762",
+      "0764",
+      "764",
+      "0768",
+      "768",
+      "0776",
+      "776",
+      "0780",
+      "780",
+      "0784",
+      "784",
+      "0788",
+      "788",
+      "0792",
+      "792",
+      "0795",
+      "795",
+      "0798",
+      "798",
+      "0800",
+      "800",
+      "0804",
+      "804",
+      "0807",
+      "807",
+      "0818",
+      "818",
+      "0826",
+      "826",
+      "0834",
+      "834",
+      "0840",
+      "840",
+      "0854",
+      "854",
+      "0858",
+      "858",
+      "0860",
+      "860",
+      "0862",
+      "862",
+      "0882",
+      "882",
+      "0887",
+      "887",
+      "0894",
+      "894",
+      "2100",
+      "2101",
+      "2102",
+      "2103",
+      "2104",
+      "2105",
+      "2106",
+      "2107",
+      "2108",
+      "2109",
+      "2110",
+      "2111",
+      "2112",
+      "2113",
+      "2114",
+      "2115",
+      "2116",
+      "2117",
+      "2118",
+      "2119",
+      "2120",
+      "2121",
+      "2122",
+      "2123",
+      "2124",
+      "2125",
+      "2126",
+      "2127",
+      "2128",
+      "2129",
+      "2130",
+      "2131",
+      "2132",
+      "2133",
+      "2134",
+      "2136"
+    ]
+  }
+};
+
+// src/cwr-sdk/lookups/index.ts
+var sets = cwr_lookup_data_types_v1_0_r0_default.sets;
+var tisSet = new Set(sets.tisNumericCodes);
+var roleSet = new Set(sets.roleCodes);
+var publisherRoleSet = new Set(sets.publisherRoles);
+var subPublisherRoleSet = new Set(sets.subPublisherRoles);
+var writerRoleSet = new Set(sets.writerRoles);
+function getLookupDataTypes() {
+  return cwr_lookup_data_types_v1_0_r0_default;
+}
+__name(getLookupDataTypes, "getLookupDataTypes");
+function getLookupSet(name) {
+  return sets[name];
+}
+__name(getLookupSet, "getLookupSet");
+function hasTisCode(code) {
+  const trimmed = code.trim();
+  if (tisSet.has(trimmed)) return true;
+  if (/^\d+$/.test(trimmed)) {
+    const n = parseInt(trimmed, 10);
+    return tisSet.has(String(n)) || tisSet.has(String(n).padStart(3, "0")) || tisSet.has(String(n).padStart(4, "0"));
+  }
+  return false;
+}
+__name(hasTisCode, "hasTisCode");
+function isRoleCode(role) {
+  return roleSet.has(role);
+}
+__name(isRoleCode, "isRoleCode");
+function isPublisherRole(role) {
+  return publisherRoleSet.has(role);
+}
+__name(isPublisherRole, "isPublisherRole");
+function isSubPublisherRole(role) {
+  return subPublisherRoleSet.has(role);
+}
+__name(isSubPublisherRole, "isSubPublisherRole");
+function isWriterRole(role) {
+  return writerRoleSet.has(role);
+}
+__name(isWriterRole, "isWriterRole");
 export {
+  getLookupDataTypes,
+  getLookupSet,
   getSchemaAsset,
+  hasTisCode,
+  isPublisherRole,
+  isRoleCode,
+  isSubPublisherRole,
+  isWriterRole,
   schemaAssetMap
 };
 //# sourceMappingURL=schema.js.map

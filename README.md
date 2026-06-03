@@ -89,9 +89,11 @@ The npm tarball includes `src/` so source maps resolve in devtools. **Do not imp
 
 #### `validateCwrJson(payload, mode?, schemaId?): ValidationResult`
 
-Validates parsed output (or any object) against the bundled CWR-JSON v1.0 JSON Schema.
+Validates parsed output against the bundled CWR-JSON v1.0 JSON Schema **and** semantic rules (lookup enums, TIS/territory rules, duplicate submitter work numbers).
 
-- `mode`: `'strict'` (default) — `valid` reflects schema compliance; `'advisory'` — always `valid: true` but still returns `errors`.
+- `mode`: `'strict'` (default) — `valid` reflects schema + semantic compliance; `'advisory'` — always `valid: true` but still returns `errors`.
+- Lookup table: `src/cwr-sdk/lookups/cwr_lookup_data_types_v1.0_r0.json`. Regenerate: `npm run schema:generate`.
+- Schema subpath: `getLookupDataTypes()`, `hasTisCode()` from `@alvdigital/cwr-json-parser/schema`.
 
 #### `validateParsedCwr(payload: SchemaV1Output, mode?): ValidationResult`
 

@@ -4,6 +4,7 @@ import { getSchemaAsset } from '../cwr-sdk/json-schemas/schemaAssetMap';
 import type { SchemaId } from '../cwr-sdk/mapper/schemaRegistry';
 import type { SchemaV1Output } from '../cwr-sdk/types/cwr';
 import type { ValidationMode, ValidationResult } from './types';
+import { validateCwrJsonSemantic } from './semanticValidation';
 
 const DEFAULT_SCHEMA_ID: SchemaId = 'cwr-json-v1-0';
 
@@ -54,6 +55,16 @@ function getExpectedHint(err: ErrorObject): string | null {
   ) {
     return `unexpected property ${(err.params as { additionalProperty: string }).additionalProperty}`;
   }
+  if (err.keyword === 'enum' && typeof err.params === 'object' && err.params && 'allowedValues' in err.params) {
+    const allowed = (err.params as { allowedValues: unknown[] }).allowedValues;
+    if (allowed.length <= 8) {
+      return `expected one of: ${allowed.map(String).join(', ')}`;
+    }
+    return `expected one of ${allowed.length} allowed values`;
+  }
+  if (err.keyword === 'pattern' && typeof err.params === 'object' && err.params && 'pattern' in err.params) {
+    return `expected pattern ${(err.params as { pattern: string }).pattern}`;
+  }
   return null;
 }
 
@@ -89,14 +100,18 @@ export function validateCwrJson(
 ): ValidationResult {
   try {
     const validator = getValidator(schemaId);
-    const valid = Boolean(validator(payload));
+    const schemaValid = Boolean(validator(payload));
     const errors = normalizeErrors(validator.errors);
 
+    const semanticErrors = validateCwrJsonSemantic(payload);
+    const allErrors = [...errors, ...semanticErrors];
+    const valid = schemaValid && semanticErrors.length === 0;
+
     if (mode === 'advisory') {
-      return { valid: true, errors };
+      return { valid: true, errors: allErrors };
     }
 
-    return { valid, errors };
+    return { valid, errors: allErrors };
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
     return {
