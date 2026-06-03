@@ -2940,7 +2940,7 @@ var cwr_lookup_data_types_v1_0_r0_default = {
   $id: "cwr_lookup_data_types_v1.0_r0",
   version: "1.0.0",
   revision: "r0",
-  source: "CISAC TIS database export (C:\\Users\\Miroslav\\Desktop\\work\\upWork\\cwr-json-parser\\src\\cwr-sdk\\lookups\\data\\CISAC-TIS.xlsx, sheet en, 241 territories)",
+  source: "CISAC TIS database export (TIS.xlsx, sheet en, 241 territories)",
   generatedAt: "2026-06-03",
   tisEntryCount: 241,
   sets: {

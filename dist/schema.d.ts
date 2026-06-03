@@ -9,7 +9,7 @@ declare function getSchemaAsset(schemaId: SchemaId): Record<string, unknown>;
 var $id = "cwr_lookup_data_types_v1.0_r0";
 var version = "1.0.0";
 var revision = "r0";
-var source = "CISAC TIS database export (C:\\Users\\Miroslav\\Desktop\\work\\upWork\\cwr-json-parser\\src\\cwr-sdk\\lookups\\data\\CISAC-TIS.xlsx, sheet en, 241 territories)";
+var source = "CISAC TIS database export (TIS.xlsx, sheet en, 241 territories)";
 var generatedAt = "2026-06-03";
 var tisEntryCount = 241;
 var sets = {

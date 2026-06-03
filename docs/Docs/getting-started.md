@@ -36,11 +36,9 @@ The <Anchor target="_blank" href="https://cwr.alvdev.com/#/">Playground&#x20;</A
 
 ## Step 3. Validate and download
 
-Validate the output against the project JSON Schema (optional but recommended):
+Validate the output against the published JSON Schema (optional but recommended):
 
-```
-src/cwr-sdk/json-schemas/cwr-json-schema-v1.0.schema.json
-```
+[cwr-json-schema-v1.0.schema.json](https://d7ap24707c.execute-api.eu-west-1.amazonaws.com/staging/api/v1/schemas/cwr-json-schema-v1.0.schema.json)
 
 Download the `.json` file for storage, APIs, or further processing.
 
@@ -75,6 +73,6 @@ Download the `.json` file for storage, APIs, or further processing.
 }
 ```
 
-> The Playground does not add a root `$schema` property today. For file exchange with societies, you may add `"$schema": "https://[host]/schemas/cwr-json-schema-v1.0.schema.json"` manually or wait for a future release (see [Changelog](./changelog)).
+> The Playground does not add a root `$schema` property today. For file exchange with societies, you may add `"$schema": "https://d7ap24707c.execute-api.eu-west-1.amazonaws.com/staging/api/v1/schemas/cwr-json-schema-v1.0.schema.json"` manually (see [Changelog](./changelog)).
 
 <br />

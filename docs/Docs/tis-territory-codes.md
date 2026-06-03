@@ -6,7 +6,7 @@ metadata:
 privacy:
   view: public
 content:
-  excerpt: CISAC TIS numeric codes used in territory include/exclude and the bundled lookup table.
+  excerpt: CISAC TIS numeric codes used in territory include/exclude and the published lookup table.
 ---
 
 Territory codes follow the **CISAC Territory Information System (TIS)**. They appear in:
@@ -18,26 +18,29 @@ Territory codes follow the **CISAC Territory Information System (TIS)**. They ap
 
 ---
 
-## Bundled lookup (validation 1.1.0)
+## Published lookup (validation 1.1.0)
 
-The reference implementation ships a machine-readable table:
+The machine-readable lookup table is published at:
 
-`src/cwr-sdk/lookups/cwr_lookup_data_types_v1.0_r0.json`
+**[cwr_lookup_data_types_v1.0_r0.json](https://d7ap24707c.execute-api.eu-west-1.amazonaws.com/staging/api/v1/lookups/cwr_lookup_data_types_v1.0_r0.json)**
 
 | Field | Value |
 |---|---|
-| Source | CISAC TIS database export (`src/cwr-sdk/lookups/data/CISAC-TIS.xlsx`, sheet `en`, column `TIS-N`) — 237 territories |
+| Source | CISAC TIS database export — 241 territories (Validation 1.1.1) |
 | Set key | `sets.tisNumericCodes` |
-| Refresh | Replace `CISAC-TIS.xlsx`, then `npm run lookup:build` or `npx tsx scripts/import-tis.ts [path-to.xlsx]` |
+| Schema | Enums injected into [cwr-json-schema-v1.0.schema.json](https://d7ap24707c.execute-api.eu-west-1.amazonaws.com/staging/api/v1/schemas/cwr-json-schema-v1.0.schema.json) |
 
-Access from npm:
+Example — check whether a code is in the published set:
 
 ```js
-import { getLookupDataTypes, hasTisCode } from '@alvdigital/cwr-json-parser/schema';
+const lookupUrl =
+  'https://d7ap24707c.execute-api.eu-west-1.amazonaws.com/staging/api/v1/lookups/cwr_lookup_data_types_v1.0_r0.json';
 
-const { sets } = getLookupDataTypes();
-console.log(sets.tisNumericCodes.length);
-hasTisCode('2136'); // World
+const { sets } = await fetch(lookupUrl).then((r) => r.json());
+const tisCodes = new Set(sets.tisNumericCodes);
+
+console.log(tisCodes.size);
+console.log(tisCodes.has('2136')); // World
 ```
 
 Official CISAC publications remain authoritative for disputes; see [cisac.org](https://www.cisac.org).
@@ -56,4 +59,4 @@ Official CISAC publications remain authoritative for disputes; see [cisac.org](h
 | `276` | Germany |
 | `036` | Australia |
 
-Full list: use `getLookupSet('tisNumericCodes')` from the package or open the JSON file above.
+Full list: download the [lookup table](https://d7ap24707c.execute-api.eu-west-1.amazonaws.com/staging/api/v1/lookups/cwr_lookup_data_types_v1.0_r0.json) and read `sets.tisNumericCodes`.

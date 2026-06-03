@@ -2,36 +2,28 @@
 
 ### Added
 
-- **`normalizeCwrJson()`** — layout cleanup before validation (ISWC display format, split `own`/`coll` territories, remove invalid `own` on sub-publishers `SE`/`AM`/`PA`).
-- **`ValidationResult.warnings`** — lists auto-fixes applied when `normalize: true` (default).
-- **`ValidationOptions.normalize`** — set `false` to validate raw JSON without pre-processing.
-- Readable validation errors with rule codes (`ISWC_FORMAT`, `OWN_COLL_MIXED`, `TIS_OVERLAP`, …) and deduplicated AJV messages.
-- CISAC TIS database export (`CISAC-TIS.xlsx`) as primary TIS lookup source; `scripts/parse-tis-xlsx.ts`, `import-tis` refresh path.
-
-### Changed
-
-- TIS lookup rebuilt from official CISAC export (241 territories) instead of ISO-only fallback.
-- Exported `formatIswcForValidation`, `NormalizeCwrJsonResult` from main entry.
+- Optional **normalization** before validation: ISWC display format, split `own`/`coll` territories, remove invalid `own` on sub-publishers (`SE`/`AM`/`PA`).
+- Validation **warnings** for auto-fixes applied during normalization.
+- Readable validation errors with rule codes (`ISWC_FORMAT`, `OWN_COLL_MIXED`, `TIS_OVERLAP`, …) and deduplicated schema messages.
+- TIS lookup rebuilt from official CISAC export (241 territories).
 
 ### Notes
 
-- Normalization clones input; original payload is not mutated.
+- Normalization operates on a copy; the original payload is not mutated.
 - **CWR-JSON v1.00 r0 format unchanged** — normalization is optional pre-validation cleanup, not a format bump.
 
-## [1.3.0] - 2026-06-03
+## Validation 1.1.0 — 2026-06-03
 
 ### Added
 
-- **Validation Update** (same `cwr-json-v1-0` schema id): lookup table `cwr_lookup_data_types_v1.0_r0.json` (565+ TIS codes, role/title/identifier enums).
-- Semantic validation pass: territory overlap, sub-publisher no `own`, E-only publisher `own`, duplicate `submitterWorkNumber`.
-- Scripts: `npm run lookup:build`, `schema:generate`, `schema:check`.
-- `@alvdigital/cwr-json-parser/schema` exports `getLookupDataTypes()`, `hasTisCode()`, role helpers.
+- Published [lookup table](https://d7ap24707c.execute-api.eu-west-1.amazonaws.com/staging/api/v1/lookups/cwr_lookup_data_types_v1.0_r0.json) (`cwr_lookup_data_types_v1.0_r0.json`): 565+ TIS codes, role/title/identifier enums.
+- Semantic validation rules: territory overlap, sub-publisher no `own`, E-only publisher `own`, duplicate `submitterWorkNumber`.
 
 ### Changed
 
-- `cwr-json-schema-v1.0.schema.json` now enforces lookup enums, date/ISWC/IPI/ISRC patterns, share bounds, and `own` + empty TIS via `if`/`then`.
-- `validateCwrJson` / `validateParsedCwr` run semantic rules in **strict** mode; **advisory** still returns `valid: true` with all errors listed.
-- `RoleCode` type includes `CA`; extension `| string` removed for closed role set.
+- [JSON Schema](https://d7ap24707c.execute-api.eu-west-1.amazonaws.com/staging/api/v1/schemas/cwr-json-schema-v1.0.schema.json) enforces lookup enums, date/ISWC/IPI/ISRC patterns, share bounds, and `own` + empty TIS via conditional rules.
+- **Strict** validation runs semantic rules after JSON Schema; **advisory** mode still returns success with all errors listed.
+- Closed role code set includes `CA`.
 
 ### Notes
 
