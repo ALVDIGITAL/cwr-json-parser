@@ -1,1 +1,0 @@
-{"version":3,"file":"schemaV1.d.ts","sourceRoot":"","sources":["../../../../src/cwr-sdk/mapper/schemas/schemaV1.ts"],"names":[],"mappings":"AAAA,OAAO,KAAK,EAAiB,cAAc,EAAE,MAAM,iBAAiB,CAAC;AACrE,OAAO,KAAK,EAAE,aAAa,EAAE,MAAM,gBAAgB,CAAC;AAEpD,eAAO,MAAM,QAAQ,EAAE,aAAa,CAAC,cAAc,CA0ElD,CAAC"}

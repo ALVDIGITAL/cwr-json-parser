@@ -2,6 +2,8 @@
 
 Framework-agnostic library that parses [CWR](https://en.wikipedia.org/wiki/Common_Works_Registration) (Common Works Registration) files into canonical JSON. Use it from Node, browsers, React, Vue, or any other environment — there is no UI or framework dependency.
 
+The package ships **dual ESM and CommonJS** builds with conditional `exports`, so Vite/Vue apps can use native `import` without a CJS interop plugin, while Lambda and other Node code can keep using `require()`.
+
 ## Install
 
 From GitHub Packages (recommended for apps):
@@ -12,11 +14,15 @@ npm install @alvdigital/cwr-json-parser
 
 From a Git URL (e.g. `"github:ALVDIGITAL/cwr-json-parser"` in `package.json`): the published commit must include the compiled `dist/` folder. After changing `src/`, run `npm run build` and commit `dist/` before pushing.
 
+Requires **Node.js 18+**.
+
 ## Usage
 
-The package exports a single parser function, `parseCwr`, which accepts the **full text** of a CWR file and returns [**CWR-JSON Schema v1.0**](src/cwr-sdk/mapper/schemas/schemaV1.ts) output.
+### Main entry — parsing and validation
 
-### Node.js
+`parseCwr` accepts the **full text** of a CWR file and returns [**CWR-JSON Schema v1.0**](src/cwr-sdk/mapper/schemas/schemaV1.ts) output.
+
+#### Node.js (CommonJS)
 
 ```js
 const fs = require('fs');
@@ -27,9 +33,7 @@ const json = parseCwr(cwrText);
 console.log(json.works.length);
 ```
 
-### Browser / React / Vue
-
-Read the file as text, then parse:
+#### Browser / Vite / Vue / React (ESM)
 
 ```ts
 import { parseCwr, type SchemaV1Output } from '@alvdigital/cwr-json-parser';
@@ -40,13 +44,37 @@ async function onFileSelected(file: File): Promise<SchemaV1Output> {
 }
 ```
 
-### TypeScript
+No custom Vite plugin is required for the main entry.
+
+#### TypeScript
 
 Types for the result are exported from the same entry point:
 
 ```ts
 import { parseCwr, type SchemaV1Output, type SchemaV1WorkOutput } from '@alvdigital/cwr-json-parser';
 ```
+
+### Subpath exports (Playground / glass-box UI)
+
+For EDI preview, field-level record UI, or JSON Schema workbench features, use documented subpaths instead of deep imports under `dist/`:
+
+| Subpath | Symbols | Use |
+|---------|---------|-----|
+| `@alvdigital/cwr-json-parser/edi-preview` | `splitIntoWorkBlocks`, `extractFirstWorkPreview`, `detectWorkRecordType` | First-work EDI preview, line blocks |
+| `@alvdigital/cwr-json-parser/record-parser` | `parseRecordLine`, `recordDefinitions` | Field-level EDI UI |
+| `@alvdigital/cwr-json-parser/schema` | `getSchemaAsset`, `schemaAssetMap`, `SchemaId` | JSON Schema workbench |
+
+```ts
+import { splitIntoWorkBlocks, extractFirstWorkPreview } from '@alvdigital/cwr-json-parser/edi-preview';
+import { parseRecordLine, recordDefinitions } from '@alvdigital/cwr-json-parser/record-parser';
+import { getSchemaAsset, type SchemaId } from '@alvdigital/cwr-json-parser/schema';
+```
+
+Import validators and `parseCwr` from the main entry; use subpaths only for the extra UI surface.
+
+### Published `src/`
+
+The npm tarball includes `src/` so source maps resolve in devtools. **Do not import from `src/`** — only the `exports` map is supported.
 
 ## API
 
@@ -111,8 +139,14 @@ if (!schema.valid) throw new Error(schema.errors.join('\n'));
 
 ```bash
 npm install
-npm run build
+npm run build      # tsup → dist/ (ESM + CJS)
+npm run typecheck  # tsc --noEmit
 npm test
+npm run publint    # validate package exports against packed tarball
 ```
 
-Compiled output is written to `dist/`. Registry installs receive `dist/` from the published tarball (`prepublishOnly` runs the build automatically).
+Compiled output is written to `dist/`. Registry installs receive `dist/` and `src/` from the published tarball (`prepublishOnly` runs the build automatically).
+
+## Migrating from 1.1.x (Vue / Quasar Playground)
+
+See [MIGRATION-VUE.md](MIGRATION-VUE.md) for removing Vite bridges, sourcemap strip scripts, and deep `dist/cwr-sdk` imports.
