@@ -1,4 +1,4 @@
-import lookupDocument from './cwr_lookup_data_types_v1.0_r0.json';
+import lookupDocument from './cwr_lookup_data_types_v1.0.json';
 
 export { tisCodeVariants } from './tisCodeVariants';
 export { societyCodeVariants } from './societyCodeVariants';
