@@ -1,3 +1,4 @@
+import { presentSocietyCode } from '../cwr-sdk/lookups';
 import type { SchemaV1Output } from '../cwr-sdk/types/cwr';
 import { formatIswcForValidation } from './normalizeIswc';
 import { normalizeTerritoriesOnDocument } from './normalizeTerritories';
@@ -44,6 +45,48 @@ export function normalizeCwrJson(payload: unknown): NormalizeCwrJsonResult {
   });
 
   normalizeTerritoriesOnDocument(data.works, notes);
+  normalizeShareSocietiesOnDocument(data.works, notes);
 
   return { data, notes };
+}
+
+function normalizeShareSocietiesOnDocument(
+  works: SchemaV1Output['works'],
+  notes: string[]
+): void {
+  works.forEach((work, wi) => {
+    for (const party of work.parties || []) {
+      normalizePartyShareSocieties(party, notes, `/works/${wi}/parties`);
+    }
+  });
+}
+
+function normalizePartyShareSocieties(
+  party: NonNullable<SchemaV1Output['works'][number]['parties']>[number],
+  notes: string[],
+  path: string
+): void {
+  for (let ti = 0; ti < (party.territories || []).length; ti++) {
+    const territory = party.territories![ti];
+    for (let sti = 0; sti < (territory.shareTypes || []).length; sti++) {
+      const shareType = territory.shareTypes![sti];
+      for (let si = 0; si < (shareType.shares || []).length; si++) {
+        const share = shareType.shares![si];
+        const raw = share.society;
+        if (raw === undefined) continue;
+        const canonical = presentSocietyCode(raw);
+        const sharePath = `${path}/territories/${ti}/shareTypes/${sti}/shares/${si}`;
+        if (!canonical) {
+          delete share.society;
+          notes.push(`${sharePath}: society "${raw}" omitted (no collecting society)`);
+        } else if (canonical !== raw) {
+          share.society = canonical;
+        }
+      }
+    }
+  }
+
+  for (let ri = 0; ri < (party.representedBy || []).length; ri++) {
+    normalizePartyShareSocieties(party.representedBy![ri], notes, `${path}/representedBy/${ri}`);
+  }
 }

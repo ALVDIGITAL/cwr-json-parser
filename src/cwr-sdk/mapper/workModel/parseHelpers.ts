@@ -1,3 +1,4 @@
+import { presentSocietyCode } from '../../lookups';
 import { parseRecordLine } from '../../parser/recordParser';
 import type { ShareEntry } from '../territoryUtils';
 
@@ -24,9 +25,10 @@ export function parseShares(
     const num = parseFloat(v) / 100;
     return parseFloat(num.toFixed(2));
   };
+  const society = presentSocietyCode(defaultSociety);
   const pushShare = (rightsType: 'pr' | 'mr' | 'sr', val?: number) => {
     if (val !== undefined && !Number.isNaN(val)) {
-      shares.push({ rightsType, value: val, society: defaultSociety });
+      shares.push(society ? { rightsType, value: val, society } : { rightsType, value: val });
     }
   };
   pushShare('pr', toVal(obj[prKey]));

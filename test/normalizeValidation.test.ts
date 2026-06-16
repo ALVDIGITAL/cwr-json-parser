@@ -110,6 +110,62 @@ describe('validation messages', () => {
   });
 });
 
+describe('normalizeCwrJson – society codes', () => {
+  const makework = (society: string) => ({
+    messages: { schema: 'CWR-JSON Schema v1.0', schemaDescription: 'Test' },
+    parties: [
+      {
+        role: 'C',
+        territories: [
+          {
+            territory: { include: [], exclude: [] },
+            shareTypes: [
+              {
+                type: 'own',
+                shares: [
+                  { rightsType: 'pr', value: 50, society },
+                  { rightsType: 'mr', value: 0, society },
+                  { rightsType: 'sr', value: 0, society },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  });
+
+  it('strips empty string society', () => {
+    const { data, notes } = normalizeCwrJson({ works: [makework('')] });
+    const share = data.works[0].parties![0].territories![0].shareTypes![0].shares![0];
+    assert.equal('society' in share, false);
+    assert.ok(notes.some((n) => n.includes('omitted')));
+  });
+
+  it('strips 000 society', () => {
+    const { data, notes } = normalizeCwrJson({ works: [makework('000')] });
+    const share = data.works[0].parties![0].territories![0].shareTypes![0].shares![0];
+    assert.equal('society' in share, false);
+    assert.ok(notes.some((n) => n.includes('omitted')));
+  });
+
+  it('keeps valid society code intact', () => {
+    const { data } = normalizeCwrJson({ works: [makework('035')] });
+    const share = data.works[0].parties![0].territories![0].shareTypes![0].shares![0];
+    assert.equal(share.society, '035');
+  });
+
+  it('validates clean after normalization with empty society', () => {
+    const r = validateCwrJson({ works: [makework('')] });
+    assert.equal(r.valid, true, r.errors.join('\n'));
+  });
+
+  it('validates clean after normalization with 000 society', () => {
+    const r = validateCwrJson({ works: [makework('000')] });
+    assert.equal(r.valid, true, r.errors.join('\n'));
+  });
+});
+
 describe('CW260340WIX.json fixture', () => {
   const path = 'c:/Users/Miroslav/Downloads/CW260340WIX.json';
 
