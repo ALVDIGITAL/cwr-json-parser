@@ -1,0 +1,68 @@
+{
+  "tableName": "Character Set",
+  "slug": "character-set",
+  "source": "CWR08-3615R2_CWR_2x_Lookup_Table_2026-03-31_EN.xml#CharacterSet",
+  "entryCount": 10,
+  "entries": [
+    {
+      "description": "Latin 1",
+      "code": "ISO-8859-1",
+      "definition": "Western Europe and Americas: Afrikaans, Basque, Catalan, Danish, Dutch, English, Faeroese, Finnish, French, Galician, German, Icelandic, Irish, Italian, Norwegian, Portuguese, Spanish and Swedish.",
+      "other": null
+    },
+    {
+      "description": "Latin 2",
+      "code": "ISO-8859-2",
+      "definition": "Latin-written Slavic and Central European languages: Czech, German, Hungarian, Polish, Romanian, Croatian, Slovak, Slovene.",
+      "other": null
+    },
+    {
+      "description": "Latin 3",
+      "code": "ISO-8859-3",
+      "definition": "Esperanto, Galician, Maltese, and Turkish.",
+      "other": null
+    },
+    {
+      "description": "Latin 4",
+      "code": "ISO-8859-4",
+      "definition": "Scandinavia/Baltic (mostly covered by 8859-1 also): Estonian, Latvian, and Lithuanian. It is an incomplete predecessor of Latin 6.",
+      "other": null
+    },
+    {
+      "description": "Cyrillic",
+      "code": "ISO-8859-5",
+      "definition": "Bulgarian, Byelorussian, Macedonian, Russian, Serbian and Ukrainian.",
+      "other": null
+    },
+    {
+      "description": "Arabic",
+      "code": "ISO-8859-6",
+      "definition": "Non-accented Arabic.",
+      "other": null
+    },
+    {
+      "description": "Modern Greek",
+      "code": "ISO-8859-7",
+      "definition": "Greek.",
+      "other": null
+    },
+    {
+      "description": "Hebrew",
+      "code": "ISO-8859-8",
+      "definition": "Non-accented Hebrew.",
+      "other": null
+    },
+    {
+      "description": "Latin 5",
+      "code": "ISO-8859-9",
+      "definition": "Same as 8859-1 except for Turkish instead of Icelandic",
+      "other": null
+    },
+    {
+      "description": "Latin 6",
+      "code": "ISO-8859-10",
+      "definition": "Latin6, for Lappish/Nordic/Eskimo languages: Adds the last Inuit (Greenlandic) and Sami (Lappish) letters that were missing in Latin 4 to cover the entire Nordic area.",
+      "other": null
+    }
+  ]
+}

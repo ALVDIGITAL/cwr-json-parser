@@ -1,0 +1,26 @@
+{
+  "tableName": "Recording Technique",
+  "slug": "recording-technique",
+  "source": "CWR08-3615R2_CWR_2x_Lookup_Table_2026-03-31_EN.xml#CWR Tables",
+  "entryCount": 3,
+  "entries": [
+    {
+      "description": "Analogue",
+      "code": "A",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Digital",
+      "code": "D",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Unknown",
+      "code": "U",
+      "definition": null,
+      "other": null
+    }
+  ]
+}

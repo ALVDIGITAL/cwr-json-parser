@@ -1,0 +1,314 @@
+{
+  "tableName": "BIEM/CISAC Media Type",
+  "slug": "biem-cisac-media-type",
+  "source": "CWR08-3615R2_CWR_2x_Lookup_Table_2026-03-31_EN.xml#CWR Tables",
+  "entryCount": 51,
+  "entries": [
+    {
+      "description": "45 rpm 17 cm Single",
+      "code": "S",
+      "definition": "VINYL",
+      "other": null
+    },
+    {
+      "description": "45 rpm 17 cm EP",
+      "code": "EP",
+      "definition": "VINYL",
+      "other": null
+    },
+    {
+      "description": "45 rpm (12 inches) Maxi Single",
+      "code": "DS",
+      "definition": "VINYL",
+      "other": null
+    },
+    {
+      "description": "Disco Single Remix (12 inches)",
+      "code": "RDS",
+      "definition": "VINYL",
+      "other": null
+    },
+    {
+      "description": "Maxi Single Remix (7 inches)",
+      "code": "RMS",
+      "definition": "VINYL",
+      "other": null
+    },
+    {
+      "description": "LP 33 rpm 17cm  EP",
+      "code": "EPM",
+      "definition": "VINYL",
+      "other": null
+    },
+    {
+      "description": "LP 33 rpm 25 cm",
+      "code": "MLP",
+      "definition": "VINYL",
+      "other": null
+    },
+    {
+      "description": "LP 33 rpm 30 cm",
+      "code": "LP",
+      "definition": "VINYL",
+      "other": null
+    },
+    {
+      "description": "LP Compilation",
+      "code": "LP2",
+      "definition": "VINYL",
+      "other": null
+    },
+    {
+      "description": "LP identical to a CD",
+      "code": "LP3",
+      "definition": "VINYL",
+      "other": null
+    },
+    {
+      "description": "LP Compilation identical to a CD Compilation",
+      "code": "LP4",
+      "definition": "VINYL",
+      "other": null
+    },
+    {
+      "description": "CD Single 2 tracks",
+      "code": "SCD",
+      "definition": "COMPACT DISC",
+      "other": null
+    },
+    {
+      "description": "CD Singles 3&5 inches",
+      "code": "CDS",
+      "definition": "COMPACT DISC",
+      "other": null
+    },
+    {
+      "description": "CD Maxi-single",
+      "code": "CDM",
+      "definition": "COMPACT DISC",
+      "other": null
+    },
+    {
+      "description": "CD Maxi single remix",
+      "code": "RCD",
+      "definition": "COMPACT DISC",
+      "other": null
+    },
+    {
+      "description": "CD-LP (5 inches)",
+      "code": "CD",
+      "definition": "COMPACT DISC",
+      "other": null
+    },
+    {
+      "description": "CD Compilation",
+      "code": "CD2",
+      "definition": "COMPACT DISC",
+      "other": null
+    },
+    {
+      "description": "SACD",
+      "code": "SA",
+      "definition": "COMPACT DISC",
+      "other": null
+    },
+    {
+      "description": "SACD Compilation",
+      "code": "SA2",
+      "definition": "COMPACT DISC",
+      "other": null
+    },
+    {
+      "description": "CD Extra Single 2 tracks",
+      "code": "CES",
+      "definition": "CD-EXTRA",
+      "other": null
+    },
+    {
+      "description": "CD Extra Single",
+      "code": "CXS",
+      "definition": "CD-EXTRA",
+      "other": null
+    },
+    {
+      "description": "CD Extra Maxi Single",
+      "code": "CXM",
+      "definition": "CD-EXTRA",
+      "other": null
+    },
+    {
+      "description": "CD Extra Maxi Remix",
+      "code": "RCE",
+      "definition": "CD-EXTRA",
+      "other": null
+    },
+    {
+      "description": "CD Extra EP",
+      "code": "CEP",
+      "definition": "CD-EXTRA",
+      "other": null
+    },
+    {
+      "description": "CD Extra LP",
+      "code": "CE",
+      "definition": "CD-EXTRA",
+      "other": null
+    },
+    {
+      "description": "CD Extra Compilation",
+      "code": "CE2",
+      "definition": "CD-EXTRA",
+      "other": null
+    },
+    {
+      "description": "MC single",
+      "code": "SMC",
+      "definition": "MUSICASSETTE",
+      "other": null
+    },
+    {
+      "description": "MC single identical to a CDS",
+      "code": "SM2",
+      "definition": "MUSICASSETTE",
+      "other": null
+    },
+    {
+      "description": "MC maxi",
+      "code": "MMC",
+      "definition": "MUSICASSETTE",
+      "other": null
+    },
+    {
+      "description": "MC EP",
+      "code": "EMC",
+      "definition": "MUSICASSETTE",
+      "other": null
+    },
+    {
+      "description": "MC Remix",
+      "code": "RMC",
+      "definition": "MUSICASSETTE",
+      "other": null
+    },
+    {
+      "description": "MC",
+      "code": "MCP",
+      "definition": "MUSICASSETTE",
+      "other": null
+    },
+    {
+      "description": "MC LP",
+      "code": "MC",
+      "definition": "MUSICASSETTE",
+      "other": null
+    },
+    {
+      "description": "MC Compilation",
+      "code": "MC2",
+      "definition": "MUSICASSETTE",
+      "other": null
+    },
+    {
+      "description": "MC identical to a CD",
+      "code": "MC3",
+      "definition": "MUSICASSETTE",
+      "other": null
+    },
+    {
+      "description": "MC Compilation identical to a CD compilation",
+      "code": "MC4",
+      "definition": "MUSICASSETTE",
+      "other": null
+    },
+    {
+      "description": "Double MC",
+      "code": "DMC",
+      "definition": "MUSICASSETTE",
+      "other": null
+    },
+    {
+      "description": "MD Single/ Maxi Single",
+      "code": "MDS",
+      "definition": "MINIDISC",
+      "other": null
+    },
+    {
+      "description": "MD Maxi Remix",
+      "code": "MDR",
+      "definition": "MINIDISC",
+      "other": null
+    },
+    {
+      "description": "MD EP",
+      "code": "MDP",
+      "definition": "MINIDISC",
+      "other": null
+    },
+    {
+      "description": "MD",
+      "code": "MD",
+      "definition": "MINIDISC",
+      "other": null
+    },
+    {
+      "description": "MD Compilation",
+      "code": "MD2",
+      "definition": "MINIDISC",
+      "other": null
+    },
+    {
+      "description": "DCC",
+      "code": "DC",
+      "definition": "DIGITAL COMPACT CASSETTE",
+      "other": null
+    },
+    {
+      "description": "DCC Compilation",
+      "code": "DC2",
+      "definition": "DIGITAL COMPACT CASSETTE",
+      "other": null
+    },
+    {
+      "description": "DVD-Audio",
+      "code": "DV1",
+      "definition": "DVD",
+      "other": null
+    },
+    {
+      "description": "DVD-Video",
+      "code": "DV2",
+      "definition": "DVD",
+      "other": null
+    },
+    {
+      "description": "DVD-Rom",
+      "code": "DV3",
+      "definition": "DVD",
+      "other": null
+    },
+    {
+      "description": "DVD-Single",
+      "code": "DV4",
+      "definition": "DVD",
+      "other": null
+    },
+    {
+      "description": "Downloading of a title",
+      "code": "DW",
+      "definition": "DOWNLOADING",
+      "other": null
+    },
+    {
+      "description": "Downloading of a Single/Maxi Single",
+      "code": "DM",
+      "definition": "DOWNLOADING",
+      "other": null
+    },
+    {
+      "description": "Downloading of  LP",
+      "code": "DL",
+      "definition": "DOWNLOADING",
+      "other": null
+    }
+  ]
+}

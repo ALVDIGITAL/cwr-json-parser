@@ -1,0 +1,26 @@
+{
+  "tableName": "AI Indicator",
+  "slug": "ai-indicator",
+  "source": "CWR08-3615R2_CWR_2x_Lookup_Table_2026-03-31_EN.xml#CWR Tables",
+  "entryCount": 3,
+  "entries": [
+    {
+      "description": "Music",
+      "code": "M",
+      "definition": "The music only has been generated using AI.",
+      "other": null
+    },
+    {
+      "description": "Text",
+      "code": "T",
+      "definition": "The text only has been generated using AI.",
+      "other": null
+    },
+    {
+      "description": "All",
+      "code": "A",
+      "definition": "Both music and text have been generated using AI.",
+      "other": null
+    }
+  ]
+}

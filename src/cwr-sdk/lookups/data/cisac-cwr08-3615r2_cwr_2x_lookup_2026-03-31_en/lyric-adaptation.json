@@ -1,0 +1,56 @@
+{
+  "tableName": "Lyric Adaptation",
+  "slug": "lyric-adaptation",
+  "source": "CWR08-3615R2_CWR_2x_Lookup_Table_2026-03-31_EN.xml#CWR Tables",
+  "entryCount": 8,
+  "entries": [
+    {
+      "description": "New",
+      "code": "NEW",
+      "definition": "New lyrics added to the existing lyrics",
+      "other": null
+    },
+    {
+      "description": "Modification",
+      "code": "MOD",
+      "definition": "Lyrics modified in the original language",
+      "other": null
+    },
+    {
+      "description": "None",
+      "code": "NON",
+      "definition": "No lyrics have been included in the work",
+      "other": null
+    },
+    {
+      "description": "Original",
+      "code": "ORI",
+      "definition": "Lyrics have been used in the original form",
+      "other": null
+    },
+    {
+      "description": "Replacement  L",
+      "code": "REP",
+      "definition": "Lyrics have been totally replaced",
+      "other": null
+    },
+    {
+      "description": "Addition",
+      "code": "ADL",
+      "definition": "Lyrics added to a pre-existing instrumental work",
+      "other": null
+    },
+    {
+      "description": "Unspecified",
+      "code": "UNS",
+      "definition": "Details of the lyric adaptation are not known at this time",
+      "other": null
+    },
+    {
+      "description": "Translation",
+      "code": "TRA",
+      "definition": "Lyrics translated into another language",
+      "other": null
+    }
+  ]
+}

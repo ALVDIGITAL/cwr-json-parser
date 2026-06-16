@@ -81,4 +81,90 @@ describe('schema validation (deep)', () => {
     const r = validateCwrJson({ works: [validWork] });
     assert.equal(r.valid, true, r.errors.join('\n'));
   });
+
+  it('rejects invalid society code on share', () => {
+    const r = validateCwrJson(
+      {
+        works: [
+          {
+            ...validWork,
+            parties: [
+              {
+                role: 'C',
+                territories: [
+                  {
+                    territory: { include: [], exclude: [] },
+                    shareTypes: [
+                      {
+                        type: 'coll',
+                        shares: [{ rightsType: 'pr', value: 50, society: 'INVALID' }],
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+      'strict',
+      'cwr-json-v1-0',
+      { normalize: false }
+    );
+    assert.equal(r.valid, false);
+    assert.ok(r.errors.some((e) => e.includes('society')));
+  });
+
+  it('rejects invalid header character set', () => {
+    const r = validateCwrJson(
+      {
+        header: { characterSet: 'NOT-A-CHARSET' },
+        works: [validWork],
+      },
+      'strict',
+      'cwr-json-v1-0',
+      { normalize: false }
+    );
+    assert.equal(r.valid, false);
+    assert.ok(r.errors.some((e) => e.includes('characterSet')));
+  });
+
+  it('rejects invalid revocation reason', () => {
+    const r = validateCwrJson(
+      {
+        works: [
+          {
+            ...validWork,
+            messages: {
+              ...validWork.messages,
+              revocation: { indicator: 'Y', reason: 'XX' },
+            },
+          },
+        ],
+      },
+      'strict',
+      'cwr-json-v1-0',
+      { normalize: false }
+    );
+    assert.equal(r.valid, false);
+    assert.ok(r.errors.some((e) => e.includes('reason')));
+  });
+
+  it('rejects invalid anomalous work reason', () => {
+    const r = validateCwrJson(
+      {
+        works: [
+          {
+            ...validWork,
+            flags: { anomalous: true, anomalousReason: 'XX' },
+          },
+        ],
+      },
+      'strict',
+      'cwr-json-v1-0',
+      { normalize: false }
+    );
+    assert.equal(r.valid, false);
+    assert.ok(r.errors.some((e) => e.includes('anomalousReason')));
+  });
 });

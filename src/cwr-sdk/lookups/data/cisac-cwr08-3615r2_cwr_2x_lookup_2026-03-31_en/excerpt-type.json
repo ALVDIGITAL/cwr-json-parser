@@ -1,0 +1,26 @@
+{
+  "tableName": "Excerpt Type",
+  "slug": "excerpt-type",
+  "source": "CWR08-3615R2_CWR_2x_Lookup_Table_2026-03-31_EN.xml#CWR Tables",
+  "entryCount": 3,
+  "entries": [
+    {
+      "description": "Movement",
+      "code": "MOV",
+      "definition": "A principal division of a musical work.",
+      "other": null
+    },
+    {
+      "description": "Unspecified Excerpt",
+      "code": "UEX",
+      "definition": "A work that is known to be an excerpt from another work, however the type of excerpt is unknown.",
+      "other": null
+    },
+    {
+      "description": "[Non-Excerpt]",
+      "code": "[blank]",
+      "definition": "[Not an excerpt]",
+      "other": null
+    }
+  ]
+}

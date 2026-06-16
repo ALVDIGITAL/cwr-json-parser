@@ -1,0 +1,980 @@
+{
+  "tableName": "Instrument",
+  "slug": "instrument",
+  "source": "CWR08-3615R2_CWR_2x_Lookup_Table_2026-03-31_EN.xml#CWR Tables",
+  "entryCount": 162,
+  "entries": [
+    {
+      "description": "Accordion",
+      "code": "ACC",
+      "definition": null,
+      "other": "Keyboard"
+    },
+    {
+      "description": "Alp Horn",
+      "code": "ALP",
+      "definition": null,
+      "other": "National/Folk"
+    },
+    {
+      "description": "Alto Clarinet",
+      "code": "ACL",
+      "definition": null,
+      "other": "Woodwind"
+    },
+    {
+      "description": "Alto Flute",
+      "code": "AFL",
+      "definition": null,
+      "other": "Woodwind"
+    },
+    {
+      "description": "Alto Horn",
+      "code": "AHN",
+      "definition": null,
+      "other": "Brass"
+    },
+    {
+      "description": "Alto Recorder",
+      "code": "ARC",
+      "definition": null,
+      "other": "Early Music"
+    },
+    {
+      "description": "Alto Saxophone",
+      "code": "ASX",
+      "definition": null,
+      "other": "Woodwind"
+    },
+    {
+      "description": "Alto Voice",
+      "code": "ALT",
+      "definition": null,
+      "other": "Voice"
+    },
+    {
+      "description": "Amplifier",
+      "code": "AMP",
+      "definition": null,
+      "other": "Electronic"
+    },
+    {
+      "description": "Bagpipes",
+      "code": "BAG",
+      "definition": null,
+      "other": "National/Folk"
+    },
+    {
+      "description": "Balalaika",
+      "code": "BKA",
+      "definition": null,
+      "other": "National/Folk"
+    },
+    {
+      "description": "Bamboo Flute",
+      "code": "BBF",
+      "definition": "same as Dizi or D'Tzu",
+      "other": "National/Folk"
+    },
+    {
+      "description": "Bandoneon",
+      "code": "BDN",
+      "definition": null,
+      "other": "Keyboard"
+    },
+    {
+      "description": "Banjo",
+      "code": "BNJ",
+      "definition": null,
+      "other": "String"
+    },
+    {
+      "description": "Baritone Horn",
+      "code": "BAR",
+      "definition": null,
+      "other": "Brass"
+    },
+    {
+      "description": "Baritone Saxophone",
+      "code": "BSX",
+      "definition": null,
+      "other": "Woodwind"
+    },
+    {
+      "description": "Baritone Voice",
+      "code": "BTN",
+      "definition": null,
+      "other": "Voice"
+    },
+    {
+      "description": "Baroque Flute",
+      "code": "BQF",
+      "definition": null,
+      "other": "Early Music"
+    },
+    {
+      "description": "Bass Baritone",
+      "code": "BBT",
+      "definition": null,
+      "other": "Voice"
+    },
+    {
+      "description": "Bass Clarinet",
+      "code": "BCL",
+      "definition": null,
+      "other": "Woodwind"
+    },
+    {
+      "description": "Bass Drum",
+      "code": "BDR",
+      "definition": null,
+      "other": "Percussion"
+    },
+    {
+      "description": "Bass Flute",
+      "code": "BFT",
+      "definition": null,
+      "other": "Woodwind"
+    },
+    {
+      "description": "Bass Guitar",
+      "code": "BGT",
+      "definition": null,
+      "other": "String"
+    },
+    {
+      "description": "Bass Oboe",
+      "code": "BOB",
+      "definition": null,
+      "other": "Woodwind"
+    },
+    {
+      "description": "Bass Recorder",
+      "code": "BRC",
+      "definition": null,
+      "other": "Early Music"
+    },
+    {
+      "description": "Bass Saxophone",
+      "code": "BSP",
+      "definition": null,
+      "other": "Woodwind"
+    },
+    {
+      "description": "Bass Trombone",
+      "code": "BRT",
+      "definition": null,
+      "other": "Brass"
+    },
+    {
+      "description": "Bass Voice",
+      "code": "BSS",
+      "definition": null,
+      "other": "Voice"
+    },
+    {
+      "description": "Basset Horn",
+      "code": "BHN",
+      "definition": null,
+      "other": "Woodwind"
+    },
+    {
+      "description": "Bassoon",
+      "code": "BSN",
+      "definition": null,
+      "other": "Woodwind"
+    },
+    {
+      "description": "Bells",
+      "code": "BEL",
+      "definition": null,
+      "other": "Percussion"
+    },
+    {
+      "description": "Bongos",
+      "code": "BNG",
+      "definition": null,
+      "other": "Percussion"
+    },
+    {
+      "description": "Boy Soprano",
+      "code": "BOY",
+      "definition": null,
+      "other": "Voice"
+    },
+    {
+      "description": "Bugle",
+      "code": "BGL",
+      "definition": null,
+      "other": "Brass"
+    },
+    {
+      "description": "Carillon",
+      "code": "CAR",
+      "definition": null,
+      "other": "Percussion"
+    },
+    {
+      "description": "Castanets",
+      "code": "CST",
+      "definition": null,
+      "other": "Percussion"
+    },
+    {
+      "description": "Celesta",
+      "code": "CEL",
+      "definition": null,
+      "other": "Keyboard"
+    },
+    {
+      "description": "Chimes",
+      "code": "CHM",
+      "definition": "same as ‘tubular bells’",
+      "other": "Percussion"
+    },
+    {
+      "description": "Cimbalom",
+      "code": "CIM",
+      "definition": null,
+      "other": "National/Folk"
+    },
+    {
+      "description": "Clarinet",
+      "code": "CLR",
+      "definition": null,
+      "other": "Woodwind"
+    },
+    {
+      "description": "Clavichord",
+      "code": "CVD",
+      "definition": null,
+      "other": "Keyboard"
+    },
+    {
+      "description": "Computer",
+      "code": "COM",
+      "definition": null,
+      "other": "Electronic"
+    },
+    {
+      "description": "Concertina",
+      "code": "CNB",
+      "definition": null,
+      "other": "Misc."
+    },
+    {
+      "description": "Congas",
+      "code": "CNG",
+      "definition": null,
+      "other": "Percussion"
+    },
+    {
+      "description": "Contra Bassoon",
+      "code": "CBN",
+      "definition": null,
+      "other": "Woodwind"
+    },
+    {
+      "description": "Contrabass Clarinet",
+      "code": "CBC",
+      "definition": null,
+      "other": "Woodwind"
+    },
+    {
+      "description": "Contralto Clarinet",
+      "code": "CCL",
+      "definition": "Same as ‘Contrabass Clarinet in Eb’",
+      "other": "Woodwind"
+    },
+    {
+      "description": "Contralto Voice",
+      "code": "CAL",
+      "definition": null,
+      "other": "Voice"
+    },
+    {
+      "description": "Cornet",
+      "code": "CNT",
+      "definition": null,
+      "other": "Brass"
+    },
+    {
+      "description": "Countertenor Voice",
+      "code": "CTN",
+      "definition": null,
+      "other": "Voice"
+    },
+    {
+      "description": "Cymbals",
+      "code": "CYM",
+      "definition": null,
+      "other": "Percussion"
+    },
+    {
+      "description": "Didjeridu",
+      "code": "DIJ",
+      "definition": null,
+      "other": "National/Folk"
+    },
+    {
+      "description": "Dizi/D'Tzu",
+      "code": "DIZ",
+      "definition": null,
+      "other": "National/Folk"
+    },
+    {
+      "description": "Djembe",
+      "code": "DJM",
+      "definition": null,
+      "other": "National/Folk"
+    },
+    {
+      "description": "Double Bass",
+      "code": "BAS",
+      "definition": null,
+      "other": "String"
+    },
+    {
+      "description": "Drum",
+      "code": "DRM",
+      "definition": null,
+      "other": "Percussion"
+    },
+    {
+      "description": "Drum Kit/Drum Set",
+      "code": "DRK",
+      "definition": null,
+      "other": "Percussion"
+    },
+    {
+      "description": "Dulcimer",
+      "code": "DUL",
+      "definition": null,
+      "other": "National/Folk"
+    },
+    {
+      "description": "E-Flat Clarinet",
+      "code": "EFC",
+      "definition": null,
+      "other": "Woodwind"
+    },
+    {
+      "description": "Electric Bass Guitar",
+      "code": "EBG",
+      "definition": null,
+      "other": "String"
+    },
+    {
+      "description": "Electric Guitar",
+      "code": "EGT",
+      "definition": null,
+      "other": "String"
+    },
+    {
+      "description": "Electronic Organ",
+      "code": "EOG",
+      "definition": null,
+      "other": "Keyboard"
+    },
+    {
+      "description": "Electronics, Live",
+      "code": "ELL",
+      "definition": null,
+      "other": "Electronic"
+    },
+    {
+      "description": "Electronics, Pre-recorded",
+      "code": "ELP",
+      "definition": null,
+      "other": "Electronic"
+    },
+    {
+      "description": "English Horn",
+      "code": "EHN",
+      "definition": null,
+      "other": "Woodwind"
+    },
+    {
+      "description": "Erhu",
+      "code": "ERH",
+      "definition": null,
+      "other": "National/Folk"
+    },
+    {
+      "description": "Euphonium",
+      "code": "EUP",
+      "definition": null,
+      "other": "Brass"
+    },
+    {
+      "description": "Flugelhorn",
+      "code": "FLG",
+      "definition": null,
+      "other": "Brass"
+    },
+    {
+      "description": "Flute",
+      "code": "FLT",
+      "definition": null,
+      "other": "Woodwind"
+    },
+    {
+      "description": "French Horn",
+      "code": "FRN",
+      "definition": null,
+      "other": "Brass"
+    },
+    {
+      "description": "Glass Harmonica",
+      "code": "GHM",
+      "definition": null,
+      "other": "Misc."
+    },
+    {
+      "description": "Glass Harp",
+      "code": "GHP",
+      "definition": null,
+      "other": "Misc."
+    },
+    {
+      "description": "Glockenspiel",
+      "code": "GLS",
+      "definition": null,
+      "other": "Percussion"
+    },
+    {
+      "description": "Gong",
+      "code": "GNG",
+      "definition": null,
+      "other": "Percussion"
+    },
+    {
+      "description": "Guitar",
+      "code": "GTR",
+      "definition": null,
+      "other": "String"
+    },
+    {
+      "description": "Handbells",
+      "code": "HBL",
+      "definition": null,
+      "other": "Percussion"
+    },
+    {
+      "description": "Harmonica",
+      "code": "HAR",
+      "definition": null,
+      "other": "Misc."
+    },
+    {
+      "description": "Harmonium",
+      "code": "HRM",
+      "definition": null,
+      "other": "Keyboard"
+    },
+    {
+      "description": "Harp",
+      "code": "HRP",
+      "definition": null,
+      "other": "String"
+    },
+    {
+      "description": "Harpsichord",
+      "code": "HPS",
+      "definition": null,
+      "other": "Early Music"
+    },
+    {
+      "description": "Heckelphone",
+      "code": "HCK",
+      "definition": null,
+      "other": "Woodwind"
+    },
+    {
+      "description": "Horn",
+      "code": "HRN",
+      "definition": null,
+      "other": "Brass"
+    },
+    {
+      "description": "Hurdy-Gurdy",
+      "code": "HUR",
+      "definition": null,
+      "other": "Early Music"
+    },
+    {
+      "description": "Kazoo",
+      "code": "KAZ",
+      "definition": null,
+      "other": "National/Folk"
+    },
+    {
+      "description": "Keyboard",
+      "code": "KEY",
+      "definition": null,
+      "other": "Keyboard"
+    },
+    {
+      "description": "Klavier",
+      "code": "KLV",
+      "definition": null,
+      "other": "Keyboard"
+    },
+    {
+      "description": "Koto",
+      "code": "KOT",
+      "definition": null,
+      "other": "National/Folk"
+    },
+    {
+      "description": "Lute",
+      "code": "LUT",
+      "definition": null,
+      "other": "Early Music"
+    },
+    {
+      "description": "Lyre",
+      "code": "LYR",
+      "definition": null,
+      "other": "Early Music"
+    },
+    {
+      "description": "Mandolin",
+      "code": "MAN",
+      "definition": null,
+      "other": "String"
+    },
+    {
+      "description": "Maracas",
+      "code": "MCS",
+      "definition": null,
+      "other": "National/Folk"
+    },
+    {
+      "description": "Marimba",
+      "code": "MAR",
+      "definition": null,
+      "other": "Percussion"
+    },
+    {
+      "description": "Mbira",
+      "code": "MBR",
+      "definition": null,
+      "other": "National/Folk"
+    },
+    {
+      "description": "Melodica",
+      "code": "MEL",
+      "definition": null,
+      "other": "Misc."
+    },
+    {
+      "description": "Mezzo Soprano Voice",
+      "code": "MEZ",
+      "definition": null,
+      "other": "Voice"
+    },
+    {
+      "description": "Midi",
+      "code": "MID",
+      "definition": null,
+      "other": "Electronic"
+    },
+    {
+      "description": "Music Box",
+      "code": "MSB",
+      "definition": null,
+      "other": "Misc."
+    },
+    {
+      "description": "Narrator/Speaker",
+      "code": "NAR",
+      "definition": null,
+      "other": "Voice"
+    },
+    {
+      "description": "Native American Flute",
+      "code": "NAF",
+      "definition": null,
+      "other": "National/Folk"
+    },
+    {
+      "description": "Natural Horn",
+      "code": "NHN",
+      "definition": null,
+      "other": "Early Music"
+    },
+    {
+      "description": "Oboe",
+      "code": "OBO",
+      "definition": null,
+      "other": "Woodwind"
+    },
+    {
+      "description": "Oboe d'Amore",
+      "code": "OBD",
+      "definition": null,
+      "other": "Woodwind"
+    },
+    {
+      "description": "Ondes Martinot",
+      "code": "OND",
+      "definition": null,
+      "other": "Electronic"
+    },
+    {
+      "description": "Organ",
+      "code": "ORG",
+      "definition": null,
+      "other": "Keyboard"
+    },
+    {
+      "description": "Pennywhistle",
+      "code": "PWH",
+      "definition": null,
+      "other": "National/Folk"
+    },
+    {
+      "description": "Percussion",
+      "code": "PER",
+      "definition": null,
+      "other": "Percussion"
+    },
+    {
+      "description": "Piano",
+      "code": "PIA",
+      "definition": null,
+      "other": "Keyboard"
+    },
+    {
+      "description": "Piccolo",
+      "code": "PIC",
+      "definition": null,
+      "other": "Woodwind"
+    },
+    {
+      "description": "Pipa",
+      "code": "PPA",
+      "definition": null,
+      "other": "National/Folk"
+    },
+    {
+      "description": "Prepared Piano",
+      "code": "PRP",
+      "definition": null,
+      "other": "Keyboard"
+    },
+    {
+      "description": "Processor",
+      "code": "PRO",
+      "definition": null,
+      "other": "Electronic"
+    },
+    {
+      "description": "Recorder",
+      "code": "REC",
+      "definition": null,
+      "other": "Early Music"
+    },
+    {
+      "description": "Ruan",
+      "code": "RUA",
+      "definition": null,
+      "other": "National/Folk"
+    },
+    {
+      "description": "Sampler",
+      "code": "SAM",
+      "definition": null,
+      "other": "Electronic"
+    },
+    {
+      "description": "Saxophone",
+      "code": "SAX",
+      "definition": null,
+      "other": "Woodwind"
+    },
+    {
+      "description": "Sequencer",
+      "code": "SEQ",
+      "definition": null,
+      "other": "Electronic"
+    },
+    {
+      "description": "Shakuhachi",
+      "code": "SHK",
+      "definition": null,
+      "other": "National/Folk"
+    },
+    {
+      "description": "Shamisen",
+      "code": "SHM",
+      "definition": null,
+      "other": "National/Folk"
+    },
+    {
+      "description": "Shawm",
+      "code": "SHW",
+      "definition": null,
+      "other": "Early Music"
+    },
+    {
+      "description": "Sho",
+      "code": "SHO",
+      "definition": null,
+      "other": "National/Folk"
+    },
+    {
+      "description": "Sitar",
+      "code": "SIT",
+      "definition": null,
+      "other": "National/Folk"
+    },
+    {
+      "description": "Snare drum",
+      "code": "SDM",
+      "definition": null,
+      "other": "Percussion"
+    },
+    {
+      "description": "Sopranino Recorder",
+      "code": "SNR",
+      "definition": null,
+      "other": "Early Music"
+    },
+    {
+      "description": "Sopranino Saxophone",
+      "code": "SNS",
+      "definition": null,
+      "other": "Woodwind"
+    },
+    {
+      "description": "Soprano Recorder",
+      "code": "SRC",
+      "definition": null,
+      "other": "Early Music"
+    },
+    {
+      "description": "Soprano Saxophone",
+      "code": "SSX",
+      "definition": null,
+      "other": "Woodwind"
+    },
+    {
+      "description": "Soprano Voice",
+      "code": "SOP",
+      "definition": null,
+      "other": "Voice"
+    },
+    {
+      "description": "Sousaphone",
+      "code": "SOU",
+      "definition": null,
+      "other": "Brass"
+    },
+    {
+      "description": "Spoons",
+      "code": "SPO",
+      "definition": null,
+      "other": "National/Folk"
+    },
+    {
+      "description": "Steel drums",
+      "code": "STD",
+      "definition": null,
+      "other": "Percussion"
+    },
+    {
+      "description": "Synthesizer",
+      "code": "SYN",
+      "definition": null,
+      "other": "Electronic"
+    },
+    {
+      "description": "Tabla",
+      "code": "TAB",
+      "definition": null,
+      "other": "National/Folk"
+    },
+    {
+      "description": "Tambour",
+      "code": "TAM",
+      "definition": null,
+      "other": "Percussion"
+    },
+    {
+      "description": "Tambourine",
+      "code": "TMN",
+      "definition": null,
+      "other": "Percussion"
+    },
+    {
+      "description": "Tamtam",
+      "code": "TTM",
+      "definition": null,
+      "other": "Percussion"
+    },
+    {
+      "description": "Tape",
+      "code": "TAP",
+      "definition": null,
+      "other": "Electronic"
+    },
+    {
+      "description": "Tenor Horn",
+      "code": "THN",
+      "definition": null,
+      "other": "Brass"
+    },
+    {
+      "description": "Tenor Recorder",
+      "code": "TRC",
+      "definition": null,
+      "other": "Early Music"
+    },
+    {
+      "description": "Tenor Saxophone",
+      "code": "TSX",
+      "definition": null,
+      "other": "Woodwind"
+    },
+    {
+      "description": "Tenor Voice",
+      "code": "TEN",
+      "definition": null,
+      "other": "Voice"
+    },
+    {
+      "description": "Theremin",
+      "code": "THE",
+      "definition": null,
+      "other": "Electronic"
+    },
+    {
+      "description": "Timpani",
+      "code": "TIM",
+      "definition": null,
+      "other": "Percussion"
+    },
+    {
+      "description": "Toy Piano",
+      "code": "TYP",
+      "definition": null,
+      "other": "Keyboard"
+    },
+    {
+      "description": "Triangle",
+      "code": "TRI",
+      "definition": null,
+      "other": "Percussion"
+    },
+    {
+      "description": "Trombone",
+      "code": "TMB",
+      "definition": null,
+      "other": "Brass"
+    },
+    {
+      "description": "Trumpet",
+      "code": "TRM",
+      "definition": null,
+      "other": "Brass"
+    },
+    {
+      "description": "Tuba",
+      "code": "TBA",
+      "definition": null,
+      "other": "Brass"
+    },
+    {
+      "description": "Ukulele",
+      "code": "UKE",
+      "definition": null,
+      "other": "String"
+    },
+    {
+      "description": "Vibraphone",
+      "code": "VIB",
+      "definition": null,
+      "other": "Percussion"
+    },
+    {
+      "description": "Video",
+      "code": "VID",
+      "definition": null,
+      "other": "Electronic"
+    },
+    {
+      "description": "Viola",
+      "code": "VLA",
+      "definition": null,
+      "other": "String"
+    },
+    {
+      "description": "Viola Da Gamba",
+      "code": "VDG",
+      "definition": null,
+      "other": "Early Music"
+    },
+    {
+      "description": "Violin",
+      "code": "VLN",
+      "definition": null,
+      "other": "String"
+    },
+    {
+      "description": "Violoncello",
+      "code": "VCL",
+      "definition": null,
+      "other": "String"
+    },
+    {
+      "description": "Voice",
+      "code": "VOC",
+      "definition": null,
+      "other": "Voice"
+    },
+    {
+      "description": "Wagner Tuba",
+      "code": "WTB",
+      "definition": null,
+      "other": "Brass"
+    },
+    {
+      "description": "Whistle",
+      "code": "WHS",
+      "definition": null,
+      "other": "Misc."
+    },
+    {
+      "description": "Wood block",
+      "code": "WBK",
+      "definition": null,
+      "other": "Percussion"
+    },
+    {
+      "description": "Xylophone",
+      "code": "XYL",
+      "definition": null,
+      "other": "Percussion"
+    },
+    {
+      "description": "Yang Qin",
+      "code": "YQN",
+      "definition": null,
+      "other": "National/Folk"
+    },
+    {
+      "description": "Zheng",
+      "code": "ZHG",
+      "definition": null,
+      "other": "National/Folk"
+    },
+    {
+      "description": "Zither",
+      "code": "ZIT",
+      "definition": null,
+      "other": "National/Folk"
+    }
+  ]
+}

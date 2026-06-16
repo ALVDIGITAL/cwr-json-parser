@@ -1,0 +1,20 @@
+{
+  "tableName": "Anomalous Work Reason",
+  "slug": "anomalous-work-reason",
+  "source": "CWR08-3615R2_CWR_2x_Lookup_Table_2026-03-31_EN.xml#CWR Tables",
+  "entryCount": 2,
+  "entries": [
+    {
+      "description": "Inaccurate IPs",
+      "code": "IPS",
+      "definition": "The work was registered with inaccurate interested parties",
+      "other": null
+    },
+    {
+      "description": "Unauthorised Version",
+      "code": "UNA",
+      "definition": "The work is an unauthorised cover version, adaptation or arrangement of another work",
+      "other": null
+    }
+  ]
+}

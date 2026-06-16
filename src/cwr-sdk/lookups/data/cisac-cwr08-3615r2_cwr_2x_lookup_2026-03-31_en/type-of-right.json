@@ -1,0 +1,26 @@
+{
+  "tableName": "Type of Right",
+  "slug": "type-of-right",
+  "source": "CWR08-3615R2_CWR_2x_Lookup_Table_2026-03-31_EN.xml#CWR Tables",
+  "entryCount": 3,
+  "entries": [
+    {
+      "description": "Mechanical Right",
+      "code": "MEC",
+      "definition": "The right to record, reproduce and distribute a work on a carrier (CDs, MCs, Films, CD-ROM, etc.)",
+      "other": null
+    },
+    {
+      "description": "Performing Right",
+      "code": "PER",
+      "definition": "The entitlement to perform musical, literary or dramatic works live or by mechanical means or to recite literary works",
+      "other": null
+    },
+    {
+      "description": "Synchronisation Right",
+      "code": "SYN",
+      "definition": "The right to include and combine a work either completely or in parts in timed relation with works of other categories for the creation of an audiovisual, multimedia work or a database",
+      "other": null
+    }
+  ]
+}

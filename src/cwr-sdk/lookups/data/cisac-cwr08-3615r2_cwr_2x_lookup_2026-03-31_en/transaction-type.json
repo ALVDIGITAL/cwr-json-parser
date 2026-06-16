@@ -1,0 +1,50 @@
+{
+  "tableName": "Transaction Type",
+  "slug": "transaction-type",
+  "source": "CWR08-3615R2_CWR_2x_Lookup_Table_2026-03-31_EN.xml#CWR Tables",
+  "entryCount": 7,
+  "entries": [
+    {
+      "description": "Acknowledgment",
+      "code": "ACK",
+      "definition": "A transaction sent in response to a transaction received that includes information on the use of the transaction received.",
+      "other": null
+    },
+    {
+      "description": "Agreement",
+      "code": "AGR",
+      "definition": "A transaction sent from publishers to societies to provide details of agreements relating to works that the publishers are registering using the NWR or REV transactions.",
+      "other": null
+    },
+    {
+      "description": "New Work Registration",
+      "code": "NWR",
+      "definition": "A transaction sent from publishers to societies for the purpose of registering a musical work.",
+      "other": null
+    },
+    {
+      "description": "Revised Registration",
+      "code": "REV",
+      "definition": "A transaction sent from publishers to societies for the purpose of revising an existing registration of a musical work.",
+      "other": null
+    },
+    {
+      "description": "Notification of ISWC",
+      "code": "ISW",
+      "definition": "A transaction sent from the societies to the publishers to notify of an ISWC allocated to a musical work.",
+      "other": null
+    },
+    {
+      "description": "Existing work which is in conflict with a work registration",
+      "code": "EXC",
+      "definition": "A transaction sent from the societies to the publishers to provide details of an existing work that is in conflict with a work registration.",
+      "other": null
+    },
+    {
+      "description": "Notification to Co-Publisher",
+      "code": "COP",
+      "definition": "A notice delivered to any publisher marked as an \"Other Publisher\" on an NWR transaction that has not previously registered the work referred to within the NWR.\nNB:  The COP code is no longer valid within CWR, but this definition has been kept for historical reference.",
+      "other": null
+    }
+  ]
+}

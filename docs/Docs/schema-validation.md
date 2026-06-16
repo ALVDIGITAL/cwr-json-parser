@@ -15,11 +15,9 @@ content:
 | Asset | URL |
 |---|---|
 | JSON Schema | [cwr-json-schema-v1.0.schema.json](https://d7ap24707c.execute-api.eu-west-1.amazonaws.com/staging/api/v1/schemas/cwr-json-schema-v1.0.schema.json) — validates the CWR-JSON v1.0 output shape (draft-07) |
-| Lookup table | [cwr_lookup_data_types_v1.0_r0.json](https://d7ap24707c.execute-api.eu-west-1.amazonaws.com/staging/api/v1/lookups/cwr_lookup_data_types_v1.0_r0.json) — allowed value sets (role codes, TIS, title types, …) |
+| Lookup table | [cwr_lookup_data_types_v1.0.json](https://d7ap24707c.execute-api.eu-west-1.amazonaws.com/staging/api/v1/lookups/cwr_lookup_data_types_v1.0.json) — allowed value sets (role codes, TIS, title types, …) |
 
-The schema embeds lookup enums and field patterns derived from the lookup table. When validating, fetch both URLs or use a validator that already bundles the published schema.
-
-> **Validation 1.1.0** tightens the existing `cwr-json-v1-0` schema (same schema id). Hand-edited JSON that passed before may fail strict validation; use advisory mode during migration where your tooling supports it.
+The schema embeds lookup enums and field patterns derived from the lookup table. CISAC CWR 2.x lookup tables (`CWR08-3615R2`) are the source for most enum sets; TIS codes come from the CISAC TIS export. Regenerate locally with `npm run schema:generate`.
 
 ---
 
@@ -35,7 +33,14 @@ The schema embeds lookup enums and field patterns derived from the lookup table.
 | `identifierSources` | `identifiers[].source` |
 | `messageTypes` | `messages.type` |
 | `aiUsageIndicators` | `flags.aiUsage` |
+| `characterSets` | `header.characterSet` |
+| `societyCodes` | `shares[].society` |
+| `languageCodes` | `titles[].language` |
+| `revocationReasons` | `messages.revocation.reason` |
+| `anomalousWorkReasons` | `flags.anomalousReason` |
 | `tisNumericCodes` | territory `include` / `exclude`, relinquishment scope |
+
+Additional CISAC reference sets (instruments, work types, transaction types, etc.) are bundled in the lookup JSON for tooling but are not yet enforced on JSON output fields until the parser exposes those properties.
 
 See also [TIS Territory Codes](./tis-territory-codes).
 
@@ -100,7 +105,7 @@ Note: AJV-only validation does not run semantic rules (territory overlap, sub-pu
 **JSON Schema (structural + lookups)** — enforced via AJV against the published schema:
 
 - Required fields, types, closed objects
-- Lookup enums: role codes, TIS codes, title types, identifier sources, message types, AI indicators
+- Lookup enums: role codes, TIS codes, title types, identifier sources, message types, AI indicators, character sets, society codes, language codes, revocation/anomalous reasons
 - Patterns: dates (`YYYYMMDD`), times (`HHMMSS`), IPI (11 digits), ISWC, ISRC, EAN
 - Share percentages `0`–`100`
 - **Conditional:** `own` territories must have empty TIS `include` / `exclude`

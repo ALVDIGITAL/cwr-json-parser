@@ -1,0 +1,2378 @@
+{
+  "tableName": "CISAC Society Code",
+  "slug": "cisac-society-code",
+  "source": "CWR08-3615R2_CWR_2x_Lookup_Table_2026-03-31_EN.xml#CISAC Society Code",
+  "entryCount": 395,
+  "entries": [
+    {
+      "description": "ACUM",
+      "code": "1",
+      "definition": null,
+      "other": "ISRAEL"
+    },
+    {
+      "description": "ADDAF",
+      "code": "2",
+      "definition": null,
+      "other": "BRAZIL"
+    },
+    {
+      "description": "AEPI",
+      "code": "3",
+      "definition": null,
+      "other": "GREECE"
+    },
+    {
+      "description": "AGADU",
+      "code": "4",
+      "definition": null,
+      "other": "URUGUAY"
+    },
+    {
+      "description": "AKM",
+      "code": "5",
+      "definition": null,
+      "other": "AUSTRIA"
+    },
+    {
+      "description": "BUCADA",
+      "code": "6",
+      "definition": null,
+      "other": "CENTRAL AFRICAN REPUBLIC"
+    },
+    {
+      "description": "APDAYC",
+      "code": "7",
+      "definition": null,
+      "other": "PERU"
+    },
+    {
+      "description": "APRA",
+      "code": "8",
+      "definition": null,
+      "other": "AUSTRALIA"
+    },
+    {
+      "description": "ARTISJUS",
+      "code": "9",
+      "definition": null,
+      "other": "HUNGARY"
+    },
+    {
+      "description": "ASCAP",
+      "code": "10",
+      "definition": null,
+      "other": "UNITED STATES"
+    },
+    {
+      "description": "AUSTRO-MECHANA (AUME)",
+      "code": "11",
+      "definition": null,
+      "other": "AUSTRIA"
+    },
+    {
+      "description": "AMCOS",
+      "code": "12",
+      "definition": null,
+      "other": "AUSTRALIA"
+    },
+    {
+      "description": "AWA",
+      "code": "13",
+      "definition": null,
+      "other": "GERMANY"
+    },
+    {
+      "description": "ARGENTORES",
+      "code": "14",
+      "definition": null,
+      "other": "ARGENTINA"
+    },
+    {
+      "description": "APA",
+      "code": "15",
+      "definition": null,
+      "other": "PARAGUAY"
+    },
+    {
+      "description": "BUMDA",
+      "code": "16",
+      "definition": null,
+      "other": "MALI"
+    },
+    {
+      "description": "AMRA",
+      "code": "17",
+      "definition": null,
+      "other": "UNITED STATES"
+    },
+    {
+      "description": "BGDA",
+      "code": "18",
+      "definition": null,
+      "other": "GUINEA"
+    },
+    {
+      "description": "BMDAV",
+      "code": "19",
+      "definition": null,
+      "other": "MOROCCO"
+    },
+    {
+      "description": "SOCAN RR",
+      "code": "20",
+      "definition": null,
+      "other": "CANADA"
+    },
+    {
+      "description": "BMI",
+      "code": "21",
+      "definition": null,
+      "other": "UNITED STATES"
+    },
+    {
+      "description": "MCSN",
+      "code": "22",
+      "definition": null,
+      "other": "NIGERIA"
+    },
+    {
+      "description": "BUMA",
+      "code": "23",
+      "definition": null,
+      "other": "NETHERLANDS"
+    },
+    {
+      "description": "BURIDA",
+      "code": "24",
+      "definition": null,
+      "other": "COTE D'IVOIRE"
+    },
+    {
+      "description": "SODAV",
+      "code": "25",
+      "definition": null,
+      "other": "SENEGAL"
+    },
+    {
+      "description": "CASH",
+      "code": "26",
+      "definition": null,
+      "other": "HONG KONG"
+    },
+    {
+      "description": "CAPAC",
+      "code": "27",
+      "definition": null,
+      "other": "CANADA"
+    },
+    {
+      "description": "LITA",
+      "code": "28",
+      "definition": null,
+      "other": "SLOVAKIA"
+    },
+    {
+      "description": "SCD",
+      "code": "29",
+      "definition": null,
+      "other": "CHILE"
+    },
+    {
+      "description": "AMAR",
+      "code": "30",
+      "definition": null,
+      "other": "BRAZIL"
+    },
+    {
+      "description": "DILIA",
+      "code": "31",
+      "definition": null,
+      "other": "CZECH REPUBLIC"
+    },
+    {
+      "description": "FILSCAP",
+      "code": "32",
+      "definition": null,
+      "other": "PHILIPPINES"
+    },
+    {
+      "description": "OMDA",
+      "code": "33",
+      "definition": null,
+      "other": "MADAGASCAR"
+    },
+    {
+      "description": "HFA",
+      "code": "34",
+      "definition": null,
+      "other": "UNITED STATES"
+    },
+    {
+      "description": "GEMA",
+      "code": "35",
+      "definition": null,
+      "other": "GERMANY"
+    },
+    {
+      "description": "IPRS",
+      "code": "36",
+      "definition": null,
+      "other": "INDIA"
+    },
+    {
+      "description": "BUBEDRA",
+      "code": "37",
+      "definition": null,
+      "other": "BENIN"
+    },
+    {
+      "description": "JASRAC",
+      "code": "38",
+      "definition": null,
+      "other": "JAPAN"
+    },
+    {
+      "description": "MUSICAUTOR",
+      "code": "39",
+      "definition": null,
+      "other": "BULGARIA"
+    },
+    {
+      "description": "KODA",
+      "code": "40",
+      "definition": null,
+      "other": "DENMARK"
+    },
+    {
+      "description": "LITERAR-MECHANA",
+      "code": "41",
+      "definition": null,
+      "other": "AUSTRIA"
+    },
+    {
+      "description": "LVG",
+      "code": "42",
+      "definition": null,
+      "other": "AUSTRIA"
+    },
+    {
+      "description": "MCSK",
+      "code": "43",
+      "definition": null,
+      "other": "KENYA"
+    },
+    {
+      "description": "MCPS",
+      "code": "44",
+      "definition": null,
+      "other": "UNITED KINGDOM"
+    },
+    {
+      "description": "BBDA",
+      "code": "45",
+      "definition": null,
+      "other": "BURKINA FASO"
+    },
+    {
+      "description": "MRS",
+      "code": "46",
+      "definition": null,
+      "other": "UNITED KINGDOM"
+    },
+    {
+      "description": "BCDA",
+      "code": "47",
+      "definition": null,
+      "other": "CONGO"
+    },
+    {
+      "description": "NCB",
+      "code": "48",
+      "definition": null,
+      "other": "DENMARK"
+    },
+    {
+      "description": "ONDA",
+      "code": "49",
+      "definition": null,
+      "other": "ALGERIA"
+    },
+    {
+      "description": "OSA",
+      "code": "50",
+      "definition": null,
+      "other": "CZECH REPUBLIC"
+    },
+    {
+      "description": "PROLITTERIS",
+      "code": "51",
+      "definition": null,
+      "other": "SWITZERLAND"
+    },
+    {
+      "description": "PRS",
+      "code": "52",
+      "definition": null,
+      "other": "UNITED KINGDOM"
+    },
+    {
+      "description": "PROCAN",
+      "code": "53",
+      "definition": null,
+      "other": "CANADA"
+    },
+    {
+      "description": "ALCS",
+      "code": "54",
+      "definition": null,
+      "other": "UNITED KINGDOM"
+    },
+    {
+      "description": "SABAM",
+      "code": "55",
+      "definition": null,
+      "other": "BELGIUM"
+    },
+    {
+      "description": "SACD",
+      "code": "56",
+      "definition": null,
+      "other": "FRANCE"
+    },
+    {
+      "description": "SACERAU",
+      "code": "57",
+      "definition": null,
+      "other": "EGYPT"
+    },
+    {
+      "description": "SACEM",
+      "code": "58",
+      "definition": null,
+      "other": "FRANCE"
+    },
+    {
+      "description": "SACM",
+      "code": "59",
+      "definition": null,
+      "other": "MEXICO"
+    },
+    {
+      "description": "SACVEN",
+      "code": "60",
+      "definition": null,
+      "other": "VENEZUELA"
+    },
+    {
+      "description": "SADAIC",
+      "code": "61",
+      "definition": null,
+      "other": "ARGENTINA"
+    },
+    {
+      "description": "SADEMBRA",
+      "code": "62",
+      "definition": null,
+      "other": "BRAZIL"
+    },
+    {
+      "description": "SAMRO",
+      "code": "63",
+      "definition": null,
+      "other": "SOUTH AFRICA"
+    },
+    {
+      "description": "SOKOJ",
+      "code": "64",
+      "definition": null,
+      "other": "SERBIA AND MONTENEGRO"
+    },
+    {
+      "description": "SAYCE",
+      "code": "65",
+      "definition": null,
+      "other": "ECUADOR"
+    },
+    {
+      "description": "SBACEM",
+      "code": "66",
+      "definition": null,
+      "other": "BRAZIL"
+    },
+    {
+      "description": "SBAT",
+      "code": "67",
+      "definition": null,
+      "other": "BRAZIL"
+    },
+    {
+      "description": "SDRM",
+      "code": "68",
+      "definition": null,
+      "other": "FRANCE"
+    },
+    {
+      "description": "SPA",
+      "code": "69",
+      "definition": null,
+      "other": "PORTUGAL"
+    },
+    {
+      "description": "SOGEM",
+      "code": "70",
+      "definition": null,
+      "other": "MEXICO"
+    },
+    {
+      "description": "SESAC Inc.",
+      "code": "71",
+      "definition": null,
+      "other": "UNITED STATES"
+    },
+    {
+      "description": "SGAE",
+      "code": "72",
+      "definition": null,
+      "other": "SPAIN"
+    },
+    {
+      "description": "SCAM",
+      "code": "73",
+      "definition": null,
+      "other": "FRANCE"
+    },
+    {
+      "description": "SIAE",
+      "code": "74",
+      "definition": null,
+      "other": "ITALY"
+    },
+    {
+      "description": "SUISSIMAGE",
+      "code": "75",
+      "definition": null,
+      "other": "SWITZERLAND"
+    },
+    {
+      "description": "ACEMLA",
+      "code": "76",
+      "definition": null,
+      "other": "PUERTO RICO"
+    },
+    {
+      "description": "STEF",
+      "code": "77",
+      "definition": null,
+      "other": "ICELAND"
+    },
+    {
+      "description": "STEMRA",
+      "code": "78",
+      "definition": null,
+      "other": "NETHERLANDS"
+    },
+    {
+      "description": "STIM",
+      "code": "79",
+      "definition": null,
+      "other": "SWEDEN"
+    },
+    {
+      "description": "SUISA",
+      "code": "80",
+      "definition": null,
+      "other": "SWITZERLAND"
+    },
+    {
+      "description": "SARRAL",
+      "code": "81",
+      "definition": null,
+      "other": "SOUTH AFRICA"
+    },
+    {
+      "description": "OTDAV",
+      "code": "82",
+      "definition": null,
+      "other": "TUNISIA"
+    },
+    {
+      "description": "SONECA",
+      "code": "83",
+      "definition": null,
+      "other": "CONGO, THE DEMOCRATIC REPUBLIC OF THE"
+    },
+    {
+      "description": "SAYCO",
+      "code": "84",
+      "definition": null,
+      "other": "COLOMBIA"
+    },
+    {
+      "description": "SOZA",
+      "code": "85",
+      "definition": null,
+      "other": "SLOVAKIA"
+    },
+    {
+      "description": "SICAM",
+      "code": "86",
+      "definition": null,
+      "other": "BRAZIL"
+    },
+    {
+      "description": "SPACEM",
+      "code": "87",
+      "definition": null,
+      "other": "FRANCE (TAHITI)"
+    },
+    {
+      "description": "CMRRA",
+      "code": "88",
+      "definition": null,
+      "other": "CANADA"
+    },
+    {
+      "description": "TEOSTO",
+      "code": "89",
+      "definition": null,
+      "other": "FINLAND"
+    },
+    {
+      "description": "TONO",
+      "code": "90",
+      "definition": null,
+      "other": "NORWAY"
+    },
+    {
+      "description": "SSA",
+      "code": "91",
+      "definition": null,
+      "other": "SWITZERLAND"
+    },
+    {
+      "description": "SOCINADA",
+      "code": "92",
+      "definition": null,
+      "other": "CAMEROON"
+    },
+    {
+      "description": "UBC",
+      "code": "93",
+      "definition": null,
+      "other": "BRAZIL"
+    },
+    {
+      "description": "RAO",
+      "code": "94",
+      "definition": null,
+      "other": "RUSSIAN FEDERATION"
+    },
+    {
+      "description": "VG WORT",
+      "code": "95",
+      "definition": null,
+      "other": "GERMANY"
+    },
+    {
+      "description": "COTT",
+      "code": "96",
+      "definition": null,
+      "other": "TRINIDAD AND TOBAGO"
+    },
+    {
+      "description": "ZAIKS",
+      "code": "97",
+      "definition": null,
+      "other": "POLAND"
+    },
+    {
+      "description": "ZIMURA",
+      "code": "98",
+      "definition": null,
+      "other": "ZIMBABWE"
+    },
+    {
+      "description": "SOCAN",
+      "code": "101",
+      "definition": null,
+      "other": "CANADA"
+    },
+    {
+      "description": "NASCAM",
+      "code": "102",
+      "definition": null,
+      "other": "NAMIBIA"
+    },
+    {
+      "description": "ACDAM",
+      "code": "103",
+      "definition": null,
+      "other": "CUBA"
+    },
+    {
+      "description": "MACP",
+      "code": "104",
+      "definition": null,
+      "other": "MALAYSIA"
+    },
+    {
+      "description": "MASA",
+      "code": "105",
+      "definition": null,
+      "other": "MAURITIUS"
+    },
+    {
+      "description": "COMPASS",
+      "code": "106",
+      "definition": null,
+      "other": "SINGAPORE"
+    },
+    {
+      "description": "ACAM",
+      "code": "107",
+      "definition": null,
+      "other": "COSTA RICA"
+    },
+    {
+      "description": "CHA",
+      "code": "108",
+      "definition": null,
+      "other": "TAIWAN, CHINESE TAIPEI"
+    },
+    {
+      "description": "KCI",
+      "code": "109",
+      "definition": null,
+      "other": "INDONESIA"
+    },
+    {
+      "description": "LATGA",
+      "code": "110",
+      "definition": null,
+      "other": "LITHUANIA"
+    },
+    {
+      "description": "HDS-ZAMP",
+      "code": "111",
+      "definition": null,
+      "other": "CROATIA"
+    },
+    {
+      "description": "SAZAS",
+      "code": "112",
+      "definition": null,
+      "other": "SLOVENIA"
+    },
+    {
+      "description": "LAA",
+      "code": "113",
+      "definition": null,
+      "other": "LATVIA"
+    },
+    {
+      "description": "AGAYC",
+      "code": "114",
+      "definition": null,
+      "other": "GUATEMALA"
+    },
+    {
+      "description": "UCMR-ADA",
+      "code": "115",
+      "definition": null,
+      "other": "ROMANIA"
+    },
+    {
+      "description": "EAU",
+      "code": "116",
+      "definition": null,
+      "other": "ESTONIA"
+    },
+    {
+      "description": "MESAM",
+      "code": "117",
+      "definition": null,
+      "other": "TURKEY"
+    },
+    {
+      "description": "KOMCA",
+      "code": "118",
+      "definition": null,
+      "other": "KOREA, REPUBLIC OF"
+    },
+    {
+      "description": "MCSC",
+      "code": "119",
+      "definition": null,
+      "other": "CHINA"
+    },
+    {
+      "description": "LIRA",
+      "code": "120",
+      "definition": null,
+      "other": "NETHERLANDS"
+    },
+    {
+      "description": "VDFS",
+      "code": "121",
+      "definition": null,
+      "other": "AUSTRIA"
+    },
+    {
+      "description": "AKKA-LAA",
+      "code": "122",
+      "definition": null,
+      "other": "LATVIA"
+    },
+    {
+      "description": "COSGA",
+      "code": "123",
+      "definition": null,
+      "other": "GHANA"
+    },
+    {
+      "description": "COSOMA",
+      "code": "124",
+      "definition": null,
+      "other": "MALAWI"
+    },
+    {
+      "description": "BNDA",
+      "code": "125",
+      "definition": null,
+      "other": "NIGER"
+    },
+    {
+      "description": "MCT",
+      "code": "126",
+      "definition": null,
+      "other": "THAILAND"
+    },
+    {
+      "description": "ALBAUTOR",
+      "code": "127",
+      "definition": null,
+      "other": "ALBANIA"
+    },
+    {
+      "description": "IMRO",
+      "code": "128",
+      "definition": null,
+      "other": "IRELAND"
+    },
+    {
+      "description": "SOBODAYCOM",
+      "code": "129",
+      "definition": null,
+      "other": "BOLIVIA"
+    },
+    {
+      "description": "BUTODRA",
+      "code": "130",
+      "definition": null,
+      "other": "TOGO"
+    },
+    {
+      "description": "ATHINA-SADA",
+      "code": "131",
+      "definition": null,
+      "other": "GREECE"
+    },
+    {
+      "description": "VG BILD-KUNST",
+      "code": "132",
+      "definition": null,
+      "other": "GERMANY"
+    },
+    {
+      "description": "ZAMCOPS",
+      "code": "133",
+      "definition": null,
+      "other": "ZAMBIA"
+    },
+    {
+      "description": "SLPRS",
+      "code": "134",
+      "definition": null,
+      "other": "SRI LANKA"
+    },
+    {
+      "description": "SADH",
+      "code": "135",
+      "definition": null,
+      "other": "GREECE"
+    },
+    {
+      "description": "ZAMP - Macédoine",
+      "code": "136",
+      "definition": null,
+      "other": "MACEDONIA, THE FORMER YUGOSLAV REPUBLIC OF"
+    },
+    {
+      "description": "SOFAM",
+      "code": "137",
+      "definition": null,
+      "other": "BELGIUM"
+    },
+    {
+      "description": "KOPIOSTO",
+      "code": "138",
+      "definition": null,
+      "other": "FINLAND"
+    },
+    {
+      "description": "VISDA",
+      "code": "139",
+      "definition": null,
+      "other": "DENMARK"
+    },
+    {
+      "description": "NGO-UACRR",
+      "code": "140",
+      "definition": null,
+      "other": "UKRAINE"
+    },
+    {
+      "description": "ATN",
+      "code": "141",
+      "definition": null,
+      "other": "CHILE"
+    },
+    {
+      "description": "DALRO",
+      "code": "142",
+      "definition": null,
+      "other": "SOUTH AFRICA"
+    },
+    {
+      "description": "TEATERAUTOR",
+      "code": "143",
+      "definition": null,
+      "other": "BULGARIA"
+    },
+    {
+      "description": "HAA",
+      "code": "144",
+      "definition": null,
+      "other": "CROATIA"
+    },
+    {
+      "description": "DIRECTORS UK",
+      "code": "145",
+      "definition": null,
+      "other": "UNITED KINGDOM"
+    },
+    {
+      "description": "SPAC",
+      "code": "146",
+      "definition": null,
+      "other": "PANAMA"
+    },
+    {
+      "description": "FILMAUTOR",
+      "code": "147",
+      "definition": null,
+      "other": "BULGARIA"
+    },
+    {
+      "description": "ADAGP",
+      "code": "148",
+      "definition": null,
+      "other": "FRANCE"
+    },
+    {
+      "description": "ARS",
+      "code": "149",
+      "definition": null,
+      "other": "UNITED STATES"
+    },
+    {
+      "description": "BEELDRECHT",
+      "code": "150",
+      "definition": null,
+      "other": "NETHERLANDS"
+    },
+    {
+      "description": "BONO",
+      "code": "151",
+      "definition": null,
+      "other": "NORWAY"
+    },
+    {
+      "description": "Bildupphovsrätt (Visual Copyright Society)",
+      "code": "152",
+      "definition": null,
+      "other": "SWEDEN"
+    },
+    {
+      "description": "DACS",
+      "code": "153",
+      "definition": null,
+      "other": "UNITED KINGDOM"
+    },
+    {
+      "description": "HUNGART",
+      "code": "154",
+      "definition": null,
+      "other": "HUNGARY"
+    },
+    {
+      "description": "SOMAAP",
+      "code": "155",
+      "definition": null,
+      "other": "MEXICO"
+    },
+    {
+      "description": "VAGA",
+      "code": "156",
+      "definition": null,
+      "other": "UNITED STATES"
+    },
+    {
+      "description": "BILDRECHT GmbH",
+      "code": "157",
+      "definition": null,
+      "other": "AUSTRIA"
+    },
+    {
+      "description": "VEGAP",
+      "code": "158",
+      "definition": null,
+      "other": "SPAIN"
+    },
+    {
+      "description": "VISCOPY",
+      "code": "159",
+      "definition": null,
+      "other": "AUSTRALIA"
+    },
+    {
+      "description": "NCIP",
+      "code": "160",
+      "definition": null,
+      "other": "BELARUS"
+    },
+    {
+      "description": "MÜST",
+      "code": "161",
+      "definition": null,
+      "other": "TAIWAN, CHINESE TAIPEI"
+    },
+    {
+      "description": "AMPAL",
+      "code": "162",
+      "definition": null,
+      "other": "AUSTRALIA"
+    },
+    {
+      "description": "APG-Japan",
+      "code": "163",
+      "definition": null,
+      "other": "JAPAN"
+    },
+    {
+      "description": "APSAV",
+      "code": "164",
+      "definition": null,
+      "other": "PERU"
+    },
+    {
+      "description": "AUTORARTE",
+      "code": "166",
+      "definition": null,
+      "other": "VENEZUELA"
+    },
+    {
+      "description": "BURAFO",
+      "code": "167",
+      "definition": null,
+      "other": "NETHERLANDS"
+    },
+    {
+      "description": "Copyright Agency",
+      "code": "168",
+      "definition": null,
+      "other": "AUSTRALIA"
+    },
+    {
+      "description": "COSCAP",
+      "code": "169",
+      "definition": null,
+      "other": "BARBADOS"
+    },
+    {
+      "description": "CPSN",
+      "code": "170",
+      "definition": null,
+      "other": "NEPAL"
+    },
+    {
+      "description": "CREAIMAGEN",
+      "code": "171",
+      "definition": null,
+      "other": "CHILE"
+    },
+    {
+      "description": "DGA",
+      "code": "172",
+      "definition": null,
+      "other": "UNITED STATES"
+    },
+    {
+      "description": "DIRECTORES",
+      "code": "173",
+      "definition": null,
+      "other": "MEXICO"
+    },
+    {
+      "description": "FILMJUS",
+      "code": "174",
+      "definition": null,
+      "other": "HUNGARY"
+    },
+    {
+      "description": "CopyRo",
+      "code": "175",
+      "definition": null,
+      "other": "ROMANIA"
+    },
+    {
+      "description": "JACAP",
+      "code": "176",
+      "definition": null,
+      "other": "JAMAICA"
+    },
+    {
+      "description": "KazAK",
+      "code": "177",
+      "definition": null,
+      "other": "KAZAKSTAN"
+    },
+    {
+      "description": "KOSA",
+      "code": "178",
+      "definition": null,
+      "other": "KOREA, REPUBLIC OF"
+    },
+    {
+      "description": "KUVASTO",
+      "code": "179",
+      "definition": null,
+      "other": "FINLAND"
+    },
+    {
+      "description": "MUSIKEDITION",
+      "code": "180",
+      "definition": null,
+      "other": "AUSTRIA"
+    },
+    {
+      "description": "NMPA",
+      "code": "181",
+      "definition": null,
+      "other": "UNITED STATES"
+    },
+    {
+      "description": "PAPPRI",
+      "code": "182",
+      "definition": null,
+      "other": "INDONESIA"
+    },
+    {
+      "description": "SACK",
+      "code": "183",
+      "definition": null,
+      "other": "KOREA, REPUBLIC OF"
+    },
+    {
+      "description": "SARTEC",
+      "code": "184",
+      "definition": null,
+      "other": "CANADA"
+    },
+    {
+      "description": "SESAM",
+      "code": "185",
+      "definition": null,
+      "other": "FRANCE"
+    },
+    {
+      "description": "SGDL",
+      "code": "186",
+      "definition": null,
+      "other": "FRANCE"
+    },
+    {
+      "description": "SNAC",
+      "code": "187",
+      "definition": null,
+      "other": "FRANCE"
+    },
+    {
+      "description": "Société de l'Image",
+      "code": "188",
+      "definition": null,
+      "other": "FRANCE"
+    },
+    {
+      "description": "SOCINPRO",
+      "code": "189",
+      "definition": null,
+      "other": "BRAZIL"
+    },
+    {
+      "description": "SOPE",
+      "code": "190",
+      "definition": null,
+      "other": "GREECE"
+    },
+    {
+      "description": "SPACQ-AE",
+      "code": "191",
+      "definition": null,
+      "other": "CANADA"
+    },
+    {
+      "description": "SFF",
+      "code": "192",
+      "definition": null,
+      "other": "SWEDEN"
+    },
+    {
+      "description": "The Society of Authors (SOA)",
+      "code": "193",
+      "definition": null,
+      "other": "UNITED KINGDOM"
+    },
+    {
+      "description": "UFFICIO GIURIDICO",
+      "code": "194",
+      "definition": null,
+      "other": "HOLY SEE (VATICAN CITY STATE)"
+    },
+    {
+      "description": "VEVAM",
+      "code": "195",
+      "definition": null,
+      "other": "NETHERLANDS"
+    },
+    {
+      "description": "WGAW",
+      "code": "196",
+      "definition": null,
+      "other": "UNITED STATES"
+    },
+    {
+      "description": "WGJ",
+      "code": "197",
+      "definition": null,
+      "other": "JAPAN"
+    },
+    {
+      "description": "ZAMP Association of Slovenia",
+      "code": "198",
+      "definition": null,
+      "other": "SLOVENIA"
+    },
+    {
+      "description": "SFP-ZAPA",
+      "code": "199",
+      "definition": null,
+      "other": "POLAND"
+    },
+    {
+      "description": "MSG",
+      "code": "200",
+      "definition": null,
+      "other": "TURKEY"
+    },
+    {
+      "description": "ABRAMUS",
+      "code": "201",
+      "definition": null,
+      "other": "BRAZIL"
+    },
+    {
+      "description": "AsDAC",
+      "code": "202",
+      "definition": null,
+      "other": "MOLDOVA, REPUBLIC OF"
+    },
+    {
+      "description": "AWGACS",
+      "code": "203",
+      "definition": null,
+      "other": "AUSTRALIA"
+    },
+    {
+      "description": "GCA",
+      "code": "204",
+      "definition": null,
+      "other": "GEORGIA"
+    },
+    {
+      "description": "SODART",
+      "code": "205",
+      "definition": null,
+      "other": "CANADA"
+    },
+    {
+      "description": "UFW",
+      "code": "206",
+      "definition": null,
+      "other": "FINLAND"
+    },
+    {
+      "description": "The Author's Registry Inc.",
+      "code": "207",
+      "definition": null,
+      "other": "UNITED STATES"
+    },
+    {
+      "description": "SGA",
+      "code": "208",
+      "definition": null,
+      "other": "GUINEA-BISSAU"
+    },
+    {
+      "description": "ARMAUTHOR NGO",
+      "code": "209",
+      "definition": null,
+      "other": "ARMENIA"
+    },
+    {
+      "description": "ACCESS COPYRIGHT",
+      "code": "210",
+      "definition": null,
+      "other": "CANADA"
+    },
+    {
+      "description": "CSCS",
+      "code": "212",
+      "definition": null,
+      "other": "CANADA"
+    },
+    {
+      "description": "DRCC",
+      "code": "213",
+      "definition": null,
+      "other": "CANADA"
+    },
+    {
+      "description": "ECCO",
+      "code": "214",
+      "definition": null,
+      "other": "SAINT LUCIA"
+    },
+    {
+      "description": "Kyrgyzpatent",
+      "code": "215",
+      "definition": null,
+      "other": "KYRGYZSTAN"
+    },
+    {
+      "description": "SQN",
+      "code": "216",
+      "definition": null,
+      "other": "BOSNIA AND HERZEGOVINA"
+    },
+    {
+      "description": "ABRAC",
+      "code": "217",
+      "definition": null,
+      "other": "BRAZIL"
+    },
+    {
+      "description": "ANACIM",
+      "code": "218",
+      "definition": null,
+      "other": "BRAZIL"
+    },
+    {
+      "description": "ASSIM",
+      "code": "219",
+      "definition": null,
+      "other": "BRAZIL"
+    },
+    {
+      "description": "ATIDA",
+      "code": "220",
+      "definition": null,
+      "other": "BRAZIL"
+    },
+    {
+      "description": "SABEM",
+      "code": "221",
+      "definition": null,
+      "other": "BRAZIL"
+    },
+    {
+      "description": "FONOPERU",
+      "code": "222",
+      "definition": null,
+      "other": "PERU"
+    },
+    {
+      "description": "COSOTA",
+      "code": "223",
+      "definition": null,
+      "other": "TANZANIA, UNITED REPUBLIC OF"
+    },
+    {
+      "description": "SOMAS",
+      "code": "224",
+      "definition": null,
+      "other": "MOZAMBIQUE"
+    },
+    {
+      "description": "SAIF",
+      "code": "225",
+      "definition": null,
+      "other": "FRANCE"
+    },
+    {
+      "description": "AACIMH",
+      "code": "226",
+      "definition": null,
+      "other": "HONDURAS"
+    },
+    {
+      "description": "SGACEDOM",
+      "code": "227",
+      "definition": null,
+      "other": "DOMINICAN REPUBLIC"
+    },
+    {
+      "description": "ROMS",
+      "code": "228",
+      "definition": null,
+      "other": "RUSSIAN FEDERATION"
+    },
+    {
+      "description": "ICG",
+      "code": "229",
+      "definition": null,
+      "other": "UNITED STATES"
+    },
+    {
+      "description": "ADAVIS",
+      "code": "230",
+      "definition": null,
+      "other": "CUBA"
+    },
+    {
+      "description": "AUTVIS",
+      "code": "231",
+      "definition": null,
+      "other": "BRAZIL"
+    },
+    {
+      "description": "GESTOR",
+      "code": "232",
+      "definition": null,
+      "other": "CZECH REPUBLIC"
+    },
+    {
+      "description": "SACEMLUXEMBOURG",
+      "code": "233",
+      "definition": null,
+      "other": "LUXEMBOURG"
+    },
+    {
+      "description": "UPRS",
+      "code": "234",
+      "definition": null,
+      "other": "UGANDA"
+    },
+    {
+      "description": "SACENC",
+      "code": "235",
+      "definition": null,
+      "other": "FRANCE"
+    },
+    {
+      "description": "ARTEGESTION",
+      "code": "236",
+      "definition": null,
+      "other": "ECUADOR"
+    },
+    {
+      "description": "TALI",
+      "code": "237",
+      "definition": null,
+      "other": "ISRAEL"
+    },
+    {
+      "description": "BSCAP",
+      "code": "238",
+      "definition": null,
+      "other": "BELIZE"
+    },
+    {
+      "description": "CMC",
+      "code": "239",
+      "definition": null,
+      "other": "CAMEROON"
+    },
+    {
+      "description": "DAMA",
+      "code": "240",
+      "definition": null,
+      "other": "SPAIN"
+    },
+    {
+      "description": "NICAUTOR",
+      "code": "241",
+      "definition": null,
+      "other": "NICARAGUA"
+    },
+    {
+      "description": "SACIM",
+      "code": "242",
+      "definition": null,
+      "other": "EL SALVADOR"
+    },
+    {
+      "description": "SADIA",
+      "code": "243",
+      "definition": null,
+      "other": "ANGOLA"
+    },
+    {
+      "description": "SASUR",
+      "code": "244",
+      "definition": null,
+      "other": "SURINAME"
+    },
+    {
+      "description": "SETEM",
+      "code": "245",
+      "definition": null,
+      "other": "TURKEY"
+    },
+    {
+      "description": "VCPMC",
+      "code": "246",
+      "definition": null,
+      "other": "VIET NAM"
+    },
+    {
+      "description": "IVARO",
+      "code": "247",
+      "definition": null,
+      "other": "IRELAND"
+    },
+    {
+      "description": "DAC",
+      "code": "248",
+      "definition": null,
+      "other": "ARGENTINA"
+    },
+    {
+      "description": "PAM CG",
+      "code": "249",
+      "definition": null,
+      "other": "MONTENEGRO"
+    },
+    {
+      "description": "AEI-GUATEMALA",
+      "code": "250",
+      "definition": null,
+      "other": "GUATEMALA"
+    },
+    {
+      "description": "ASDACS",
+      "code": "251",
+      "definition": null,
+      "other": "AUSTRALIA"
+    },
+    {
+      "description": "COLCCMA",
+      "code": "252",
+      "definition": null,
+      "other": "TAIWAN, CHINESE TAIPEI"
+    },
+    {
+      "description": "AAS",
+      "code": "253",
+      "definition": null,
+      "other": "AZERBAIJAN"
+    },
+    {
+      "description": "SOCILADRA",
+      "code": "254",
+      "definition": null,
+      "other": "CAMEROON"
+    },
+    {
+      "description": "SODOMAPLA",
+      "code": "255",
+      "definition": null,
+      "other": "DOMINICAN REPUBLIC"
+    },
+    {
+      "description": "PICTORIGHT",
+      "code": "256",
+      "definition": null,
+      "other": "NETHERLANDS"
+    },
+    {
+      "description": "SAVA",
+      "code": "257",
+      "definition": null,
+      "other": "ARGENTINA"
+    },
+    {
+      "description": "MRCSN",
+      "code": "258",
+      "definition": null,
+      "other": "NEPAL"
+    },
+    {
+      "description": "SDCSI",
+      "code": "259",
+      "definition": null,
+      "other": "IRELAND"
+    },
+    {
+      "description": "ACS",
+      "code": "260",
+      "definition": null,
+      "other": "UNITED KINGDOM"
+    },
+    {
+      "description": "GAI Uz",
+      "code": "261",
+      "definition": null,
+      "other": "UZBEKISTAN"
+    },
+    {
+      "description": "SINEBIR",
+      "code": "262",
+      "definition": null,
+      "other": "TURKEY"
+    },
+    {
+      "description": "SACS",
+      "code": "263",
+      "definition": null,
+      "other": "SEYCHELLES"
+    },
+    {
+      "description": "CARCC",
+      "code": "264",
+      "definition": null,
+      "other": "CANADA"
+    },
+    {
+      "description": "MACA",
+      "code": "265",
+      "definition": null,
+      "other": "MACAU"
+    },
+    {
+      "description": "BeAT",
+      "code": "266",
+      "definition": null,
+      "other": "BRUNEI DARUSSALAM"
+    },
+    {
+      "description": "UPRAVIS",
+      "code": "267",
+      "definition": null,
+      "other": "RUSSIAN FEDERATION"
+    },
+    {
+      "description": "COSON",
+      "code": "268",
+      "definition": null,
+      "other": "NIGERIA"
+    },
+    {
+      "description": "WAMI",
+      "code": "269",
+      "definition": null,
+      "other": "INDONESIA"
+    },
+    {
+      "description": "JASPAR",
+      "code": "270",
+      "definition": null,
+      "other": "JAPAN"
+    },
+    {
+      "description": "DHFA",
+      "code": "271",
+      "definition": null,
+      "other": "CROATIA"
+    },
+    {
+      "description": "MOSCAP",
+      "code": "272",
+      "definition": null,
+      "other": "MONGOLIA"
+    },
+    {
+      "description": "AMUS",
+      "code": "273",
+      "definition": null,
+      "other": "BOSNIA AND HERZEGOVINA"
+    },
+    {
+      "description": "AuPO CINEMA",
+      "code": "274",
+      "definition": null,
+      "other": "UKRAINE"
+    },
+    {
+      "description": "AUTODIA",
+      "code": "275",
+      "definition": null,
+      "other": "GREECE"
+    },
+    {
+      "description": "DASC",
+      "code": "276",
+      "definition": null,
+      "other": "COLOMBIA"
+    },
+    {
+      "description": "RSAU",
+      "code": "277",
+      "definition": null,
+      "other": "RWANDA"
+    },
+    {
+      "description": "RUR",
+      "code": "278",
+      "definition": null,
+      "other": "RUSSIAN FEDERATION"
+    },
+    {
+      "description": "SDADV",
+      "code": "279",
+      "definition": null,
+      "other": "ANDORRA"
+    },
+    {
+      "description": "SANASTO",
+      "code": "280",
+      "definition": null,
+      "other": "FINLAND"
+    },
+    {
+      "description": "UNAC-SA",
+      "code": "282",
+      "definition": null,
+      "other": "ANGOLA"
+    },
+    {
+      "description": "CAPASSO",
+      "code": "283",
+      "definition": null,
+      "other": "SOUTH AFRICA"
+    },
+    {
+      "description": "COSOZA",
+      "code": "284",
+      "definition": null,
+      "other": "TANZANIA, UNITED REPUBLIC OF"
+    },
+    {
+      "description": "GHAMRO",
+      "code": "285",
+      "definition": null,
+      "other": "GHANA"
+    },
+    {
+      "description": "ODDA",
+      "code": "286",
+      "definition": null,
+      "other": "DJIBOUTI"
+    },
+    {
+      "description": "KOLAA",
+      "code": "287",
+      "definition": null,
+      "other": "KOREA"
+    },
+    {
+      "description": "ABYROY",
+      "code": "288",
+      "definition": null,
+      "other": "KAZAKHSTAN"
+    },
+    {
+      "description": "AIPA",
+      "code": "289",
+      "definition": null,
+      "other": "SLOVENIA"
+    },
+    {
+      "description": "AZDG",
+      "code": "290",
+      "definition": null,
+      "other": "AZERBAIJAN"
+    },
+    {
+      "description": "OFA",
+      "code": "291",
+      "definition": null,
+      "other": "SERBIA"
+    },
+    {
+      "description": "ZPAP",
+      "code": "292",
+      "definition": null,
+      "other": "POLAND"
+    },
+    {
+      "description": "DBCA",
+      "code": "293",
+      "definition": null,
+      "other": "BRAZIL"
+    },
+    {
+      "description": "REDES SGC",
+      "code": "294",
+      "definition": null,
+      "other": "COLOMBIA"
+    },
+    {
+      "description": "SAGCRYT",
+      "code": "295",
+      "definition": null,
+      "other": "MEXICO"
+    },
+    {
+      "description": "DACIN-SARA",
+      "code": "296",
+      "definition": null,
+      "other": "ROMANIA"
+    },
+    {
+      "description": "GEDAR",
+      "code": "297",
+      "definition": null,
+      "other": "BRAZIL"
+    },
+    {
+      "description": "OOA-S",
+      "code": "298",
+      "definition": null,
+      "other": "CZECH REPUBLIC"
+    },
+    {
+      "description": "SCM-COOPERATIVA",
+      "code": "299",
+      "definition": null,
+      "other": "CAPE VERDE"
+    },
+    {
+      "description": "WID Centre",
+      "code": "300",
+      "definition": null,
+      "other": "UNITED STATES"
+    },
+    {
+      "description": "GESAC",
+      "code": "301",
+      "definition": null,
+      "other": "BELGIUM"
+    },
+    {
+      "description": "LATINAUTOR",
+      "code": "302",
+      "definition": null,
+      "other": "URUGUAY"
+    },
+    {
+      "description": "NORD-DOC",
+      "code": "303",
+      "definition": null,
+      "other": "SWEDEN"
+    },
+    {
+      "description": "SONGCODE",
+      "code": "304",
+      "definition": null,
+      "other": "UNITED STATES"
+    },
+    {
+      "description": "IMJV",
+      "code": "305",
+      "definition": null,
+      "other": "NETHERLANDS"
+    },
+    {
+      "description": "ACCS",
+      "code": "306",
+      "definition": null,
+      "other": "TRINIDAD AND TOBAGO"
+    },
+    {
+      "description": "MIS@ASIA",
+      "code": "307",
+      "definition": null,
+      "other": "SINGAPORE"
+    },
+    {
+      "description": "ECAD",
+      "code": "308",
+      "definition": null,
+      "other": "BRAZIL"
+    },
+    {
+      "description": "LatinNet",
+      "code": "309",
+      "definition": null,
+      "other": "SPAIN"
+    },
+    {
+      "description": "DIVA",
+      "code": "310",
+      "definition": null,
+      "other": "HONG KONG"
+    },
+    {
+      "description": "MCPS-PRS Alliance",
+      "code": "311",
+      "definition": null,
+      "other": "UNITED KINGDOM"
+    },
+    {
+      "description": "CISAC",
+      "code": "312",
+      "definition": null,
+      "other": "FRANCE"
+    },
+    {
+      "description": "FastTrack DCN",
+      "code": "313",
+      "definition": null,
+      "other": "FRANCE"
+    },
+    {
+      "description": "IDA",
+      "code": "314",
+      "definition": null,
+      "other": "FRANCE"
+    },
+    {
+      "description": "CSI",
+      "code": "315",
+      "definition": null,
+      "other": "FRANCE"
+    },
+    {
+      "description": "CIS-Net AVI",
+      "code": "316",
+      "definition": null,
+      "other": "FRANCE"
+    },
+    {
+      "description": "INTL-REP",
+      "code": "317",
+      "definition": null,
+      "other": "FRANCE"
+    },
+    {
+      "description": "SGS",
+      "code": "318",
+      "definition": null,
+      "other": "FRANCE"
+    },
+    {
+      "description": "ICE Services AB",
+      "code": "319",
+      "definition": null,
+      "other": "SWEDEN"
+    },
+    {
+      "description": "ARMONIA",
+      "code": "320",
+      "definition": null,
+      "other": "FRANCE"
+    },
+    {
+      "description": "PUBLISHERS",
+      "code": "321",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "EVA",
+      "code": "322",
+      "definition": null,
+      "other": "BELGIUM"
+    },
+    {
+      "description": "ANCO",
+      "code": "323",
+      "definition": null,
+      "other": "MOLDOVA"
+    },
+    {
+      "description": "CNRCMSE",
+      "code": "324",
+      "definition": null,
+      "other": "ETHIOPIA"
+    },
+    {
+      "description": "CRSEA",
+      "code": "325",
+      "definition": null,
+      "other": "RUSSIA"
+    },
+    {
+      "description": "IMPF",
+      "code": "326",
+      "definition": null,
+      "other": "BELGIUM"
+    },
+    {
+      "description": "OAZA",
+      "code": "327",
+      "definition": null,
+      "other": "CZECH REPUBLIC"
+    },
+    {
+      "description": "SAA",
+      "code": "328",
+      "definition": null,
+      "other": "BELGIUM"
+    },
+    {
+      "description": "ICSC",
+      "code": "329",
+      "definition": null,
+      "other": "CHINA"
+    },
+    {
+      "description": "SINGCAPS",
+      "code": "330",
+      "definition": null,
+      "other": "SINGAPORE"
+    },
+    {
+      "description": "COSBOTS",
+      "code": "331",
+      "definition": null,
+      "other": "BOTSWANA"
+    },
+    {
+      "description": "DEGANZ",
+      "code": "332",
+      "definition": null,
+      "other": "NEW ZEALAND"
+    },
+    {
+      "description": "DGK",
+      "code": "333",
+      "definition": null,
+      "other": "REPUBLIC OF KOREA"
+    },
+    {
+      "description": "ASCRL",
+      "code": "334",
+      "definition": null,
+      "other": "USA"
+    },
+    {
+      "description": "ISOCRATIS",
+      "code": "335",
+      "definition": null,
+      "other": "GREECE"
+    },
+    {
+      "description": "KOSCAP",
+      "code": "336",
+      "definition": null,
+      "other": "REPUBLIC OF KOREA"
+    },
+    {
+      "description": "COPYSWEDE",
+      "code": "337",
+      "definition": null,
+      "other": "SWEDEN"
+    },
+    {
+      "description": "EDEM",
+      "code": "338",
+      "definition": null,
+      "other": "GREECE"
+    },
+    {
+      "description": "EKKI",
+      "code": "339",
+      "definition": null,
+      "other": "SPAIN"
+    },
+    {
+      "description": "MYNDSTEF",
+      "code": "340",
+      "definition": null,
+      "other": "ICELAND"
+    },
+    {
+      "description": "AVTE",
+      "code": "341",
+      "definition": null,
+      "other": "FRANCE"
+    },
+    {
+      "description": "DGJ",
+      "code": "342",
+      "definition": null,
+      "other": "JAPAN"
+    },
+    {
+      "description": "Mali Maliki Institute",
+      "code": "343",
+      "definition": null,
+      "other": "GHANA"
+    },
+    {
+      "description": "SEDA",
+      "code": "344",
+      "definition": null,
+      "other": "SPAIN"
+    },
+    {
+      "description": "SIIP",
+      "code": "345",
+      "definition": null,
+      "other": "UZBEKISTAN"
+    },
+    {
+      "description": "TAMRISO",
+      "code": "346",
+      "definition": null,
+      "other": "TANZANIA, UNITED REPUBLIC OF"
+    },
+    {
+      "description": "IAF",
+      "code": "347",
+      "definition": null,
+      "other": "UNITED KINGDOM"
+    },
+    {
+      "description": "AVRS",
+      "code": "348",
+      "definition": null,
+      "other": "NIGERIA"
+    },
+    {
+      "description": "DYGA",
+      "code": "349",
+      "definition": null,
+      "other": "CHILE"
+    },
+    {
+      "description": "LESCOSAA",
+      "code": "350",
+      "definition": null,
+      "other": "LESOTHO"
+    },
+    {
+      "description": "SEF",
+      "code": "351",
+      "definition": null,
+      "other": "TURKEY"
+    },
+    {
+      "description": "VISARTA",
+      "code": "352",
+      "definition": null,
+      "other": "ROMANIA"
+    },
+    {
+      "description": "RRA",
+      "code": "353",
+      "definition": null,
+      "other": "NEW ZEALAND"
+    },
+    {
+      "description": "ArmCinemaAuthor",
+      "code": "354",
+      "definition": null,
+      "other": "ARMENIA"
+    },
+    {
+      "description": "Asocijacija Autora",
+      "code": "355",
+      "definition": null,
+      "other": "SERBIA"
+    },
+    {
+      "description": "KTRWA",
+      "code": "356",
+      "definition": null,
+      "other": "REPUBLIC OF KOREA"
+    },
+    {
+      "description": "MRIGHTS",
+      "code": "357",
+      "definition": null,
+      "other": "ITALY"
+    },
+    {
+      "description": "OSDEETE",
+      "code": "358",
+      "definition": null,
+      "other": "GREEECE"
+    },
+    {
+      "description": "SRAI",
+      "code": "359",
+      "definition": null,
+      "other": "INDIA"
+    },
+    {
+      "description": "VAPIK",
+      "code": "360",
+      "definition": null,
+      "other": "KOSOVO"
+    },
+    {
+      "description": "LASCAP",
+      "code": "361",
+      "definition": null,
+      "other": "LAOS"
+    },
+    {
+      "description": "COMP",
+      "code": "362",
+      "definition": null,
+      "other": "PAKISTAN"
+    },
+    {
+      "description": "EMRA",
+      "code": "363",
+      "definition": null,
+      "other": "UNITED ARAB EMIRATES"
+    },
+    {
+      "description": "GRD",
+      "code": "555",
+      "definition": null,
+      "other": "FASTTRACK/GRD"
+    },
+    {
+      "description": "SACEM Deal Multi territorial",
+      "code": "590",
+      "definition": null,
+      "other": "SACEM-FRANCE"
+    },
+    {
+      "description": "SACEM Deal",
+      "code": "591",
+      "definition": null,
+      "other": "SACEM-FRANCE"
+    },
+    {
+      "description": "BACKOFFICE",
+      "code": "592",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "GEMA-US",
+      "code": "635",
+      "definition": null,
+      "other": "Additional CIS-Net Node"
+    },
+    {
+      "description": "SACEM-US",
+      "code": "658",
+      "definition": null,
+      "other": "Additional CIS-Net Node"
+    },
+    {
+      "description": "SGAE-NY",
+      "code": "672",
+      "definition": null,
+      "other": "Additional CIS-Net Node"
+    },
+    {
+      "description": "WIPO",
+      "code": "700",
+      "definition": null,
+      "other": "Code used for the Deployment of the WIPO test CIS-Net node"
+    },
+    {
+      "description": "SONY",
+      "code": "701",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "BMG",
+      "code": "702",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "UNIVERSAL",
+      "code": "703",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "DISCOVERY",
+      "code": "704",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "KOBALT",
+      "code": "705",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "MusicMark",
+      "code": "707",
+      "definition": null,
+      "other": "USA"
+    },
+    {
+      "description": "The MLC",
+      "code": "708",
+      "definition": null,
+      "other": "USA"
+    },
+    {
+      "description": "ISAN",
+      "code": "710",
+      "definition": null,
+      "other": "SWITZERLAND"
+    },
+    {
+      "description": "SACEM-LIBAN",
+      "code": "758",
+      "definition": null,
+      "other": "Additional CIS-Net Node"
+    },
+    {
+      "description": "Solar EMI",
+      "code": "775",
+      "definition": null,
+      "other": "GERMANY/UK"
+    },
+    {
+      "description": "Solar Sony",
+      "code": "776",
+      "definition": null,
+      "other": "GERMANY/UK"
+    },
+    {
+      "description": "CELAS",
+      "code": "777",
+      "definition": null,
+      "other": "GERMANY/UK"
+    },
+    {
+      "description": "GMR",
+      "code": "778",
+      "definition": null,
+      "other": "UNITED STATES"
+    },
+    {
+      "description": "Polaris Nordic",
+      "code": "779",
+      "definition": null,
+      "other": "SCANDINAVIA"
+    },
+    {
+      "description": "UNISON",
+      "code": "780",
+      "definition": null,
+      "other": "SPAIN"
+    },
+    {
+      "description": "SOUNDREEF",
+      "code": "781",
+      "definition": null,
+      "other": "ENGLAND and WALES"
+    },
+    {
+      "description": "NexTone",
+      "code": "782",
+      "definition": null,
+      "other": "JAPAN"
+    },
+    {
+      "description": "HEXACORP LTD",
+      "code": "783",
+      "definition": null,
+      "other": "USA"
+    },
+    {
+      "description": "ESMAA",
+      "code": "784",
+      "definition": null,
+      "other": "UNITED ARAB EMIRATES"
+    },
+    {
+      "description": "LEA",
+      "code": "785",
+      "definition": null,
+      "other": "ITALY"
+    },
+    {
+      "description": "ALLTRACK",
+      "code": "786",
+      "definition": null,
+      "other": "USA"
+    },
+    {
+      "description": "ORFIUM Greece",
+      "code": "787",
+      "definition": null,
+      "other": "GREECE"
+    },
+    {
+      "description": "MINT",
+      "code": "788",
+      "definition": null,
+      "other": "Hub of 16 Societies established by SESAC and SUISA"
+    },
+    {
+      "description": "GDSDX",
+      "code": "789",
+      "definition": null,
+      "other": "Asia Pacific"
+    },
+    {
+      "description": "MESAM / MSG",
+      "code": "790",
+      "definition": null,
+      "other": "Turkey"
+    },
+    {
+      "description": "ATLAS",
+      "code": "791",
+      "definition": null,
+      "other": "ASIA PACIFIC"
+    },
+    {
+      "description": "BRIDGER",
+      "code": "792",
+      "definition": null,
+      "other": "LUXEMBOURG"
+    },
+    {
+      "description": "NMP",
+      "code": "793",
+      "definition": null,
+      "other": "SWEDEN"
+    },
+    {
+      "description": "PAECOL",
+      "code": "888",
+      "definition": null,
+      "other": "Additional CIS-Net Node"
+    }
+  ]
+}

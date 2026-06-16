@@ -1,0 +1,182 @@
+{
+  "tableName": "CWR Work Type",
+  "slug": "cwr-work-type",
+  "source": "CWR08-3615R2_CWR_2x_Lookup_Table_2026-03-31_EN.xml#CWR Tables",
+  "entryCount": 29,
+  "entries": [
+    {
+      "description": "AAA (Triple A)",
+      "code": "TA",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Adult Contemporary",
+      "code": "AC",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Album Oriented Rock (AOR)",
+      "code": "AR",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Alternative Music",
+      "code": "AL",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Americana",
+      "code": "AM",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Band",
+      "code": "BD",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Bluegrass Music",
+      "code": "BL",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Children’s Music",
+      "code": "CD",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Classical Music",
+      "code": "CL",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Contemporary Christian",
+      "code": "CC",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Country Music",
+      "code": "CT",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Dance",
+      "code": "DN",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Film/ Television Music",
+      "code": "FM",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Folk Music",
+      "code": "FK",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Gospel (Black)",
+      "code": "BG",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Gospel (Southern)",
+      "code": "SG",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Jazz Music",
+      "code": "JZ",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Jingles",
+      "code": "JG",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Latin",
+      "code": "LN",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Latina",
+      "code": "LA",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "New Age",
+      "code": "NA",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Opera",
+      "code": "OP",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Polka Music",
+      "code": "PK",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Pop Music",
+      "code": "PP",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Rap Music",
+      "code": "RP",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Rock Music",
+      "code": "RK",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Rhythm and Blues",
+      "code": "RB",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Sacred",
+      "code": "SD",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Symphonic",
+      "code": "SY",
+      "definition": null,
+      "other": null
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "tableName": "Musical Work Distribution Category",
+  "slug": "musical-work-distribution-category",
+  "source": "CWR08-3615R2_CWR_2x_Lookup_Table_2026-03-31_EN.xml#CWR Tables",
+  "entryCount": 4,
+  "entries": [
+    {
+      "description": "Jazz",
+      "code": "JAZ",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Popular",
+      "code": "POP",
+      "definition": "The musical mainstream, usually song-based and melody-orientated, created for mass consumption.",
+      "other": null
+    },
+    {
+      "description": "Serious",
+      "code": "SER",
+      "definition": "Classical or art music.",
+      "other": null
+    },
+    {
+      "description": "Unclassified Distribution Category",
+      "code": "UNC",
+      "definition": "The catch-all for societies who do not track genres; all works are paid the same regardless of genre.",
+      "other": null
+    }
+  ]
+}

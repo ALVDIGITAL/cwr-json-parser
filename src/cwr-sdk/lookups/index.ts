@@ -1,6 +1,7 @@
 import lookupDocument from './cwr_lookup_data_types_v1.0_r0.json';
 
 export { tisCodeVariants } from './tisCodeVariants';
+export { societyCodeVariants } from './societyCodeVariants';
 
 export type LookupDataTypesDocument = typeof lookupDocument;
 
@@ -13,6 +14,7 @@ const roleSet = new Set(sets.roleCodes);
 const publisherRoleSet = new Set(sets.publisherRoles);
 const subPublisherRoleSet = new Set(sets.subPublisherRoles);
 const writerRoleSet = new Set(sets.writerRoles);
+const societySet = new Set(sets.societyCodes);
 
 export function getLookupDataTypes(): LookupDataTypesDocument {
   return lookupDocument;
@@ -50,6 +52,16 @@ export function isSubPublisherRole(role: string): boolean {
 
 export function isWriterRole(role: string): boolean {
   return writerRoleSet.has(role);
+}
+
+export function hasSocietyCode(code: string): boolean {
+  const trimmed = code.trim();
+  if (societySet.has(trimmed)) return true;
+  if (/^\d+$/.test(trimmed)) {
+    const n = parseInt(trimmed, 10);
+    return societySet.has(String(n)) || societySet.has(String(n).padStart(3, '0'));
+  }
+  return false;
 }
 
 export { CISAC_TIS_GROUP_CODES } from './cisacGroups';

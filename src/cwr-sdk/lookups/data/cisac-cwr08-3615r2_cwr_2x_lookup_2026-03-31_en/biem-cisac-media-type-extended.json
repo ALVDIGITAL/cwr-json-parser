@@ -1,0 +1,314 @@
+{
+  "tableName": "BIEM/CISAC Media Type (Extended)",
+  "slug": "biem-cisac-media-type-extended",
+  "source": "CWR08-3615R2_CWR_2x_Lookup_Table_2026-03-31_EN.xml#BIEMCISAC Media Type",
+  "entryCount": 51,
+  "entries": [
+    {
+      "description": "45 rpm 17 cm Single",
+      "code": "S",
+      "definition": "maxDurationMinutes=8; maxWorks=2; maxFragments=6",
+      "other": "VINYL"
+    },
+    {
+      "description": "45 rpm 17 cm EP",
+      "code": "EP",
+      "definition": "maxDurationMinutes=16; maxWorks=4; maxFragments=12",
+      "other": "VINYL"
+    },
+    {
+      "description": "45 rpm (12 inches) Maxi Single",
+      "code": "DS",
+      "definition": "maxDurationMinutes=16; maxWorks=4; maxFragments=12",
+      "other": "VINYL"
+    },
+    {
+      "description": "Disco Single Remix (12 inches)",
+      "code": "RDS",
+      "definition": "maxDurationMinutes=16; maxWorks=4; maxFragments=12",
+      "other": "VINYL"
+    },
+    {
+      "description": "Maxi Single Remix (7 inches)",
+      "code": "RMS",
+      "definition": "maxDurationMinutes=16; maxWorks=4; maxFragments=12",
+      "other": "VINYL"
+    },
+    {
+      "description": "LP 33 rpm 17cm  EP",
+      "code": "EPM",
+      "definition": "maxDurationMinutes=20; maxWorks=6; maxFragments=18",
+      "other": "VINYL"
+    },
+    {
+      "description": "LP 33 rpm 25 cm",
+      "code": "MLP",
+      "definition": "maxDurationMinutes=30; maxWorks=10; maxFragments=24",
+      "other": "VINYL"
+    },
+    {
+      "description": "LP 33 rpm 30 cm",
+      "code": "LP",
+      "definition": "maxDurationMinutes=60; maxWorks=16; maxFragments=28",
+      "other": "VINYL"
+    },
+    {
+      "description": "LP Compilation",
+      "code": "LP2",
+      "definition": "maxDurationMinutes=60; maxWorks=20; maxFragments=33",
+      "other": "VINYL"
+    },
+    {
+      "description": "LP identical to a CD",
+      "code": "LP3",
+      "definition": "maxDurationMinutes=80; maxWorks=20; maxFragments=40",
+      "other": "VINYL"
+    },
+    {
+      "description": "LP Compilation identical to a CD Compilation",
+      "code": "LP4",
+      "definition": "maxDurationMinutes=80; maxWorks=24; maxFragments=48",
+      "other": "VINYL"
+    },
+    {
+      "description": "CD Single 2 tracks",
+      "code": "SCD",
+      "definition": "maxDurationMinutes=12; maxWorks=2; maxFragments=6",
+      "other": "COMPACT DISC"
+    },
+    {
+      "description": "CD Singles 3&5 inches",
+      "code": "CDS",
+      "definition": "maxDurationMinutes=23; maxWorks=5; maxFragments=12",
+      "other": "COMPACT DISC"
+    },
+    {
+      "description": "CD Maxi-single",
+      "code": "CDM",
+      "definition": "maxDurationMinutes=23; maxWorks=5; maxFragments=12",
+      "other": "COMPACT DISC"
+    },
+    {
+      "description": "CD Maxi single remix",
+      "code": "RCD",
+      "definition": "maxDurationMinutes=23; maxWorks=5; maxFragments=12",
+      "other": "COMPACT DISC"
+    },
+    {
+      "description": "CD-LP (5 inches)",
+      "code": "CD",
+      "definition": "maxDurationMinutes=80; maxWorks=20; maxFragments=40",
+      "other": "COMPACT DISC"
+    },
+    {
+      "description": "CD Compilation",
+      "code": "CD2",
+      "definition": "maxDurationMinutes=80; maxWorks=24; maxFragments=48",
+      "other": "COMPACT DISC"
+    },
+    {
+      "description": "SACD",
+      "code": "SA",
+      "definition": "maxDurationMinutes=80; maxWorks=20; maxFragments=40",
+      "other": "COMPACT DISC"
+    },
+    {
+      "description": "SACD Compilation",
+      "code": "SA2",
+      "definition": "maxDurationMinutes=80; maxWorks=24; maxFragments=48",
+      "other": "COMPACT DISC"
+    },
+    {
+      "description": "CD Extra Single 2 tracks",
+      "code": "CES",
+      "definition": "maxDurationMinutes=12; maxWorks=2; maxFragments=6",
+      "other": "CD-EXTRA"
+    },
+    {
+      "description": "CD Extra Single",
+      "code": "CXS",
+      "definition": "maxDurationMinutes=23; maxWorks=5; maxFragments=12",
+      "other": "CD-EXTRA"
+    },
+    {
+      "description": "CD Extra Maxi Single",
+      "code": "CXM",
+      "definition": "maxDurationMinutes=23; maxWorks=5; maxFragments=12",
+      "other": "CD-EXTRA"
+    },
+    {
+      "description": "CD Extra Maxi Remix",
+      "code": "RCE",
+      "definition": "maxDurationMinutes=23; maxWorks=5; maxFragments=12",
+      "other": "CD-EXTRA"
+    },
+    {
+      "description": "CD Extra EP",
+      "code": "CEP",
+      "definition": "maxDurationMinutes=30; maxWorks=10; maxFragments=24",
+      "other": "CD-EXTRA"
+    },
+    {
+      "description": "CD Extra LP",
+      "code": "CE",
+      "definition": "maxDurationMinutes=80; maxWorks=20; maxFragments=40",
+      "other": "CD-EXTRA"
+    },
+    {
+      "description": "CD Extra Compilation",
+      "code": "CE2",
+      "definition": "maxDurationMinutes=80; maxWorks=24; maxFragments=48",
+      "other": "CD-EXTRA"
+    },
+    {
+      "description": "MC single",
+      "code": "SMC",
+      "definition": "maxDurationMinutes=8; maxWorks=2; maxFragments=6",
+      "other": "updated by Anders Zetterlund (STIM)"
+    },
+    {
+      "description": "MC single identical to a CDS",
+      "code": "SM2",
+      "definition": "maxDurationMinutes=23; maxWorks=5; maxFragments=12",
+      "other": "updated by Anders Zetterlund (STIM)"
+    },
+    {
+      "description": "MC maxi",
+      "code": "MMC",
+      "definition": "maxDurationMinutes=16; maxWorks=4; maxFragments=12",
+      "other": "updated by Anders Zetterlund (STIM)"
+    },
+    {
+      "description": "MC EP",
+      "code": "EMC",
+      "definition": "maxDurationMinutes=16; maxWorks=4; maxFragments=12",
+      "other": "updated by Anders Zetterlund (STIM)"
+    },
+    {
+      "description": "MC Remix",
+      "code": "RMC",
+      "definition": "maxDurationMinutes=16; maxWorks=4; maxFragments=12",
+      "other": "updated by Anders Zetterlund (STIM)"
+    },
+    {
+      "description": "MC",
+      "code": "MCP",
+      "definition": "maxDurationMinutes=30; maxWorks=10; maxFragments=24",
+      "other": "updated by Anders Zetterlund (STIM)"
+    },
+    {
+      "description": "MC LP",
+      "code": "MC",
+      "definition": "maxDurationMinutes=60; maxWorks=16; maxFragments=28",
+      "other": "updated by Anders Zetterlund (STIM)"
+    },
+    {
+      "description": "MC Compilation",
+      "code": "MC2",
+      "definition": "maxDurationMinutes=60; maxWorks=20; maxFragments=33",
+      "other": "updated by Anders Zetterlund (STIM)"
+    },
+    {
+      "description": "MC identical to a CD",
+      "code": "MC3",
+      "definition": "maxDurationMinutes=80; maxWorks=20; maxFragments=40",
+      "other": "updated by Anders Zetterlund (STIM)"
+    },
+    {
+      "description": "MC Compilation identical to a CD compilation",
+      "code": "MC4",
+      "definition": "maxDurationMinutes=80; maxWorks=24; maxFragments=48",
+      "other": "updated by Anders Zetterlund (STIM)"
+    },
+    {
+      "description": "Double MC",
+      "code": "DMC",
+      "definition": "maxDurationMinutes=120; maxWorks=32; maxFragments=56",
+      "other": "updated by Anders Zetterlund (STIM)"
+    },
+    {
+      "description": "MD Single/ Maxi Single",
+      "code": "MDS",
+      "definition": "maxDurationMinutes=23; maxWorks=5; maxFragments=12",
+      "other": "MINIDISC"
+    },
+    {
+      "description": "MD Maxi Remix",
+      "code": "MDR",
+      "definition": "maxDurationMinutes=23; maxWorks=5; maxFragments=12",
+      "other": "MINIDISC"
+    },
+    {
+      "description": "MD EP",
+      "code": "MDP",
+      "definition": "maxDurationMinutes=30; maxWorks=10; maxFragments=24",
+      "other": "MINIDISC"
+    },
+    {
+      "description": "MD",
+      "code": "MD",
+      "definition": "maxDurationMinutes=80; maxWorks=20; maxFragments=40",
+      "other": "MINIDISC"
+    },
+    {
+      "description": "MD Compilation",
+      "code": "MD2",
+      "definition": "maxDurationMinutes=80; maxWorks=24; maxFragments=48",
+      "other": "MINIDISC"
+    },
+    {
+      "description": "DCC",
+      "code": "DC",
+      "definition": "maxDurationMinutes=80; maxWorks=20; maxFragments=40",
+      "other": "DIGITAL COMPACT CASSETTE"
+    },
+    {
+      "description": "DCC Compilation",
+      "code": "DC2",
+      "definition": "maxDurationMinutes=80; maxWorks=24; maxFragments=48",
+      "other": "DIGITAL COMPACT CASSETTE"
+    },
+    {
+      "description": "DVD-Audio",
+      "code": "DV1",
+      "definition": null,
+      "other": "DVD"
+    },
+    {
+      "description": "DVD-Video",
+      "code": "DV2",
+      "definition": null,
+      "other": "DVD"
+    },
+    {
+      "description": "DVD-Rom",
+      "code": "DV3",
+      "definition": null,
+      "other": "DVD"
+    },
+    {
+      "description": "DVD-Single",
+      "code": "DV4",
+      "definition": null,
+      "other": "DVD"
+    },
+    {
+      "description": "Downloading of a title",
+      "code": "DW",
+      "definition": null,
+      "other": "DOWNLOADING"
+    },
+    {
+      "description": "Downloading of a Single/Maxi Single",
+      "code": "DM",
+      "definition": "maxDurationMinutes=23; maxWorks=5; maxFragments=12",
+      "other": "DOWNLOADING"
+    },
+    {
+      "description": "Downloading of  LP",
+      "code": "DL",
+      "definition": "maxDurationMinutes=80; maxWorks=20; maxFragments=40",
+      "other": "DOWNLOADING"
+    }
+  ]
+}

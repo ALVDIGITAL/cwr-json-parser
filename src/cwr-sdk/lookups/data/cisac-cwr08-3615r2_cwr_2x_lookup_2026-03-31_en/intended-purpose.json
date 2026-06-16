@@ -1,0 +1,62 @@
+{
+  "tableName": "Intended Purpose",
+  "slug": "intended-purpose",
+  "source": "CWR08-3615R2_CWR_2x_Lookup_Table_2026-03-31_EN.xml#CWR Tables",
+  "entryCount": 9,
+  "entries": [
+    {
+      "description": "Commercial / Jingle / Trailer",
+      "code": "COM",
+      "definition": "A short piece of music created for an advertisement, to introduce a programme, or to act as punctuation.",
+      "other": null
+    },
+    {
+      "description": "Film",
+      "code": "FIL",
+      "definition": "A work originally composed for use in a film production.",
+      "other": null
+    },
+    {
+      "description": "General Usage",
+      "code": "GEN",
+      "definition": "A work originally composed for general usage",
+      "other": null
+    },
+    {
+      "description": "Library Work",
+      "code": "LIB",
+      "definition": "A work recorded for use primarily in audio-visual productions or broadcasts.",
+      "other": null
+    },
+    {
+      "description": "Multimedia",
+      "code": "MUL",
+      "definition": "A work originally composed for use within a multimedia production not intended for broadcast.\nExamples: CDI, CD-ROM.",
+      "other": null
+    },
+    {
+      "description": "Radio",
+      "code": "RAD",
+      "definition": "A work specifically created for use in a radio production.",
+      "other": null
+    },
+    {
+      "description": "Television",
+      "code": "TEL",
+      "definition": "A work specifically created for use in a television production.",
+      "other": null
+    },
+    {
+      "description": "Theatre",
+      "code": "THR",
+      "definition": "A work specifically created for use in a theatrical production.",
+      "other": null
+    },
+    {
+      "description": "Video",
+      "code": "VID",
+      "definition": "A work specifically created for use in a video production.",
+      "other": null
+    }
+  ]
+}

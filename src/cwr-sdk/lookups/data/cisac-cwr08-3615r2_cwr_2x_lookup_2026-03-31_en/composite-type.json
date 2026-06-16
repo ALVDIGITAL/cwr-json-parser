@@ -1,0 +1,38 @@
+{
+  "tableName": "Composite Type",
+  "slug": "composite-type",
+  "source": "CWR08-3615R2_CWR_2x_Lookup_Table_2026-03-31_EN.xml#CWR Tables",
+  "entryCount": 5,
+  "entries": [
+    {
+      "description": "Composite of Samples",
+      "code": "COS",
+      "definition": "A composite work containing new material and one or more samples of pre-existing recorded works.",
+      "other": null
+    },
+    {
+      "description": "Medley",
+      "code": "MED",
+      "definition": "A continuous and sequential combination of existing works or excerpts.",
+      "other": null
+    },
+    {
+      "description": "Potpourri",
+      "code": "POT",
+      "definition": "A composite work with the addition of original material which have been combined to form a new work, that has been published and printed",
+      "other": null
+    },
+    {
+      "description": "Unspecified Composite",
+      "code": "UCO",
+      "definition": "Works known to be a composite but where the type of composite is unknown.",
+      "other": null
+    },
+    {
+      "description": "[Non-Composite]",
+      "code": "[blank]",
+      "definition": "[Not a composite work]",
+      "other": null
+    }
+  ]
+}

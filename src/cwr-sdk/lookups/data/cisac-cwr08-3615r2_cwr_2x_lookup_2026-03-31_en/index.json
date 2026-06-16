@@ -1,0 +1,218 @@
+{
+  "$id": "cisac_cwr_2x_lookup_tables",
+  "version": "1.0.0",
+  "sourceFile": "CWR08-3615R2_CWR_2x_Lookup_Table_2026-03-31_EN.xml",
+  "generatedAt": "2026-06-15",
+  "tableCount": 32,
+  "tables": [
+    {
+      "slug": "agreement-role-code",
+      "tableName": "Agreement Role Code",
+      "file": "agreement-role-code.json",
+      "entryCount": 2
+    },
+    {
+      "slug": "agreement-type",
+      "tableName": "Agreement Type",
+      "file": "agreement-type.json",
+      "entryCount": 4
+    },
+    {
+      "slug": "ai-indicator",
+      "tableName": "AI Indicator",
+      "file": "ai-indicator.json",
+      "entryCount": 3
+    },
+    {
+      "slug": "anomalous-work-reason",
+      "tableName": "Anomalous Work Reason",
+      "file": "anomalous-work-reason.json",
+      "entryCount": 2
+    },
+    {
+      "slug": "biem-cisac-media-type",
+      "tableName": "BIEM/CISAC Media Type",
+      "file": "biem-cisac-media-type.json",
+      "entryCount": 51
+    },
+    {
+      "slug": "biem-cisac-media-type-extended",
+      "tableName": "BIEM/CISAC Media Type (Extended)",
+      "file": "biem-cisac-media-type-extended.json",
+      "entryCount": 51
+    },
+    {
+      "slug": "bltvr-background-logo-theme-visual-rolled-up-cue",
+      "tableName": "BLTVR (Background, Logo, Theme, Visual, Rolled up Cue)",
+      "file": "bltvr-background-logo-theme-visual-rolled-up-cue.json",
+      "entryCount": 5
+    },
+    {
+      "slug": "character-set",
+      "tableName": "Character Set",
+      "file": "character-set.json",
+      "entryCount": 10
+    },
+    {
+      "slug": "cis-language-code",
+      "tableName": "CIS Language Code",
+      "file": "cis-language-code.json",
+      "entryCount": 142
+    },
+    {
+      "slug": "cisac-society-code",
+      "tableName": "CISAC Society Code",
+      "file": "cisac-society-code.json",
+      "entryCount": 395
+    },
+    {
+      "slug": "composite-type",
+      "tableName": "Composite Type",
+      "file": "composite-type.json",
+      "entryCount": 5
+    },
+    {
+      "slug": "cwr-work-type",
+      "tableName": "CWR Work Type",
+      "file": "cwr-work-type.json",
+      "entryCount": 29
+    },
+    {
+      "slug": "excerpt-type",
+      "tableName": "Excerpt Type",
+      "file": "excerpt-type.json",
+      "entryCount": 3
+    },
+    {
+      "slug": "instrument",
+      "tableName": "Instrument",
+      "file": "instrument.json",
+      "entryCount": 162
+    },
+    {
+      "slug": "intended-purpose",
+      "tableName": "Intended Purpose",
+      "file": "intended-purpose.json",
+      "entryCount": 9
+    },
+    {
+      "slug": "lyric-adaptation",
+      "tableName": "Lyric Adaptation",
+      "file": "lyric-adaptation.json",
+      "entryCount": 8
+    },
+    {
+      "slug": "music-arrangement",
+      "tableName": "Music Arrangement",
+      "file": "music-arrangement.json",
+      "entryCount": 5
+    },
+    {
+      "slug": "musical-work-distribution-category",
+      "tableName": "Musical Work Distribution Category",
+      "file": "musical-work-distribution-category.json",
+      "entryCount": 4
+    },
+    {
+      "slug": "publisher-type",
+      "tableName": "Publisher Type",
+      "file": "publisher-type.json",
+      "entryCount": 6
+    },
+    {
+      "slug": "recording-technique",
+      "tableName": "Recording Technique",
+      "file": "recording-technique.json",
+      "entryCount": 3
+    },
+    {
+      "slug": "revocation-reason",
+      "tableName": "Revocation Reason",
+      "file": "revocation-reason.json",
+      "entryCount": 4
+    },
+    {
+      "slug": "special-agreement-indicator",
+      "tableName": "Special Agreement Indicator",
+      "file": "special-agreement-indicator.json",
+      "entryCount": 6
+    },
+    {
+      "slug": "standard-instrumentation",
+      "tableName": "Standard Instrumentation",
+      "file": "standard-instrumentation.json",
+      "entryCount": 50
+    },
+    {
+      "slug": "subject-codes",
+      "tableName": "Subject Codes",
+      "file": "subject-codes.json",
+      "entryCount": 7
+    },
+    {
+      "slug": "text-music-relationship",
+      "tableName": "Text Music Relationship",
+      "file": "text-music-relationship.json",
+      "entryCount": 4
+    },
+    {
+      "slug": "title-type",
+      "tableName": "Title Type",
+      "file": "title-type.json",
+      "entryCount": 11
+    },
+    {
+      "slug": "transaction-status",
+      "tableName": "Transaction Status",
+      "file": "transaction-status.json",
+      "entryCount": 9
+    },
+    {
+      "slug": "transaction-type",
+      "tableName": "Transaction Type",
+      "file": "transaction-type.json",
+      "entryCount": 7
+    },
+    {
+      "slug": "type-of-right",
+      "tableName": "Type of Right",
+      "file": "type-of-right.json",
+      "entryCount": 3
+    },
+    {
+      "slug": "usa-license-indicator",
+      "tableName": "USA License Indicator",
+      "file": "usa-license-indicator.json",
+      "entryCount": 5
+    },
+    {
+      "slug": "version-type",
+      "tableName": "Version Type",
+      "file": "version-type.json",
+      "entryCount": 2
+    },
+    {
+      "slug": "writer-designation",
+      "tableName": "Writer Designation",
+      "file": "writer-designation.json",
+      "entryCount": 9
+    }
+  ],
+  "skippedSections": [
+    {
+      "tableName": "Dialect",
+      "slug": "dialect",
+      "reason": "No rows in source; references ISO 639-2(T)."
+    },
+    {
+      "tableName": "Society Code",
+      "slug": "society-code",
+      "reason": "Extracted from separate CISAC Society Code sheet/tab."
+    },
+    {
+      "tableName": "TIS Numeric Code",
+      "slug": "tis-numeric-code",
+      "reason": "No rows in source; territory codes maintained separately (CISAC TIS database)."
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "tableName": "Agreement Type",
+  "slug": "agreement-type",
+  "source": "CWR08-3615R2_CWR_2x_Lookup_Table_2026-03-31_EN.xml#CWR Tables",
+  "entryCount": 4,
+  "entries": [
+    {
+      "description": "Original Specific",
+      "code": "OS",
+      "definition": "Agreement between the songwriter and original publisher covering a list of specific work(s)",
+      "other": null
+    },
+    {
+      "description": "Subpublishing Specific",
+      "code": "PS",
+      "definition": "Agreement between two publishers covering a list of specific work(s)",
+      "other": null
+    },
+    {
+      "description": "Subpublishing General",
+      "code": "PG",
+      "definition": "Agreement between two publishers covering all works in a catalogue",
+      "other": null
+    },
+    {
+      "description": "Original General",
+      "code": "OG",
+      "definition": "Agreement between the songwriter and original publisher covering all works in a catalogue",
+      "other": null
+    }
+  ]
+}

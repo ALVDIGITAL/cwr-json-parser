@@ -1,0 +1,74 @@
+{
+  "tableName": "Title Type",
+  "slug": "title-type",
+  "source": "CWR08-3615R2_CWR_2x_Lookup_Table_2026-03-31_EN.xml#CWR Tables",
+  "entryCount": 11,
+  "entries": [
+    {
+      "description": "Alternative Title",
+      "code": "AT",
+      "definition": "An alternative to an original title.",
+      "other": null
+    },
+    {
+      "description": "First Line of Text",
+      "code": "TE",
+      "definition": "The beginning of a text.",
+      "other": null
+    },
+    {
+      "description": "Formal Title",
+      "code": "FT",
+      "definition": "A standardised title in which the elements are arranged in a pre-determined order. Normally created for classical works.",
+      "other": null
+    },
+    {
+      "description": "Incorrect Title",
+      "code": "IT",
+      "definition": "A spurious or unacceptable title sometimes mistakenly used for identification.",
+      "other": null
+    },
+    {
+      "description": "Original Title",
+      "code": "OT",
+      "definition": "A title given to the work by its creator(s) shown in its original language.",
+      "other": null
+    },
+    {
+      "description": "Original Title Translated",
+      "code": "TT",
+      "definition": "An original title translated into a different language.",
+      "other": null
+    },
+    {
+      "description": "Part Title",
+      "code": "PT",
+      "definition": "A section of a work which is not recognized as an excerpt in its own right and does not have its own ISWC.",
+      "other": null
+    },
+    {
+      "description": "Restricted Title",
+      "code": "RT",
+      "definition": "A title from which all initial articles and punctuation have been removed.",
+      "other": null
+    },
+    {
+      "description": "Extra Search Title",
+      "code": "ET",
+      "definition": "An alternate title created to aid database searching (e.g. where special characters, puns, or slang have been replaced by standardized elements).",
+      "other": null
+    },
+    {
+      "description": "Original Title with National Characters",
+      "code": "OL",
+      "definition": "The Original title of the Work in it’s original language, using ‘accented’ National characters",
+      "other": null
+    },
+    {
+      "description": "Alternative Title with National Characters",
+      "code": "AL",
+      "definition": "An alternatice work title in it’s original language, using ‘accented ‘ National characters.",
+      "other": null
+    }
+  ]
+}

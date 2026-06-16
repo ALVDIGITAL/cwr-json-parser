@@ -63,13 +63,20 @@ schema.definitions.TitleTypeCode = enumSchema(sets.titleTypes);
 schema.definitions.IdentifierSource = enumSchema(sets.identifierSources);
 schema.definitions.MessageType = enumSchema(sets.messageTypes);
 schema.definitions.AiUsageIndicator = enumSchema(sets.aiUsageIndicators);
+schema.definitions.CharacterSetCode = enumSchema(sets.characterSets);
+schema.definitions.SocietyCode = enumSchema(sets.societyCodes);
+schema.definitions.LanguageCode = enumSchema(sets.languageCodes);
+schema.definitions.RevocationReasonCode = enumSchema(sets.revocationReasons);
+schema.definitions.AnomalousWorkReasonCode = enumSchema(sets.anomalousWorkReasons);
 
 // Share bounds
 const share = schema.definitions.Share as JsonSchema;
-(share.properties as Record<string, JsonSchema>).value = {
+const shareProps = share.properties as Record<string, JsonSchema>;
+shareProps.value = {
   type: 'number',
   ...PATTERNS.sharePercent,
 };
+shareProps.society = { $ref: '#/definitions/SocietyCode' };
 
 // Participant controlled ref
 const participant = schema.definitions.Participant as JsonSchema;
@@ -116,24 +123,28 @@ const hdrProps = hdr.properties as Record<string, JsonSchema>;
 hdrProps.creationDate = { type: 'string', pattern: PATTERNS.date8 };
 hdrProps.creationTime = { type: 'string', pattern: PATTERNS.time6 };
 hdrProps.transmissionDate = { type: 'string', pattern: PATTERNS.date8 };
+hdrProps.characterSet = { $ref: '#/definitions/CharacterSetCode' };
 
 // Flags
 const flags = schema.definitions.Flags as JsonSchema;
-(flags.properties as Record<string, JsonSchema>).aiUsage = {
-  $ref: '#/definitions/AiUsageIndicator',
-};
+const flagsProps = flags.properties as Record<string, JsonSchema>;
+flagsProps.aiUsage = { $ref: '#/definitions/AiUsageIndicator' };
+flagsProps.anomalousReason = { $ref: '#/definitions/AnomalousWorkReasonCode' };
 
-// Messages.type
+// Messages.type + revocation.reason
 const messages = schema.definitions.Messages as JsonSchema;
-(messages.properties as Record<string, JsonSchema>).type = {
-  $ref: '#/definitions/MessageType',
+const messagesProps = messages.properties as Record<string, JsonSchema>;
+messagesProps.type = { $ref: '#/definitions/MessageType' };
+const revocation = messagesProps.revocation as JsonSchema;
+(revocation.properties as Record<string, JsonSchema>).reason = {
+  $ref: '#/definitions/RevocationReasonCode',
 };
 
-// WorkTitle.type
+// WorkTitle.type + language
 const workTitle = schema.definitions.WorkTitle as JsonSchema;
-(workTitle.properties as Record<string, JsonSchema>).type = {
-  $ref: '#/definitions/TitleTypeCode',
-};
+const workTitleProps = workTitle.properties as Record<string, JsonSchema>;
+workTitleProps.type = { $ref: '#/definitions/TitleTypeCode' };
+workTitleProps.language = { $ref: '#/definitions/LanguageCode' };
 
 // WorkIdentifier — source enum; conditional ISWC pattern
 schema.definitions.WorkIdentifier = {

@@ -1,0 +1,38 @@
+{
+  "tableName": "USA License Indicator",
+  "slug": "usa-license-indicator",
+  "source": "CWR08-3615R2_CWR_2x_Lookup_Table_2026-03-31_EN.xml#CWR Tables",
+  "entryCount": 5,
+  "entries": [
+    {
+      "description": "ASCAP",
+      "code": "A",
+      "definition": "When this work is performed in the USA, ASCAP has the right to collect.",
+      "other": null
+    },
+    {
+      "description": "BMI",
+      "code": "B",
+      "definition": "When this work is performed in the USA, BMI has the right to collect.",
+      "other": null
+    },
+    {
+      "description": "SESAC",
+      "code": "S",
+      "definition": "When this work is performed in the USA, SESAC has the right to collect.",
+      "other": null
+    },
+    {
+      "description": "AMRA",
+      "code": "M",
+      "definition": "When this work is performed in the USA, AMRA has the right to collect.",
+      "other": null
+    },
+    {
+      "description": "GMR",
+      "code": "G",
+      "definition": "When this work is performed in the USA, GMR has the right to collect.",
+      "other": null
+    }
+  ]
+}

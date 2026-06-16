@@ -1,0 +1,860 @@
+{
+  "tableName": "CIS Language Code",
+  "slug": "cis-language-code",
+  "source": "CWR08-3615R2_CWR_2x_Lookup_Table_2026-03-31_EN.xml#CWR Tables",
+  "entryCount": 142,
+  "entries": [
+    {
+      "description": "(Afan) Oromo",
+      "code": "OM",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Abkhazian",
+      "code": "AB",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Afar",
+      "code": "AA",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Afrikaans",
+      "code": "AF",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Albanian",
+      "code": "SQ",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Amharic",
+      "code": "AM",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Arabic",
+      "code": "AR",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Armenian",
+      "code": "HY",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Assamese",
+      "code": "AS",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Aymara",
+      "code": "AY",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Azerbaijani",
+      "code": "AZ",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Bashkir",
+      "code": "BA",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Basque",
+      "code": "EU",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Bengali",
+      "code": "BN",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Bhutani",
+      "code": "DZ",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Bihari",
+      "code": "BH",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Bislama",
+      "code": "BI",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Breton",
+      "code": "BR",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Bulgarian",
+      "code": "BG",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Burmese",
+      "code": "MY",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Byelorussian",
+      "code": "BE",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Cambodian",
+      "code": "KM",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Catalan",
+      "code": "CA",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Chinese",
+      "code": "ZH",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Corsican",
+      "code": "CO",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Croatian",
+      "code": "HR",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Czech",
+      "code": "CS",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Danish",
+      "code": "DA",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Dutch",
+      "code": "NL",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "English",
+      "code": "EN",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Esperanto",
+      "code": "EO",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Estonian",
+      "code": "ET",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Faeroese",
+      "code": "FO",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Farsi",
+      "code": "FA",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Fiji",
+      "code": "FJ",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Finnish",
+      "code": "FI",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "French",
+      "code": "FR",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Frisian",
+      "code": "FY",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Galician",
+      "code": "GL",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Georgian",
+      "code": "KA",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "German",
+      "code": "DE",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Greek",
+      "code": "EL",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Greenlandic",
+      "code": "KL",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Guarani",
+      "code": "GN",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Gujarati",
+      "code": "GU",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Hausa",
+      "code": "HA",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Hawaii",
+      "code": "HW",
+      "definition": "Added at the request of the publishers",
+      "other": null
+    },
+    {
+      "description": "Hebrew",
+      "code": "IW",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Hindi",
+      "code": "HI",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Hungarian",
+      "code": "HU",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Icelandic",
+      "code": "IS",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Indonesian",
+      "code": "IN",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Interlingua",
+      "code": "IA",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Interlingue",
+      "code": "IE",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Inupiak",
+      "code": "IK",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Irish",
+      "code": "GA",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Italian",
+      "code": "IT",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Japanese",
+      "code": "JA",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Javanese",
+      "code": "JW",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Kannada",
+      "code": "KN",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Kashmiri",
+      "code": "KS",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Kazakh",
+      "code": "KK",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Kinyarwanda",
+      "code": "RW",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Kirghiz",
+      "code": "KY",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Kirundi",
+      "code": "RN",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Korean",
+      "code": "KO",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Kurdish",
+      "code": "KU",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Laothian",
+      "code": "LO",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Latin",
+      "code": "LA",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Latvian",
+      "code": "LV",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Lingala",
+      "code": "LN",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Lithuanian",
+      "code": "LT",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Macedonian",
+      "code": "MK",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Malagasy",
+      "code": "MG",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Malay",
+      "code": "MS",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Malayalam",
+      "code": "ML",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Maltese",
+      "code": "MT",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Maori",
+      "code": "MI",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Marathi",
+      "code": "MR",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Moldavian",
+      "code": "MO",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Mongolian",
+      "code": "MN",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Nauru",
+      "code": "NA",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Ndebele",
+      "code": "ND",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Nepali",
+      "code": "NE",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "North Sotho",
+      "code": "NS",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Norwegian",
+      "code": "NO",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Occitan",
+      "code": "OC",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Oriya",
+      "code": "OR",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Oromo",
+      "code": "OM",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Papiamento",
+      "code": "PM",
+      "definition": "native, unofficial language of the southern islands of the Netherlands Antilles-Curacao, Aruba, and Bonaire",
+      "other": null
+    },
+    {
+      "description": "Pashto",
+      "code": "PS",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Polish",
+      "code": "PL",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Portuguese",
+      "code": "PT",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Punjabi",
+      "code": "PA",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Quechua",
+      "code": "QU",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Rhaeto-Romance",
+      "code": "RM",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Romanian",
+      "code": "RO",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Russian",
+      "code": "RU",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Samoan",
+      "code": "SM",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Sangro",
+      "code": "SG",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Sanskrit",
+      "code": "SA",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Scots Gaelic",
+      "code": "GD",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Serbian",
+      "code": "SR",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Serbo-Croatian",
+      "code": "SH",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Sesotho",
+      "code": "ST",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Setswana",
+      "code": "TN",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Shona",
+      "code": "SN",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Sindhi",
+      "code": "SD",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Singhalese",
+      "code": "SI",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Siswati",
+      "code": "SS",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Slovak",
+      "code": "SK",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Slovenian",
+      "code": "SL",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Somali",
+      "code": "SO",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Spanish",
+      "code": "ES",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Sudanese",
+      "code": "SU",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Swahili",
+      "code": "SW",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Swedish",
+      "code": "SV",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Tagalog",
+      "code": "TL",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Tajik",
+      "code": "TG",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Tamil",
+      "code": "TA",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Tatar",
+      "code": "TT",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Telugu",
+      "code": "TE",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Thai",
+      "code": "TH",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Tibetan",
+      "code": "BO",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Tigrinya",
+      "code": "TI",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Tonga",
+      "code": "TO",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Tsonga",
+      "code": "TS",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Turkish",
+      "code": "TR",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Turkmen",
+      "code": "TK",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Twi",
+      "code": "TW",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Ukranian",
+      "code": "UK",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Urdu",
+      "code": "UR",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Uzbek",
+      "code": "UZ",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Venda",
+      "code": "VE",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Vietnamese",
+      "code": "VI",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Volapuk",
+      "code": "VO",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Welsh",
+      "code": "CY",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Wolof",
+      "code": "WO",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Xhosa",
+      "code": "XH",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Yiddish",
+      "code": "JI",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Yoruba",
+      "code": "YO",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Zulu",
+      "code": "ZU",
+      "definition": null,
+      "other": null
+    }
+  ]
+}

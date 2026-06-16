@@ -1,0 +1,50 @@
+{
+  "tableName": "Subject Codes",
+  "slug": "subject-codes",
+  "source": "CWR08-3615R2_CWR_2x_Lookup_Table_2026-03-31_EN.xml#CWR Tables",
+  "entryCount": 7,
+  "entries": [
+    {
+      "description": "Direct Licensing",
+      "code": "DL",
+      "definition": "Instructions for Direct Licensing",
+      "other": null
+    },
+    {
+      "description": "Share Change",
+      "code": "SC",
+      "definition": "Writer added/deleted, share increase or decreased",
+      "other": null
+    },
+    {
+      "description": "Different Work",
+      "code": "DW",
+      "definition": "This is not the same work as XXX",
+      "other": null
+    },
+    {
+      "description": "Inquiry List",
+      "code": "IQ",
+      "definition": "Work contained in Inquiry List of society",
+      "other": null
+    },
+    {
+      "description": "Requested Work",
+      "code": "RQ",
+      "definition": "Work for which a notification was requested by society",
+      "other": null
+    },
+    {
+      "description": "GEMA",
+      "code": "GW",
+      "definition": "Structured note for shares agreed by authors for performing rights",
+      "other": null
+    },
+    {
+      "description": "SACEM",
+      "code": "EW",
+      "definition": "The Sacem submitter is controlling the entire work",
+      "other": null
+    }
+  ]
+}

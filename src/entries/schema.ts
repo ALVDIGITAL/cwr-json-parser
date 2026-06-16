@@ -3,6 +3,7 @@ export type { SchemaId } from '../cwr-sdk/mapper/schemaRegistry';
 export {
   getLookupDataTypes,
   getLookupSet,
+  hasSocietyCode,
   hasTisCode,
   isRoleCode,
   isPublisherRole,

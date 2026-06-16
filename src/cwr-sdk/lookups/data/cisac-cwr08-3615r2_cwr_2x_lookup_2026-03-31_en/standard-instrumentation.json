@@ -1,0 +1,308 @@
+{
+  "tableName": "Standard Instrumentation",
+  "slug": "standard-instrumentation",
+  "source": "CWR08-3615R2_CWR_2x_Lookup_Table_2026-03-31_EN.xml#CWR Tables",
+  "entryCount": 50,
+  "entries": [
+    {
+      "description": "Audience",
+      "code": "AUD",
+      "definition": null,
+      "other": "Audience"
+    },
+    {
+      "description": "Band",
+      "code": "BND",
+      "definition": "Large group of woodwinds and brass with optional percussion, keyboard, and double bass",
+      "other": "Band"
+    },
+    {
+      "description": "Brass Band",
+      "code": "BBA",
+      "definition": "Large group of brasses (approximately 25 players) with optional percussion",
+      "other": "Brass Band"
+    },
+    {
+      "description": "Brass Choir",
+      "code": "BRC",
+      "definition": "Group of brasses with optional percussion (usually 10-20 players)",
+      "other": "Brass Choir"
+    },
+    {
+      "description": "Brass Quartet",
+      "code": "BQU",
+      "definition": "2 trumpets, horn, trombone or tuba",
+      "other": "Brass Quartet"
+    },
+    {
+      "description": "Brass Quintet",
+      "code": "BQN",
+      "definition": "2 trumpets, horn, trombone, tuba",
+      "other": "Brass Quintet"
+    },
+    {
+      "description": "Brass Sextet",
+      "code": "BXT",
+      "definition": "2 trumpets, 2 horns, trombone, tuba",
+      "other": "Brass Sextet"
+    },
+    {
+      "description": "Brass Trio",
+      "code": "BTR",
+      "definition": "Trumpet, horn, trombone",
+      "other": "Brass Trio"
+    },
+    {
+      "description": "Chamber Ensemble",
+      "code": "CEN",
+      "definition": "Mixed group of single players on a part; does not denote size of group",
+      "other": "Chamber Ensemble"
+    },
+    {
+      "description": "Chorus",
+      "code": "CHO",
+      "definition": "Multiple voices on a part",
+      "other": "Chorus"
+    },
+    {
+      "description": "Chorus and Orchestra",
+      "code": "CAO",
+      "definition": "Multiple voices with orchestra",
+      "other": "Chorus and Orchestra"
+    },
+    {
+      "description": "Chorus, Boys’",
+      "code": "BCH",
+      "definition": "Multiple boys’ voices on a part",
+      "other": "Chorus, Boys'"
+    },
+    {
+      "description": "Chorus, Children’s",
+      "code": "CCH",
+      "definition": "Multiple treble voices on a part",
+      "other": "Chorus, Children's"
+    },
+    {
+      "description": "Chorus, Double",
+      "code": "DCH",
+      "definition": "Two choruses",
+      "other": "Chorus, Double"
+    },
+    {
+      "description": "Chorus, Men’s",
+      "code": "MCH",
+      "definition": "Multiple men’s voices on a part",
+      "other": "Chorus, Men's"
+    },
+    {
+      "description": "Chorus, Mixed",
+      "code": "MXC",
+      "definition": "Multiple voices on a part (usually SATB)",
+      "other": "Chorus, Mixed"
+    },
+    {
+      "description": "Chorus, Treble",
+      "code": "TCH",
+      "definition": "Multiple children’s voices on a part",
+      "other": "Chorus, Treble"
+    },
+    {
+      "description": "Chorus, Unison",
+      "code": "UCH",
+      "definition": "Multiple voices on a single part",
+      "other": "Chorus, Unison"
+    },
+    {
+      "description": "Chorus, Women's",
+      "code": "WCH",
+      "definition": "Multiple women’s voices on a part",
+      "other": "Chorus, Women's"
+    },
+    {
+      "description": "Chorus, Youth",
+      "code": "YCH",
+      "definition": "Multiple young voices on a part",
+      "other": "Chorus, Youth"
+    },
+    {
+      "description": "Clarinet Choir",
+      "code": "CLC",
+      "definition": "Multiple clarinets (usually 10-20)",
+      "other": "Clarinet Choir"
+    },
+    {
+      "description": "Clarinet Quintet",
+      "code": "CQN",
+      "definition": "Clarinet and string quartet",
+      "other": "Clarinet Quintet"
+    },
+    {
+      "description": "Concert Band",
+      "code": "CBA",
+      "definition": "Large group of woodwinds and brass with optional percussion, keyboard, and double bass",
+      "other": "Concert Band"
+    },
+    {
+      "description": "Flute Choir",
+      "code": "FLC",
+      "definition": "Multiple flutes (usually 10-20)",
+      "other": "Flute Choir"
+    },
+    {
+      "description": "Gamelan",
+      "code": "GML",
+      "definition": "Indonesian percussion ensemble, usually including gongs, chimes, mallet percussion, and drums",
+      "other": "Gamelan"
+    },
+    {
+      "description": "Guitar Quartet",
+      "code": "GQT",
+      "definition": "4 guitars",
+      "other": "Guitar Quartet"
+    },
+    {
+      "description": "Horn Choir",
+      "code": "HNC",
+      "definition": "Multiple horns (10-20 players)",
+      "other": "Horn Choir"
+    },
+    {
+      "description": "Jazz Ensemble",
+      "code": "JZE",
+      "definition": "Multiple saxophones, trumpets, trombones with rhythm section of piano, double bass, drum set, guitar",
+      "other": "Jazz Ensemble"
+    },
+    {
+      "description": "Oboe Quartet",
+      "code": "OQU",
+      "definition": "Oboe and string trio",
+      "other": "Oboe Quartet"
+    },
+    {
+      "description": "Orchestra, Chamber",
+      "code": "COR",
+      "definition": "Orchestra with fewer winds and strings than full orchestra (usually 20-25 players)",
+      "other": "Orchestra, Chamber"
+    },
+    {
+      "description": "Orchestra, Full",
+      "code": "ORC",
+      "definition": "Large group of multiple strings with woodwinds, brass and percussion",
+      "other": "Orchestra, Full"
+    },
+    {
+      "description": "Orchestra, String",
+      "code": "SOR",
+      "definition": "Multiple strings on a part (usually 16 or more)",
+      "other": "Orchestra, String"
+    },
+    {
+      "description": "Percussion Ensemble",
+      "code": "PCE",
+      "definition": "Multiple players on various instruments",
+      "other": "Percussion Ensemble"
+    },
+    {
+      "description": "Piano Duo",
+      "code": "PDU",
+      "definition": "2 pianists on two pianos",
+      "other": "Piano Duo"
+    },
+    {
+      "description": "Piano Four Hands",
+      "code": "PFH",
+      "definition": "2 pianists on one piano",
+      "other": "Piano Four Hands"
+    },
+    {
+      "description": "Piano Quartet",
+      "code": "PQU",
+      "definition": "Piano and string trio",
+      "other": "Piano Quartet"
+    },
+    {
+      "description": "Piano Quintet",
+      "code": "PQN",
+      "definition": "Piano and string quartet",
+      "other": "Piano Quintet"
+    },
+    {
+      "description": "Piano Trio",
+      "code": "PTR",
+      "definition": "Violin, cello, piano",
+      "other": "Piano Trio"
+    },
+    {
+      "description": "Saxophone Quartet",
+      "code": "SQT",
+      "definition": "4 saxophones",
+      "other": "Saxophone Quartet"
+    },
+    {
+      "description": "String Octet",
+      "code": "SOC",
+      "definition": "Double string quartet",
+      "other": "String Octet"
+    },
+    {
+      "description": "String Quartet",
+      "code": "SQU",
+      "definition": "2 violins, viola, cello",
+      "other": "String Quartet"
+    },
+    {
+      "description": "String Quintet",
+      "code": "SQN",
+      "definition": "2 violins, viola, cello and one other stringed instrument",
+      "other": "String Quintet"
+    },
+    {
+      "description": "String Trio",
+      "code": "SGT",
+      "definition": "Violin, viola, cello",
+      "other": "String Trio"
+    },
+    {
+      "description": "Symphonic Band",
+      "code": "SBA",
+      "definition": "Large group of woodwinds and brass with optional percussion, keyboard, and double bass",
+      "other": "Symphonic Band"
+    },
+    {
+      "description": "Trombone  Choir",
+      "code": "TBC",
+      "definition": "Multiple trombones (usually 10-20)",
+      "other": "Trombone  Choir"
+    },
+    {
+      "description": "Trumpet Choir",
+      "code": "TPC",
+      "definition": "Multiple trumpets (usually 10-20)",
+      "other": "Trumpet Choir"
+    },
+    {
+      "description": "Tuba Choir",
+      "code": "TUC",
+      "definition": "Multiple tubas (usually 10-20)",
+      "other": "Tuba Choir"
+    },
+    {
+      "description": "Wind Ensemble",
+      "code": "WEN",
+      "definition": "Large group of woodwinds and brass with optional percussion, keyboard, and double bass",
+      "other": "Wind Ensemble"
+    },
+    {
+      "description": "Woodwind Quartet",
+      "code": "WQR",
+      "definition": "Flute, oboe, clarinet, bassoon",
+      "other": "Woodwind Quartet"
+    },
+    {
+      "description": "Woodwind Quintet",
+      "code": "WQN",
+      "definition": "Flute, oboe, clarinet, bassoon, horn",
+      "other": "Woodwind Quintet"
+    }
+  ]
+}

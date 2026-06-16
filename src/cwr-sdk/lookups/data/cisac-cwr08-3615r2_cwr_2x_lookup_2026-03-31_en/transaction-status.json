@@ -1,0 +1,62 @@
+{
+  "tableName": "Transaction Status",
+  "slug": "transaction-status",
+  "source": "CWR08-3615R2_CWR_2x_Lookup_Table_2026-03-31_EN.xml#CWR Tables",
+  "entryCount": 9,
+  "entries": [
+    {
+      "description": "Conflict",
+      "code": "CO",
+      "definition": "The status assigned to a transaction that has been received, has passed all validity checks, but does not agree with information previously submitted from another supplier.",
+      "other": "The status assigned to a transaction that has been received and validated but is inconsistent with information already submitted by another supplier."
+    },
+    {
+      "description": "Duplicate",
+      "code": "DU",
+      "definition": "The status assigned to a transaction that has been received, has passed all validity checks, and exactly matches another transaction previously received from the same submitter.",
+      "other": null
+    },
+    {
+      "description": "Transaction Accepted",
+      "code": "RA",
+      "definition": "The transaction has passed all of the mandatory edits.  Any field and record rejects, and status re possible duplicate works will be noted in messages.",
+      "other": null
+    },
+    {
+      "description": "Registration Accepted",
+      "code": "AS",
+      "definition": "The registration was accepted as submitted by the publisher and is now ready for payment",
+      "other": null
+    },
+    {
+      "description": "Registration Accepted with Changes",
+      "code": "AC",
+      "definition": "The registration was accepted but modifications were made e.g. CAE numbers supplied, OIP info corrected",
+      "other": null
+    },
+    {
+      "description": "Rejected",
+      "code": "RJ",
+      "definition": "The status assigned to a transaction that does not meet the editing requirements documented for that transaction type.  Publisher must resubmit.",
+      "other": null
+    },
+    {
+      "description": "No Participation",
+      "code": "NP",
+      "definition": "The status assigned to indicate that the receiving society has no interest in the work, and therefore may not have edited the work fully e.g. if BMI received a work that contained only ASCAP interested parties (or vice versa)",
+      "other": null
+    },
+    {
+      "description": "Claim rejected",
+      "code": "RC",
+      "definition": "The publisher's claim to this work is rejected.",
+      "other": null
+    },
+    {
+      "description": "In Dispute",
+      "code": "DI",
+      "definition": "The status assigned to a transaction that has been received and validated but where an interested party has formally disputed the registered rights or shares.",
+      "other": null
+    }
+  ]
+}

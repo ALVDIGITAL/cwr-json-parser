@@ -1,0 +1,44 @@
+{
+  "tableName": "Special Agreement Indicator",
+  "slug": "special-agreement-indicator",
+  "source": "CWR08-3615R2_CWR_2x_Lookup_Table_2026-03-31_EN.xml#CWR Tables",
+  "entryCount": 6,
+  "entries": [
+    {
+      "description": "Reversionary Rights",
+      "code": "R",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Leading Publisher",
+      "code": "L",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Both Reversionary Rights and Leading Publisher",
+      "code": "B",
+      "definition": null,
+      "other": null
+    },
+    {
+      "description": "Reversionary Rights",
+      "code": "Y",
+      "definition": "Formerly ‘Yes’ on ‘Reversionary rights field’",
+      "other": null
+    },
+    {
+      "description": "No Reversionary Rights",
+      "code": "N",
+      "definition": "Formerly ‘No’ on ‘Reversionary rights field’",
+      "other": null
+    },
+    {
+      "description": "Unknown Reversionary Rights",
+      "code": "U",
+      "definition": "Formerly ‘Unknown’ on ‘Reversionary rights field’",
+      "other": null
+    }
+  ]
+}

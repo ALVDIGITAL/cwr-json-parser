@@ -1,0 +1,38 @@
+{
+  "tableName": "Music Arrangement",
+  "slug": "music-arrangement",
+  "source": "CWR08-3615R2_CWR_2x_Lookup_Table_2026-03-31_EN.xml#CWR Tables",
+  "entryCount": 5,
+  "entries": [
+    {
+      "description": "New",
+      "code": "NEW",
+      "definition": "New music added to existing music",
+      "other": null
+    },
+    {
+      "description": "Arrangement",
+      "code": "ARR",
+      "definition": "A version of a work in which musical elements have been modified",
+      "other": null
+    },
+    {
+      "description": "Addition",
+      "code": "ADM",
+      "definition": "Music added to a pre-existing text",
+      "other": null
+    },
+    {
+      "description": "Unspecified arrangement",
+      "code": "UNS",
+      "definition": "To be used when it is known the work is an arrangement, but no further details are available",
+      "other": null
+    },
+    {
+      "description": "Original",
+      "code": "ORI",
+      "definition": "Music used in its original form",
+      "other": null
+    }
+  ]
+}

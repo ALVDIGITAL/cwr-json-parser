@@ -1,0 +1,38 @@
+{
+  "tableName": "BLTVR (Background, Logo, Theme, Visual, Rolled up Cue)",
+  "slug": "bltvr-background-logo-theme-visual-rolled-up-cue",
+  "source": "CWR08-3615R2_CWR_2x_Lookup_Table_2026-03-31_EN.xml#CWR Tables",
+  "entryCount": 5,
+  "entries": [
+    {
+      "description": "Background",
+      "code": "B",
+      "definition": "Music which is dubbed in for effect. It is not seen to be heard by the actors or performers in an audio-visual work and it is not the title or signature music",
+      "other": null
+    },
+    {
+      "description": "Logo",
+      "code": "L",
+      "definition": "Logo Music is an aural means of identification.  It indicates the source or ownership of a product (e.g., motion picture, television series, etc.) , service or entity.  Such music is usually, but not necessarily, performed with the owner's (e.g., film producer's or distributor's)visual logo and/or trademark.",
+      "other": null
+    },
+    {
+      "description": "Rolled up Cue",
+      "code": "R",
+      "definition": "Cues where the writers and ownership information are the same as each other and it is desirable to make a collated single entry. \nThe individual constituent cue titles are not the same.",
+      "other": null
+    },
+    {
+      "description": "Theme",
+      "code": "T",
+      "definition": "Music which is the main title music used at the start or end of the audio-visual work",
+      "other": null
+    },
+    {
+      "description": "Visual",
+      "code": "V",
+      "definition": "Music from an on screen performance",
+      "other": null
+    }
+  ]
+}
