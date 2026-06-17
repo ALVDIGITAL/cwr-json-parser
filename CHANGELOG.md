@@ -1,3 +1,35 @@
+## [1.4.1] - 2026-06-17
+
+### Fixed
+
+- `normalizeCwrJson` strips blank (`""`) and `000` collecting-society codes on shares; emits normalization warnings.
+- Parser omits non-present society via `presentSocietyCode` — CWR blank/000 → no `society` field in output.
+
+### Notes
+
+- **CWR-JSON v1.00 r0 format unchanged** — optional normalization only.
+
+## [1.4.0] - 2026-06-15
+
+### Added
+
+- EDI-level validation on raw CWR text:
+  - `validateCwrFilename` — `CWyynnnnsss_rrr.Vxx` naming convention
+  - `validateCwrRecordOrder` — work-block record order (`scope: 'first' | 'all'`)
+  - `validateCwrSequence` — `TransactionSeq` / `RecordSeq` numbering
+  - `validateCwrEdi` — combined filename + order + sequence checks
+- Lookup table revision **r1** (`cwr_lookup_data_types_v1.0.json`): CISAC-derived `societyCodes` (300+), `characterSets`, `languageCodes`, `revocationReasons`, `anomalousWorkReasons` injected into JSON Schema enums.
+- `hasSocietyCode` + `societyCodeVariants` on `@alvdigital/cwr-json-parser/schema` (padded/unpadded numeric forms).
+
+### Changed
+
+- Bundled lookup metadata: `revision: r1`, `generatedAt: 2026-06-14`, `cisacGeneratedAt: 2026-06-15`.
+
+### Notes
+
+- **CWR-JSON v1.00 r0 output shape unchanged**.
+- Stricter validation may reject hand-edited JSON with invalid society, `header.characterSet`, revocation, or anomalous-work reason values.
+
 ## [1.3.1] - 2026-06-03
 
 ### Added
