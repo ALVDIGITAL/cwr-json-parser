@@ -31,6 +31,24 @@ Integrators (including downstream export pipelines) should treat this page as th
 - Zero-share `SPT`/`SWT` records merge TIS `include`/`exclude` into the active `coll` territory instead of spawning a separate territory with zero-value shares.
 - Share arrays omit `value: 0` entries (aligned with [Territories & Shares](../interested-parties/territories-shares)).
 - Duplicate `SPU` for the same sub-publisher under one `E` chain is deduplicated; same `partyId` under different `E` parents remains separate (KEY008, KEY044).
+## 2026-06-17 — Society code normalization (no format bump)
+
+> **No change to CWR-JSON v1.00 r0 field shapes.**
+
+**Validation 1.1.2 (patch)**
+- Optional normalization strips empty and `000` society codes on shares before validation.
+- Parser output omits blank/`000` society fields (matches CWR EDI semantics).
+
+---
+
+## 2026-06-15 — Validation 1.1.2 (no format bump)
+
+> **No change to CWR-JSON v1.00 r0 field shapes.**
+
+**Validation 1.1.2**
+- Lookup revision **r1**: CISAC society, character set, language, revocation, and anomalous-work enums in published lookup + JSON Schema.
+- JSON Schema validates `shares[].society`, `header.characterSet`, `revocation.reason`, `flags.anomalousReason`.
+- **EDI validators** on npm package (`validateCwrEdi`, etc.) for raw CWR text before parse — see package [README](https://github.com/ALVDIGITAL/cwr-json-parser#typical-pipeline).
 
 ---
 
