@@ -60,6 +60,7 @@ export function projectCanonicalFromModel(model: WorkModel): ParsedCwrFile {
     delete p._ownShares;
     delete p._agreementNumber;
     delete p._publisherSequence;
+    delete p._activeCollTerritory;
     if (p.representedBy?.length) p.representedBy.forEach(cleanupParticipant);
   };
 

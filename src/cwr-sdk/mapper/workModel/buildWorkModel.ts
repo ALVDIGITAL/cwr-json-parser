@@ -1,5 +1,11 @@
 import { upsertCollectionTerritory, upsertOwnTerritory } from '../territoryUtils';
-import { lineToObj, parseShares, normalizeSequenceKey, isPublisherOwnEligible } from './parseHelpers';
+import {
+  lineToObj,
+  parseShares,
+  normalizeSequenceKey,
+  normalizePartyKey,
+  isPublisherOwnEligible,
+} from './parseHelpers';
 import { PublisherRegistry } from './publisherRegistry';
 import type {
   WorkModel,
@@ -120,6 +126,16 @@ export function buildWorkModel(lines: string[]): WorkModel {
     }
 
     if (['SE', 'AM', 'PA'].includes(role) && currentPublisherChain) {
+      const partyId = (obj.InterestedPartyNumber || '').trim();
+      const normalizedId = normalizePartyKey(partyId);
+      const existing = currentPublisherChain.party.representedBy.find(
+        (sub) =>
+          sub.partyId === partyId || normalizePartyKey(sub.partyId) === normalizedId
+      );
+      if (existing) {
+        registry.addChain(currentPublisherChain);
+        return;
+      }
       const sub = createPublisherParty(obj, type, currentPublisherChain.sequence);
       currentPublisherChain.party.representedBy.push(sub);
       registry.addChain(currentPublisherChain);

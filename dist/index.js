@@ -24,19 +24,62 @@ function findOrCreateTerritoryEntry(participant, include, exclude) {
 }
 __name(findOrCreateTerritoryEntry, "findOrCreateTerritoryEntry");
 function addShareType(territoryEntry, type, shares) {
-  if (!shares || shares.length === 0) return;
+  const filtered = (shares || []).filter((s) => s.value > 0);
+  if (!filtered.length) return;
   let shareTypeEntry = territoryEntry.shareTypes.find((st) => st.type === type);
   if (!shareTypeEntry) {
     shareTypeEntry = { type, shares: [] };
     territoryEntry.shareTypes.push(shareTypeEntry);
   }
-  shareTypeEntry.shares = shares;
+  shareTypeEntry.shares = filtered;
 }
 __name(addShareType, "addShareType");
 function normalizeSharesKey(shares = []) {
-  return shares.map((s) => `${s.rightsType || ""}:${s.value ?? ""}:${s.society || ""}`).sort().join("|");
+  return shares.filter((s) => s.value > 0).map((s) => `${s.rightsType || ""}:${s.value ?? ""}:${s.society || ""}`).sort().join("|");
 }
 __name(normalizeSharesKey, "normalizeSharesKey");
+function getNonZeroCollShares(territoryEntry) {
+  const coll = (territoryEntry.shareTypes || []).find((st) => st.type === "coll");
+  return (coll?.shares || []).filter((s) => s.value > 0);
+}
+__name(getNonZeroCollShares, "getNonZeroCollShares");
+function findCollTerritoryByShareKey(participant, shareKey) {
+  if (!shareKey) return void 0;
+  return (participant.territories || []).find((t) => {
+    const nonZero = getNonZeroCollShares(t);
+    return nonZero.length > 0 && normalizeSharesKey(nonZero) === shareKey;
+  });
+}
+__name(findCollTerritoryByShareKey, "findCollTerritoryByShareKey");
+function findPendingCollTerritory(participant) {
+  return (participant.territories || []).find((t) => {
+    const hasTis = (t.territory?.include?.length || 0) > 0 || (t.territory?.exclude?.length || 0) > 0;
+    return hasTis && getNonZeroCollShares(t).length === 0;
+  });
+}
+__name(findPendingCollTerritory, "findPendingCollTerritory");
+function findLastCollTerritoryWithShares(participant) {
+  const territories = participant.territories || [];
+  for (let i = territories.length - 1; i >= 0; i--) {
+    if (getNonZeroCollShares(territories[i]).length > 0) {
+      return territories[i];
+    }
+  }
+  return void 0;
+}
+__name(findLastCollTerritoryWithShares, "findLastCollTerritoryWithShares");
+function mergeTis(territoryEntry, incl, tis) {
+  if (incl) {
+    territoryEntry.territory.include = Array.from(
+      /* @__PURE__ */ new Set([...territoryEntry.territory.include || [], ...tis])
+    );
+  } else {
+    territoryEntry.territory.exclude = Array.from(
+      /* @__PURE__ */ new Set([...territoryEntry.territory.exclude || [], ...tis])
+    );
+  }
+}
+__name(mergeTis, "mergeTis");
 function upsertOwnTerritory(participant, ownShares, agreementNumber) {
   if (!ownShares?.length) return null;
   const ownTerritory = findOrCreateTerritoryEntry(participant, [], []);
@@ -47,26 +90,28 @@ function upsertOwnTerritory(participant, ownShares, agreementNumber) {
 __name(upsertOwnTerritory, "upsertOwnTerritory");
 function upsertCollectionTerritory(participant, options) {
   const { incl, tis, collShares, agreementNumber } = options;
-  const collSharesKey = normalizeSharesKey(collShares || []);
-  const hasAnyCollShares = (collShares || []).length > 0;
-  let territoryEntry = (participant.territories || []).find((t) => {
-    const existingColl = (t.shareTypes || []).find((st) => st.type === "coll")?.shares || [];
-    if (!existingColl.length && !hasAnyCollShares) return false;
-    return normalizeSharesKey(existingColl) === collSharesKey;
-  });
-  if (!territoryEntry) {
-    territoryEntry = findOrCreateTerritoryEntry(participant, incl ? tis : [], !incl ? tis : []);
-  } else if (incl) {
-    territoryEntry.territory.include = Array.from(
-      /* @__PURE__ */ new Set([...territoryEntry.territory.include || [], ...tis])
-    );
+  const nonZeroShares = (collShares || []).filter((s) => s.value > 0);
+  const shareKey = normalizeSharesKey(nonZeroShares);
+  const isScopeOnly = tis.length > 0 && nonZeroShares.length === 0;
+  let territoryEntry;
+  if (nonZeroShares.length > 0) {
+    territoryEntry = findCollTerritoryByShareKey(participant, shareKey) || findPendingCollTerritory(participant);
+    if (!territoryEntry) {
+      territoryEntry = findOrCreateTerritoryEntry(participant, incl ? tis : [], !incl ? tis : []);
+    } else {
+      mergeTis(territoryEntry, incl, tis);
+    }
+    addShareType(territoryEntry, "coll", nonZeroShares);
+    participant._activeCollTerritory = territoryEntry;
+  } else if (isScopeOnly) {
+    territoryEntry = participant._activeCollTerritory || findLastCollTerritoryWithShares(participant) || findPendingCollTerritory(participant);
+    if (!territoryEntry) {
+      territoryEntry = findOrCreateTerritoryEntry(participant, incl ? tis : [], !incl ? tis : []);
+    } else {
+      mergeTis(territoryEntry, incl, tis);
+    }
   } else {
-    territoryEntry.territory.exclude = Array.from(
-      /* @__PURE__ */ new Set([...territoryEntry.territory.exclude || [], ...tis])
-    );
-  }
-  if (hasAnyCollShares) {
-    addShareType(territoryEntry, "coll", collShares);
+    return null;
   }
   if (agreementNumber) {
     territoryEntry.agreementNumber = agreementNumber;
@@ -2486,6 +2531,15 @@ function buildWorkModel(lines) {
       return;
     }
     if (["SE", "AM", "PA"].includes(role) && currentPublisherChain) {
+      const partyId = (obj.InterestedPartyNumber || "").trim();
+      const normalizedId = normalizePartyKey(partyId);
+      const existing = currentPublisherChain.party.representedBy.find(
+        (sub2) => sub2.partyId === partyId || normalizePartyKey(sub2.partyId) === normalizedId
+      );
+      if (existing) {
+        registry.addChain(currentPublisherChain);
+        return;
+      }
       const sub = createPublisherParty(obj, type, currentPublisherChain.sequence);
       currentPublisherChain.party.representedBy.push(sub);
       registry.addChain(currentPublisherChain);
@@ -2815,6 +2869,7 @@ function projectCanonicalFromModel(model) {
     delete p._ownShares;
     delete p._agreementNumber;
     delete p._publisherSequence;
+    delete p._activeCollTerritory;
     if (p.representedBy?.length) p.representedBy.forEach(cleanupParticipant);
   }, "cleanupParticipant");
   interestedParties.forEach(cleanupParticipant);

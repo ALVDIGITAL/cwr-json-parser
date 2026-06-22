@@ -1,3 +1,19 @@
+## [1.4.2] - 2026-06-22
+
+### Fixed
+
+- **Collection territory merge:** zero-share `SPT`/`SWT` records (exclude-only scope) now merge `include`/`exclude` TIS into the active collection territory instead of creating a separate node with `value: 0` shares.
+- **Zero shares omitted:** collection and ownership share arrays no longer emit entries with `value: 0` (matches schema docs).
+- **Duplicate sub-publisher nodes:** repeated `SPU` for the same `partyId` under the same original publisher (`E`) chain is deduplicated; same sub-publisher under different `E` parents is unchanged.
+
+### Added
+
+- Tests: `territoryUtils` unit cases (KEY015, KEY005D, MOD017 patterns) and fixture integration tests (`BC-key015`, `BC-key008`, `BC-key044`).
+
+### Notes
+
+- **CWR-JSON v1.00 r0 format unchanged** — parser output shape is the same; territory rows are consolidated and zero-value shares are omitted.
+
 ## [1.3.1] - 2026-06-03
 
 ### Added

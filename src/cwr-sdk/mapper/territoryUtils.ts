@@ -39,7 +39,8 @@ export function addShareType(
   type: 'own' | 'coll',
   shares: ShareEntry[]
 ) {
-  if (!shares || shares.length === 0) return;
+  const filtered = (shares || []).filter((s) => s.value > 0);
+  if (!filtered.length) return;
 
   let shareTypeEntry = territoryEntry.shareTypes.find((st: any) => st.type === type);
 
@@ -48,14 +49,58 @@ export function addShareType(
     territoryEntry.shareTypes.push(shareTypeEntry);
   }
 
-  shareTypeEntry.shares = shares;
+  shareTypeEntry.shares = filtered;
 }
 
 export function normalizeSharesKey(shares: ShareEntry[] = []) {
   return shares
+    .filter((s) => s.value > 0)
     .map((s) => `${s.rightsType || ''}:${s.value ?? ''}:${s.society || ''}`)
     .sort()
     .join('|');
+}
+
+function getNonZeroCollShares(territoryEntry: any): ShareEntry[] {
+  const coll = (territoryEntry.shareTypes || []).find((st: any) => st.type === 'coll');
+  return (coll?.shares || []).filter((s: ShareEntry) => s.value > 0);
+}
+
+function findCollTerritoryByShareKey(participant: any, shareKey: string): any | undefined {
+  if (!shareKey) return undefined;
+  return (participant.territories || []).find((t: any) => {
+    const nonZero = getNonZeroCollShares(t);
+    return nonZero.length > 0 && normalizeSharesKey(nonZero) === shareKey;
+  });
+}
+
+function findPendingCollTerritory(participant: any): any | undefined {
+  return (participant.territories || []).find((t: any) => {
+    const hasTis =
+      (t.territory?.include?.length || 0) > 0 || (t.territory?.exclude?.length || 0) > 0;
+    return hasTis && getNonZeroCollShares(t).length === 0;
+  });
+}
+
+function findLastCollTerritoryWithShares(participant: any): any | undefined {
+  const territories = participant.territories || [];
+  for (let i = territories.length - 1; i >= 0; i--) {
+    if (getNonZeroCollShares(territories[i]).length > 0) {
+      return territories[i];
+    }
+  }
+  return undefined;
+}
+
+function mergeTis(territoryEntry: any, incl: boolean, tis: string[]) {
+  if (incl) {
+    territoryEntry.territory.include = Array.from(
+      new Set([...(territoryEntry.territory.include || []), ...tis])
+    );
+  } else {
+    territoryEntry.territory.exclude = Array.from(
+      new Set([...(territoryEntry.territory.exclude || []), ...tis])
+    );
+  }
 }
 
 /** Ownership shares are global to the party — not scoped to TIS include/exclude. */
@@ -81,31 +126,40 @@ export function upsertCollectionTerritory(
   }
 ) {
   const { incl, tis, collShares, agreementNumber } = options;
-  const collSharesKey = normalizeSharesKey(collShares || []);
-  const hasAnyCollShares = (collShares || []).length > 0;
+  const nonZeroShares = (collShares || []).filter((s) => s.value > 0);
+  const shareKey = normalizeSharesKey(nonZeroShares);
+  const isScopeOnly = tis.length > 0 && nonZeroShares.length === 0;
 
-  let territoryEntry = (participant.territories || []).find((t: any) => {
-    const existingColl =
-      (t.shareTypes || []).find((st: any) => st.type === 'coll')?.shares || [];
-    if (!existingColl.length && !hasAnyCollShares) return false;
-    return normalizeSharesKey(existingColl) === collSharesKey;
-  });
+  let territoryEntry: any;
 
-  if (!territoryEntry) {
-    territoryEntry = findOrCreateTerritoryEntry(participant, incl ? tis : [], !incl ? tis : []);
-  } else if (incl) {
-    territoryEntry.territory.include = Array.from(
-      new Set([...(territoryEntry.territory.include || []), ...tis])
-    );
+  if (nonZeroShares.length > 0) {
+    territoryEntry =
+      findCollTerritoryByShareKey(participant, shareKey) ||
+      findPendingCollTerritory(participant);
+
+    if (!territoryEntry) {
+      territoryEntry = findOrCreateTerritoryEntry(participant, incl ? tis : [], !incl ? tis : []);
+    } else {
+      mergeTis(territoryEntry, incl, tis);
+    }
+
+    addShareType(territoryEntry, 'coll', nonZeroShares);
+    participant._activeCollTerritory = territoryEntry;
+  } else if (isScopeOnly) {
+    territoryEntry =
+      participant._activeCollTerritory ||
+      findLastCollTerritoryWithShares(participant) ||
+      findPendingCollTerritory(participant);
+
+    if (!territoryEntry) {
+      territoryEntry = findOrCreateTerritoryEntry(participant, incl ? tis : [], !incl ? tis : []);
+    } else {
+      mergeTis(territoryEntry, incl, tis);
+    }
   } else {
-    territoryEntry.territory.exclude = Array.from(
-      new Set([...(territoryEntry.territory.exclude || []), ...tis])
-    );
+    return null;
   }
 
-  if (hasAnyCollShares) {
-    addShareType(territoryEntry, 'coll', collShares);
-  }
   if (agreementNumber) {
     territoryEntry.agreementNumber = agreementNumber;
   }

@@ -13,6 +13,7 @@ export type PartyNode = {
   _ownShares?: ShareEntry[];
   _agreementNumber?: AgreementNumber;
   _publisherSequence?: string;
+  _activeCollTerritory?: any;
   roleSplitM?: number;
   roleSplitT?: number;
   relinquishment?: Record<string, unknown>;

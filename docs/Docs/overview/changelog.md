@@ -23,6 +23,17 @@ Integrators (including downstream export pipelines) should treat this page as th
 
 ---
 
+## 2026-06-22 — Parser 1.4.2 (no format bump)
+
+> **No change to CWR-JSON v1.00 r0 field shapes.** Collection territory mapping and sub-publisher chain deduplication fixes.
+
+**Parser 1.4.2**
+- Zero-share `SPT`/`SWT` records merge TIS `include`/`exclude` into the active `coll` territory instead of spawning a separate territory with zero-value shares.
+- Share arrays omit `value: 0` entries (aligned with [Territories & Shares](../interested-parties/territories-shares)).
+- Duplicate `SPU` for the same sub-publisher under one `E` chain is deduplicated; same `partyId` under different `E` parents remains separate (KEY008, KEY044).
+
+---
+
 ## 2026-06-03 — Validation UX & normalization (no format bump)
 
 > **No change to CWR-JSON v1.00 r0 field shapes.** Validation ergonomics and optional pre-validation cleanup.
