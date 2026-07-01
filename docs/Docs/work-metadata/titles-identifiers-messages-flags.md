@@ -52,18 +52,37 @@ The `identifiers` array contains all identifiers assigned to the work.
 
 ## Sources
 
-| `source`                | CWR Source Field          | Description                                  |
-| ----------------------- | ------------------------- | -------------------------------------------- |
-| `"iswc"`                | `NWR.ISWC`                | International Standard Work Code (ISO 15707) |
-| `"submitterWorkNumber"` | `NWR.SubmitterWorkNumber` | Submitter's internal work number             |
-| `"proprietary"`         | _(varies)_                | Other proprietary identifier                 |
+| `source`                | CWR Source                         | Description                                  |
+| ----------------------- | ---------------------------------- | -------------------------------------------- |
+| `"iswc"`                | `NWR.ISWC`, `XRF` (`ISW`)          | International Standard Work Code (ISO 15707) |
+| `"isrc"`                | `XRF` (`ISR`)                      | ISRC cross-reference on the work             |
+| `"submitterWorkNumber"` | `NWR.SubmitterWorkNumber`          | Submitter's internal work number             |
+| Society code (e.g. `"035"`) | `XRF` (`OrganisationCode`)     | Society-assigned work identifier             |
+| Submitter code (e.g. `"EMI"`) | `XRF` (`OrganisationCode`)   | Publisher/submitter-assigned work ID         |
+| `"proprietary"`         | `XRF` (no org code)                | Fallback when organisation code is missing   |
+
+### XRF mapping
+
+CWR 2.2 **`XRF`** (Work ID Cross Reference) rows append to `identifiers[]`:
+
+| `OrganisationCode` | `source` in JSON | `value` |
+|---|---|---|
+| `ISW` | `iswc` | `Identifier` |
+| `ISR` | `isrc` | `Identifier` |
+| Society / submitter code | same as org code | `Identifier` |
+| `000`, `099` | _(skipped)_ | — |
+
+All `Validity` values (`Y`, `N`, `U`) are emitted. `{source, value}` duplicates (e.g. `NWR` ISWC + `XRF` `ISW`) are deduplicated.
 
 ## Example
 
 ```json
 "identifiers": [
   { "source": "iswc", "value": "T-000.000.001-0" },
-  { "source": "submitterWorkNumber", "value": "EMI-00042" }
+  { "source": "submitterWorkNumber", "value": "EMI-00042" },
+  { "source": "035", "value": "3987389001" },
+  { "source": "isrc", "value": "USRC17607839" },
+  { "source": "EMI", "value": "EMI-00042" }
 ]
 ```
 

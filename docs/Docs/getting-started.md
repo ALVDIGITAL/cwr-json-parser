@@ -16,7 +16,7 @@ Open the <Anchor target="_blank" href="https://cwr.alvdev.com/#/">Playground&#x2
 Supported for conversion today:
 
 - `NWR` / `REV` work registration transactions
-- Related detail records (`ALT`, `NAT`, parties, territories, `REC`, `ARI`, `MSG`, etc.)
+- Related detail records (`ALT`, `NAT`, parties, territories, `REC`, `ARI`, `XRF`, `MSG`, etc.)
 
 Acknowledgement (`ACK`) files may be parsed for preview; full ACK serialisation is [planned](./changelog).
 

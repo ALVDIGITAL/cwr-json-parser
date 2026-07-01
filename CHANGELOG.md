@@ -1,3 +1,15 @@
+## [1.4.3] - 2026-06-30
+
+### Added
+
+- **XRF → `identifiers[]`:** CWR 2.2 Work ID Cross Reference records map into `works[].identifiers` — `OrganisationCode` → `source`, `Identifier` → `value`; `ISW` → `iswc`, `ISR` → `isrc`; society and submitter org codes (e.g. `035`, `EMI`) as `source`; skip org `000`/`099`; dedupe on `{source, value}`.
+- **Schema / lookup:** `identifierSources` includes CISAC society codes and `isrc`; `identifiers[].source` also accepts 2–3 letter CWR submitter IDs; conditional ISRC pattern on work identifiers.
+- Sample fixture: `test/files/XRF-identifiers-sample.V22`.
+
+### Notes
+
+- **CWR-JSON v1.00 r0 field shapes unchanged** — new data in existing `identifiers[]`; stricter validation may apply to hand-edited JSON with society-code `source` values.
+
 ## [1.4.2] - 2026-06-22
 
 ### Fixed

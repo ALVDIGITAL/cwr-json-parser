@@ -38,7 +38,7 @@ A CWR-JSON file produced by the **CWR-JSON Playground** reference implementation
 |---|---|
 | `header` | File-level metadata from the CWR `HDR` record (sender, dates, CWR version, software) |
 | `works[].titles` | All titles — original, alternate, non-Roman |
-| `works[].identifiers` | ISWC, submitter work numbers, proprietary IDs |
+| `works[].identifiers` | ISWC, submitter work numbers, society/submitter cross-refs from `XRF` |
 | `works[].parties` | Ownership chain: writers → original publishers → sub-publishers; `own` shares without TIS scope, `coll` shares per TIS |
 | `works[].recordings` | Commercial recordings (ISRC, album, label, release date) |
 | `works[].messages` | Registration type, revocation flags, ACK messages, schema metadata |

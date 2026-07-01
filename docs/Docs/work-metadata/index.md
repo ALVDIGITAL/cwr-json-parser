@@ -16,7 +16,7 @@ privacy:
 | `messages`    | object | M   | Registration metadata, ACK messages, and schema metadata (`schema`, `schemaDescription`)                                                   |
 | `flags`       | object | O   | Boolean indicators from the registration record                                                                                            |
 | `titles`      | array  | O   | All titles for the work (original, alternate, non-Roman)                                                                                   |
-| `identifiers` | array  | O   | All identifiers (ISWC, submitter work number, proprietary IDs)                                                                             |
+| `identifiers` | array  | O   | All identifiers (ISWC, submitter work number, `XRF` cross-refs)                                                                              |
 | `parties`     | array  | O   | **Ownership chain** — writers and publishers with hierarchical `representedBy` nesting and per-territory shares (ownership and collection) |
 | `recordings`  | array  | O   | Commercial recordings (ISRC, album, label, release date)                                                                                   |
 

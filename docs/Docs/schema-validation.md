@@ -30,7 +30,7 @@ The schema embeds lookup enums and field patterns derived from the lookup table.
 | `shareTypes` | `shareTypes[].type` (`own`, `coll`) |
 | `controlled` | `parties[].controlled` |
 | `titleTypes` | `titles[].type` |
-| `identifierSources` | `identifiers[].source` |
+| `identifierSources` | `identifiers[].source` (canonical names, CISAC society codes, `isrc`; or 2–3 letter submitter ID pattern) |
 | `messageTypes` | `messages.type` |
 | `aiUsageIndicators` | `flags.aiUsage` |
 | `characterSets` | `header.characterSet` |

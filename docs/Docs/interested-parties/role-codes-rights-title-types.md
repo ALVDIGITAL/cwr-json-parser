@@ -74,8 +74,11 @@ Used in `identifiers[].source` and `recordings[].releases[].identifiers[].source
 | Source | Description | Format |
 |---|---|---|
 | `iswc` | International Standard Work Code (ISO 15707) | `T-NNNNNNNNN-C` |
+| `isrc` | ISRC from `XRF` (`OrganisationCode = ISR`) | `CCXXXYYNNNNN` |
 | `submitterWorkNumber` | Submitter's internal work ID | Alphanumeric, unique per submitter |
-| `proprietary` | Other proprietary identifier | Varies |
+| CISAC society code | Society work ID from `XRF` (e.g. `035`) | Varies per society |
+| CWR submitter ID | Publisher/submitter work ID from `XRF` (e.g. `EMI`) | 2–3 uppercase letters + value |
+| `proprietary` | Fallback when org code is absent | Varies |
 | `ean` | EAN barcode (release-level) | 13-digit numeric string |
 | `catalogNumber` | Release catalogue number | Alphanumeric |
 

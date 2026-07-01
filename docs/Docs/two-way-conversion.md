@@ -38,3 +38,24 @@ The `NWR` and `REV` records are the root of every CWR transaction.
 - For `REV` with `RevocationIndicator = "Y"`: the work is being revoked.
 
 ---
+
+# XRF — Work ID Cross Reference
+
+CWR 2.2 **`XRF`** records carry additional work identifiers (society work numbers, ISWC/ISRC cross-refs, submitter IDs).
+
+## Mapping
+
+| CWR EDI Field | JSON Path | Notes |
+|---|---|---|
+| `OrganisationCode = ISW` | `work.identifiers[]` | `{ source: "iswc", value: Identifier }` |
+| `OrganisationCode = ISR` | `work.identifiers[]` | `{ source: "isrc", value: Identifier }` |
+| Other `OrganisationCode` | `work.identifiers[]` | `{ source: <OrganisationCode>, value: Identifier }` (e.g. `"035"`, `"EMI"`) |
+| `OrganisationCode` `000` / `099` | — | Skipped |
+| `Validity` | — | Not emitted in JSON (all Y/N/U rows included) |
+
+## Notes
+
+- Duplicate `{source, value}` pairs are deduplicated against `NWR`/`REV` and other `XRF` rows.
+- `REC` recordings are unchanged; `ISR` XRF also appears in `identifiers[]` (not auto-merged into `recordings[]`).
+
+---

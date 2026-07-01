@@ -23,6 +23,24 @@ Integrators (including downstream export pipelines) should treat this page as th
 
 ---
 
+## 2026-06-30 — Parser 1.4.3 (no format bump)
+
+> **No change to CWR-JSON v1.00 r0 object shapes.** `works[].identifiers[]` gains rows from `XRF` records; JSON Schema `identifierSources` enum widened.
+
+**Parser 1.4.3**
+- **`XRF` (Work ID Cross Reference)** → `works[].identifiers[]`: `OrganisationCode` becomes `source`, `Identifier` becomes `value`.
+- Special org codes: `ISW` → `source: "iswc"`; `ISR` → `source: "isrc"`.
+- Society codes (e.g. `035`) and CWR submitter IDs (e.g. `EMI`) are valid `source` values; org `000` / `099` rows are skipped.
+- Duplicate `{source, value}` pairs are deduplicated (including overlap with `NWR` ISWC).
+- Sample file: `test/files/XRF-identifiers-sample.V22`.
+
+**Validation**
+- `identifierSources` lookup set merges canonical sources with CISAC society codes and `isrc`.
+- `identifiers[].source` accepts the enum **or** `^[A-Z]{2,3}$` for publisher submitter codes.
+- ISRC format enforced on `identifiers[]` when `source` is `isrc`.
+
+---
+
 ## 2026-06-22 — Parser 1.4.2 (no format bump)
 
 > **No change to CWR-JSON v1.00 r0 field shapes.** Collection territory mapping and sub-publisher chain deduplication fixes.
@@ -109,12 +127,13 @@ Integrators (including downstream export pipelines) should treat this page as th
 - Optional root `$schema` for interchange (not emitted by Playground today)
 
 **Supported CWR record types (→ JSON)**
-`HDR` `NWR` `REV` `ALT` `NAT` `NWN` `NOW` `NPN` `SPU` `OPU` `SWR` `OWR` `PWR` `SWT` `OWT` `SPT` `OPT` `REC` `ARI` `MSG`
+`HDR` `NWR` `REV` `ALT` `NAT` `NWN` `NOW` `NPN` `SPU` `OPU` `SWR` `OWR` `PWR` `SWT` `OWT` `SPT` `OPT` `REC` `ARI` `XRF` `MSG`
 
 **Data model**
 - `parties`: writers at top level; publishers in `representedBy[]`; unlinked `E` publishers may appear at top level
 - `parties[].territories[]`: `shareTypes` `own` / `coll`
 - `recordings[]` with ISRC dedupe and `releases[].identifiers` (`ean`, `catalogNumber`)
+- `identifiers[]` from `NWR`/`REV` and **`XRF`** (society, submitter, ISWC, ISRC cross-refs)
 - GEMA `ARI` (035/GW) → `roleSplitM` / `roleSplitT` on `CA` writers
 - `NWN` / `NOW` / `NPN` → `nameDomestic` / `nameScript`
 - **CWR 2.2 Rev3** `PWR` relinquishment on publisher participants
