@@ -52,3 +52,26 @@ export function normalizeSequenceKey(seq?: string) {
 export function isPublisherOwnEligible(role?: string) {
   return (role || '').trim() === 'E';
 }
+
+export type WorkIdentifierEntry = { source: string; value: string };
+
+/** Map CWR XRF (Work ID Cross Reference) to a work-level identifier (Q0 B). */
+export function mapXrfToIdentifier(obj: Record<string, string>): WorkIdentifierEntry | null {
+  const org = (obj.OrganisationCode || '').trim();
+  const id = (obj.Identifier || '').trim();
+  if (!id) return null;
+  if (org === '000' || org === '099') return null;
+
+  if (org === 'ISW') return { source: 'iswc', value: id };
+  if (org === 'ISR') return { source: 'isrc', value: id };
+
+  return { source: org || 'proprietary', value: id };
+}
+
+export function pushIdentifier(
+  identifiers: WorkIdentifierEntry[],
+  entry: WorkIdentifierEntry
+) {
+  const exists = identifiers.some((i) => i.source === entry.source && i.value === entry.value);
+  if (!exists) identifiers.push(entry);
+}

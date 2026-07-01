@@ -13,6 +13,29 @@ export function cwrLine(recordType: string, fields: Record<number, string>, minL
   return chars.join('');
 }
 
+/** XRF detail record (Work ID Cross Reference). */
+export function xrfLine(
+  transactionSeq: string,
+  recordSeq: string,
+  organisationCode: string,
+  identifier: string,
+  identifierType: string,
+  validity: string
+): string {
+  return cwrLine(
+    'XRF',
+    {
+      4: transactionSeq.padStart(8, '0'),
+      12: recordSeq.padStart(8, '0'),
+      20: organisationCode.padEnd(3, ' ').slice(0, 3),
+      23: identifier.padEnd(14, ' ').slice(0, 14),
+      37: identifierType,
+      38: validity,
+    },
+    40
+  );
+}
+
 /** Minimal valid single-work CWR (HDR + GRH + NWR). */
 export function minimalOneWorkCwr(): string {
   const hdr = cwrLine('HDR', {

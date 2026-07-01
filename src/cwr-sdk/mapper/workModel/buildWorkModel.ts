@@ -5,6 +5,8 @@ import {
   normalizeSequenceKey,
   normalizePartyKey,
   isPublisherOwnEligible,
+  mapXrfToIdentifier,
+  pushIdentifier,
 } from './parseHelpers';
 import { PublisherRegistry } from './publisherRegistry';
 import type {
@@ -343,9 +345,12 @@ export function buildWorkModel(lines: string[]): WorkModel {
       model.messages.type = type.toLowerCase();
       const mainTitle = (obj.Title || obj.WorkTitle || '').trim();
       if (mainTitle.length) model.titles.push({ value: mainTitle, type: 'TT' });
-      if (obj.ISWC) model.identifiers.push({ source: 'iswc', value: obj.ISWC });
+      if (obj.ISWC) pushIdentifier(model.identifiers, { source: 'iswc', value: obj.ISWC });
       if (obj.SubmitterWorkNumber) {
-        model.identifiers.push({ source: 'submitterWorkNumber', value: obj.SubmitterWorkNumber });
+        pushIdentifier(model.identifiers, {
+          source: 'submitterWorkNumber',
+          value: obj.SubmitterWorkNumber,
+        });
       }
       if (obj.RevocationIndicator) {
         model.messages.revocation = {
@@ -441,6 +446,13 @@ export function buildWorkModel(lines: string[]): WorkModel {
         subjectCode: obj.SubjectCode || undefined,
         note: obj.Note?.trim() || undefined,
       });
+      continue;
+    }
+
+    if (type === 'XRF') {
+      const mapped = mapXrfToIdentifier(obj);
+      if (mapped) pushIdentifier(model.identifiers, mapped);
+      continue;
     }
   }
 

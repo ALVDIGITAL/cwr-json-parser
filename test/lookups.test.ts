@@ -43,6 +43,9 @@ describe('lookups', () => {
   it('loads CISAC-sourced validation sets', () => {
     assert.ok(getLookupSet('characterSets').length >= 10);
     assert.ok(getLookupSet('societyCodes').length >= 300);
+    assert.ok(getLookupSet('identifierSources').length >= 300);
+    assert.ok(getLookupSet('identifierSources').includes('isrc'));
+    assert.ok(getLookupSet('identifierSources').includes('035'));
     assert.ok(getLookupSet('languageCodes').length >= 100);
     assert.ok(getLookupSet('revocationReasons').length >= 4);
     assert.ok(getLookupSet('anomalousWorkReasons').length >= 2);

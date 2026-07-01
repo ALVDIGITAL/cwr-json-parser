@@ -146,13 +146,18 @@ const workTitleProps = workTitle.properties as Record<string, JsonSchema>;
 workTitleProps.type = { $ref: '#/definitions/TitleTypeCode' };
 workTitleProps.language = { $ref: '#/definitions/LanguageCode' };
 
-// WorkIdentifier — source enum; conditional ISWC pattern
+// WorkIdentifier — society/submitter source codes + conditional value patterns
 schema.definitions.WorkIdentifier = {
   additionalProperties: false,
   type: 'object',
   required: ['source', 'value'],
   properties: {
-    source: { $ref: '#/definitions/IdentifierSource' },
+    source: {
+      oneOf: [
+        { $ref: '#/definitions/IdentifierSource' },
+        { type: 'string', pattern: '^[A-Z]{2,3}$' },
+      ],
+    },
     value: { type: 'string' },
   },
   allOf: [
@@ -163,6 +168,15 @@ schema.definitions.WorkIdentifier = {
       },
       then: {
         properties: { value: { type: 'string', pattern: PATTERNS.iswc } },
+      },
+    },
+    {
+      if: {
+        properties: { source: { const: 'isrc' } },
+        required: ['source'],
+      },
+      then: {
+        properties: { value: { type: 'string', pattern: PATTERNS.isrc } },
       },
     },
     {

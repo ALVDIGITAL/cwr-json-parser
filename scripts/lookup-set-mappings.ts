@@ -38,9 +38,18 @@ export const MANUAL_SETS: Record<string, string[]> = {
   rightsTypes: ['pr', 'mr', 'sr'],
   shareTypes: ['own', 'coll'],
   controlled: ['yes', 'no'],
-  identifierSources: ['iswc', 'submitterWorkNumber', 'proprietary', 'ean', 'catalogNumber'],
+  identifierSources: ['iswc', 'isrc', 'submitterWorkNumber', 'proprietary', 'ean', 'catalogNumber'],
   messageTypes: ['nwr', 'rev'],
 };
+
+/** Work-level identifier sources: canonical names + CISAC society codes (Q0 B / XRF). */
+export function buildIdentifierSources(mappedSets: Record<string, string[]>): string[] {
+  const set = new Set(MANUAL_SETS.identifierSources);
+  for (const code of mappedSets.societyCodes ?? []) {
+    set.add(code);
+  }
+  return [...set].sort((a, b) => a.localeCompare(b));
+}
 
 export function buildMappedSet(mapping: LookupMapping): string[] {
   const set = new Set<string>();

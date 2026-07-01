@@ -28,6 +28,8 @@ import {
 
   buildAllMappedSets,
 
+  buildIdentifierSources,
+
   coveredCisacSlugs,
 
   deriveRoleSubsets,
@@ -223,6 +225,8 @@ const document = {
     ...mappedSets,
 
     ...MANUAL_SETS,
+
+    identifierSources: buildIdentifierSources(mappedSets),
 
     writerRoles,
 
