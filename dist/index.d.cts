@@ -1,5 +1,5 @@
-import { a as SchemaV1Output, S as SchemaId } from './schemaRegistry-DFvRh1rf.cjs';
-export { H as HdrRecord, P as Participant, R as Recording, b as SchemaV1Messages, c as SchemaV1WorkOutput, W as WorkIdentifier, d as WorkTitle } from './schemaRegistry-DFvRh1rf.cjs';
+import { a as SchemaV1Output, S as SchemaId } from './schemaRegistry-D8L31eqS.cjs';
+export { H as HdrRecord, P as Participant, R as Recording, b as SchemaV1Messages, c as SchemaV1WorkOutput, W as WorkIdentifier, d as WorkTitle } from './schemaRegistry-D8L31eqS.cjs';
 
 type ValidationMode = 'strict' | 'advisory';
 interface ValidationOptions {
