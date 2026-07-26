@@ -418,6 +418,32 @@ var recordDefinitions = {
     { label: "PublisherSequence", start: 29, length: 2, type: "N", mandatory: true },
     { label: "PublisherName", start: 31, length: 45, type: "A", mandatory: true },
     { label: "LanguageCode", start: 76, length: 2, type: "A", mandatory: false }
+  ],
+  ACK: [
+    { label: "RecordType", start: 1, length: 3, type: "A", mandatory: true },
+    { label: "TransactionSeq", start: 4, length: 8, type: "N", mandatory: true },
+    { label: "RecordSeq", start: 12, length: 8, type: "N", mandatory: true },
+    { label: "CreationDate", start: 20, length: 8, type: "N", mandatory: true },
+    { label: "CreationTime", start: 28, length: 6, type: "N", mandatory: true },
+    { label: "OriginalGroupId", start: 34, length: 5, type: "N", mandatory: true },
+    { label: "OriginalTransactionSeq", start: 39, length: 8, type: "N", mandatory: true },
+    { label: "OriginalTransactionType", start: 47, length: 3, type: "L", mandatory: true },
+    { label: "CreationTitle", start: 50, length: 60, type: "A", mandatory: false },
+    { label: "SubmitterCreationNumber", start: 110, length: 20, type: "A", mandatory: false },
+    { label: "RecipientCreationNumber", start: 130, length: 20, type: "A", mandatory: false },
+    { label: "ProcessingDate", start: 150, length: 8, type: "N", mandatory: true },
+    { label: "TransactionStatus", start: 158, length: 2, type: "L", mandatory: true }
+  ],
+  MSG: [
+    { label: "RecordType", start: 1, length: 3, type: "A", mandatory: true },
+    { label: "TransactionSeq", start: 4, length: 8, type: "N", mandatory: true },
+    { label: "RecordSeq", start: 12, length: 8, type: "N", mandatory: true },
+    { label: "MessageType", start: 20, length: 1, type: "L", mandatory: true },
+    { label: "OriginalRecordSequence", start: 21, length: 8, type: "N", mandatory: true },
+    { label: "MessageRecordType", start: 29, length: 3, type: "A", mandatory: true },
+    { label: "MessageLevel", start: 32, length: 1, type: "L", mandatory: true },
+    { label: "ValidationNumber", start: 33, length: 3, type: "A", mandatory: true },
+    { label: "MessageText", start: 36, length: 150, type: "A", mandatory: true }
   ]
 };
 

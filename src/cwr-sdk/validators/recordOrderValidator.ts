@@ -11,9 +11,10 @@
 
 import { getRecordType } from "../parser/prefix";
 
-// - Envelope records (HDR/GRH/GRT/TRL) are ignored here.
+// - Envelope records (HDR/GRH/GRT/TRL) and MSG are ignored here.
+// - ACK is a transaction header; nested NWR/REV after ACK is allowed.
 export function validateRecordOrder(lines: string[]): { ok: boolean; problems: string[] } {
-  const ignore = new Set(['HDR', 'GRH', 'GRT', 'TRL']);
+  const ignore = new Set(['HDR', 'GRH', 'GRT', 'TRL', 'MSG']);
 
   // 1. Define Slots and their corresponding Functional Blocks
   const slots = [
@@ -57,17 +58,29 @@ export function validateRecordOrder(lines: string[]): { ok: boolean; problems: s
   const problems = [];
   let currentSlotIdx = 0;
   let sawWorkStart = false;
+  let ackHeader = false;
   const assignedSlots = new Array(lines.length).fill(null);
 
   for (let i = 0; i < lines.length; i++) {
     const type = getRecordType(lines[i]);
     if (ignore.has(type)) continue;
 
-    if (['NWR', 'REV', 'ISW', 'EXC'].includes(type)) {
+    if (type === 'ACK') {
       if (sawWorkStart) {
+        problems.push(`Unexpected ACK at line ${i + 1}`);
+      }
+      sawWorkStart = true;
+      ackHeader = true;
+      currentSlotIdx = 0;
+      continue;
+    }
+
+    if (['NWR', 'REV', 'ISW', 'EXC'].includes(type)) {
+      if (sawWorkStart && !ackHeader) {
         problems.push(`Unexpected ${type} at line ${i + 1}; work blocks must start with a single NWR/REV/ISW/EXC.`);
       }
       sawWorkStart = true;
+      ackHeader = false;
       currentSlotIdx = 0;
     }
 
