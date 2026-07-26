@@ -23,11 +23,11 @@ Integrators (including downstream export pipelines) should treat this page as th
 
 ---
 
-## 2026-07-26 — Parser ACK/MSG support (format additive)
+## 2026-07-26 — Parser 1.5.0 (format additive)
 
 > **Additive only.** Existing `nwr`/`rev` shapes unchanged. `MessageType` gains `"ack"`; optional ACK fields and richer `msgs[]` properties documented.
 
-**Parser**
+**Parser 1.5.0**
 - `ACK` / `MSG` fixed-width layouts in `recordDefinitions` (field-level EDI preview).
 - GRH `TransactionType=ACK` → work blocks start on each `ACK` row (nested `NWR`/`REV` stay in the same block).
 - Flat ACK fields on `works[].messages` (`type: "ack"`, `transactionStatus`, dates, creation numbers, …).
