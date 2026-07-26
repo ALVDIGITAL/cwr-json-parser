@@ -295,13 +295,31 @@ export function buildWorkModel(lines: string[]): WorkModel {
       continue;
     }
 
+    if (type === 'ACK') {
+      model.messages.type = 'ack';
+      model.messages.creationDate = (obj.CreationDate || '').trim();
+      model.messages.creationTime = (obj.CreationTime || '').trim();
+      model.messages.originalGroupId = (obj.OriginalGroupId || '').trim();
+      model.messages.originalTransactionSequence = (obj.OriginalTransactionSeq || '').trim();
+      model.messages.originalTransactionType = (obj.OriginalTransactionType || '').trim();
+      model.messages.creationTitle = (obj.CreationTitle || '').trim();
+      model.messages.submitterCreationNumber = (obj.SubmitterCreationNumber || '').trim();
+      model.messages.recipientCreationNumber = (obj.RecipientCreationNumber || '').trim();
+      model.messages.processingDate = (obj.ProcessingDate || '').trim();
+      model.messages.transactionStatus = (obj.TransactionStatus || '').trim();
+      continue;
+    }
+
     if (type === 'MSG') {
-      const rawMessage = (obj.Raw || line.substring(3)).trim();
-      const [statusToken, ...rest] = rawMessage.split(/\s+/);
-      const status = statusToken || 'status';
-      const text = rest.join(' ') || rawMessage;
       const msgs = (model.messages.msgs as any[]) || [];
-      msgs.push({ status, message: text.trim() });
+      msgs.push({
+        status: (obj.MessageType || '').trim(),
+        message: (obj.MessageText || '').trim(),
+        originalRecordSequence: (obj.OriginalRecordSequence || '').trim(),
+        recordType: (obj.MessageRecordType || '').trim(),
+        messageLevel: (obj.MessageLevel || '').trim(),
+        validationNumber: (obj.ValidationNumber || '').trim(),
+      });
       model.messages.msgs = msgs;
       continue;
     }
@@ -342,7 +360,9 @@ export function buildWorkModel(lines: string[]): WorkModel {
     }
 
     if (type === 'NWR' || type === 'REV') {
-      model.messages.type = type.toLowerCase();
+      if (model.messages.type !== 'ack') {
+        model.messages.type = type.toLowerCase();
+      }
       const mainTitle = (obj.Title || obj.WorkTitle || '').trim();
       if (mainTitle.length) model.titles.push({ value: mainTitle, type: 'TT' });
       if (obj.ISWC) pushIdentifier(model.identifiers, { source: 'iswc', value: obj.ISWC });
