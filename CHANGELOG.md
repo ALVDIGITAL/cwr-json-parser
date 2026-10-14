@@ -1,3 +1,13 @@
+## [Unreleased]
+
+### Added
+
+- **`header.conventions`:** optional file-level declaration of writer and publisher representation. `writerControl` is `swrOnly` or `swrOwr`. `publisherShare` is `summed` or `perWriterChain`. Both fields are required when the object is present. Not mapped from the CWR `HDR` record.
+
+### Notes
+
+- Additive on CWR-JSON v1.0. Files without `conventions` stay valid. A validator built before this change rejects the property as an extra header field.
+
 ## [1.4.3] - 2026-06-30
 
 ### Added

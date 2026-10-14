@@ -150,6 +150,64 @@ describe('schema validation (deep)', () => {
     assert.ok(r.errors.some((e) => e.includes('reason')));
   });
 
+  it('accepts header conventions when both fields are set', () => {
+    const r = validateCwrJson(
+      {
+        header: {
+          conventions: { writerControl: 'swrOnly', publisherShare: 'perWriterChain' },
+        },
+        works: [validWork],
+      },
+      'strict',
+      'cwr-json-v1-0',
+      { normalize: false }
+    );
+    assert.equal(r.valid, true, r.errors.join('\n'));
+  });
+
+  it('accepts a header with no conventions', () => {
+    const r = validateCwrJson(
+      {
+        header: { senderIdentifier: 'EMI' },
+        works: [validWork],
+      },
+      'strict',
+      'cwr-json-v1-0',
+      { normalize: false }
+    );
+    assert.equal(r.valid, true, r.errors.join('\n'));
+  });
+
+  it('rejects an unknown writerControl value', () => {
+    const r = validateCwrJson(
+      {
+        header: {
+          conventions: { writerControl: 'other', publisherShare: 'summed' },
+        },
+        works: [validWork],
+      },
+      'strict',
+      'cwr-json-v1-0',
+      { normalize: false }
+    );
+    assert.equal(r.valid, false);
+    assert.ok(r.errors.some((e) => e.includes('writerControl')));
+  });
+
+  it('rejects conventions that set only one field', () => {
+    const r = validateCwrJson(
+      {
+        header: { conventions: { writerControl: 'swrOwr' } },
+        works: [validWork],
+      },
+      'strict',
+      'cwr-json-v1-0',
+      { normalize: false }
+    );
+    assert.equal(r.valid, false);
+    assert.ok(r.errors.some((e) => e.includes('publisherShare')));
+  });
+
   it('rejects invalid anomalous work reason', () => {
     const r = validateCwrJson(
       {

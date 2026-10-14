@@ -23,6 +23,16 @@ Integrators (including downstream export pipelines) should treat this page as th
 
 ---
 
+## 2026-10-14 — Optional `header.conventions`
+
+> Additive optional field on CWR-JSON v1.0. Files without `conventions` stay valid. A validator that has not picked up this schema rejects files that include it.
+
+- `header.conventions` declares how the file represents writers and publisher shares.
+- `writerControl`: `swrOnly` or `swrOwr`.
+- `publisherShare`: `summed` or `perWriterChain`.
+- When `conventions` is present, both fields are required.
+- Not mapped from the CWR `HDR` record. The sender sets it on the JSON file.
+
 ## 2026-06-30 — Parser 1.4.3 (no format bump)
 
 > **No change to CWR-JSON v1.00 r0 object shapes.** `works[].identifiers[]` gains rows from `XRF` records; JSON Schema `identifierSources` enum widened.

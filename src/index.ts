@@ -8,6 +8,7 @@ export type {
   SchemaV1WorkOutput,
   SchemaV1Messages,
   HdrRecord,
+  HeaderConventions,
   Participant,
   Recording,
   WorkTitle,

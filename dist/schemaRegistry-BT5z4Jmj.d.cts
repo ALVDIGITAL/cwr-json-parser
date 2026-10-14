@@ -108,6 +108,10 @@ interface CanonicalWork {
     parties?: Participant[];
     recordings?: Recording[];
 }
+interface HeaderConventions {
+    writerControl: 'swrOnly' | 'swrOwr';
+    publisherShare: 'summed' | 'perWriterChain';
+}
 interface HdrRecord {
     senderIdentifier?: string;
     senderName?: string;
@@ -119,6 +123,7 @@ interface HdrRecord {
     revision?: string;
     softwarePackage?: string;
     softwarePackageVersion?: string;
+    conventions?: HeaderConventions;
 }
 interface ParsedCwrFile {
     header?: HdrRecord;
@@ -160,4 +165,4 @@ interface CwrJsonSchema<TOutput> {
 declare const jsonSchemaRegistry: CwrJsonSchema<unknown>[];
 type SchemaId = typeof jsonSchemaRegistry[number]['id'];
 
-export type { HdrRecord as H, Participant as P, Recording as R, SchemaId as S, WorkIdentifier as W, SchemaV1Output as a, SchemaV1Messages as b, SchemaV1WorkOutput as c, WorkTitle as d };
+export type { HdrRecord as H, Participant as P, Recording as R, SchemaId as S, WorkIdentifier as W, SchemaV1Output as a, HeaderConventions as b, SchemaV1Messages as c, SchemaV1WorkOutput as d, WorkTitle as e };

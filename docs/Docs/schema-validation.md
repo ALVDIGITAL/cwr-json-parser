@@ -40,6 +40,8 @@ The schema embeds lookup enums and field patterns derived from the lookup table.
 | `anomalousWorkReasons` | `flags.anomalousReason` |
 | `tisNumericCodes` | territory `include` / `exclude`, relinquishment scope |
 
+`header.conventions` is not a lookup set. When the object is present, `writerControl` must be `swrOnly` or `swrOwr`, and `publisherShare` must be `summed` or `perWriterChain`.
+
 Additional CISAC reference sets (instruments, work types, transaction types, etc.) are bundled in the lookup JSON for tooling but are not yet enforced on JSON output fields until the parser exposes those properties.
 
 See also [TIS Territory Codes](./tis-territory-codes).

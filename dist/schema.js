@@ -119,6 +119,9 @@ var cwr_json_schema_v1_0_schema_default = {
         },
         version: {
           type: "string"
+        },
+        conventions: {
+          $ref: "#/definitions/Conventions"
         }
       },
       type: "object"
@@ -2418,6 +2421,30 @@ var cwr_json_schema_v1_0_schema_default = {
         "IPS",
         "UNA"
       ]
+    },
+    Conventions: {
+      additionalProperties: false,
+      properties: {
+        publisherShare: {
+          type: "string",
+          enum: [
+            "summed",
+            "perWriterChain"
+          ]
+        },
+        writerControl: {
+          type: "string",
+          enum: [
+            "swrOnly",
+            "swrOwr"
+          ]
+        }
+      },
+      required: [
+        "publisherShare",
+        "writerControl"
+      ],
+      type: "object"
     }
   }
 };

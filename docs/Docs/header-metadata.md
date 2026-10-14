@@ -56,8 +56,27 @@ The `header` object is derived from the CWR `HDR` record. The Playground current
 | `creationTime`     | string | O   | `CreationTime`     | Format: `HHMMSS`                                                                                   |
 | `version`          | string | O   | `Version`          | **CWR EDI version** from the source file (e.g. `"2.1"`, `"2.2"`) — not the CWR-JSON format version |
 | `softwarePackage`  | string | O   | `SoftwarePackage`  | Software that generated the source file                                                            |
+| `conventions`      | object | O   | —                  | File-level writer and publisher representation. Not mapped from `HDR`. Set on the JSON file.       |
 
 Additional HDR fields (`transmissionDate`, `characterSet`, `revision`, `softwarePackageVersion`) are defined in the TypeScript model and JSON Schema but are **not yet populated** by the mapper — see [Changelog](./changelog).
+
+### `header.conventions`
+
+Optional. When present, both fields are required. The CWR EDI mapper does not emit this object.
+
+| Field             | Values                              | Meaning                                                                                          |
+| ----------------- | ----------------------------------- | ------------------------------------------------------------------------------------------------ |
+| `writerControl`   | `swrOnly`, `swrOwr`                 | `swrOnly`: writer is SWR only, with publisher relationships on that writer. `swrOwr`: the same writer may also appear as OWR. |
+| `publisherShare`  | `summed`, `perWriterChain`          | `summed`: one publisher share can cover several writers. `perWriterChain`: one publisher share per writer chain. |
+
+```json
+"header": {
+  "conventions": {
+    "writerControl": "swrOnly",
+    "publisherShare": "perWriterChain"
+  }
+}
+```
 
 ### Example
 

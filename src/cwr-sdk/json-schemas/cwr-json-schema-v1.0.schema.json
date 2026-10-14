@@ -115,6 +115,9 @@
         },
         "version": {
           "type": "string"
+        },
+        "conventions": {
+          "$ref": "#/definitions/Conventions"
         }
       },
       "type": "object"
@@ -2414,6 +2417,30 @@
         "IPS",
         "UNA"
       ]
+    },
+    "Conventions": {
+      "additionalProperties": false,
+      "properties": {
+        "publisherShare": {
+          "type": "string",
+          "enum": [
+            "summed",
+            "perWriterChain"
+          ]
+        },
+        "writerControl": {
+          "type": "string",
+          "enum": [
+            "swrOnly",
+            "swrOwr"
+          ]
+        }
+      },
+      "required": [
+        "publisherShare",
+        "writerControl"
+      ],
+      "type": "object"
     }
   }
 }

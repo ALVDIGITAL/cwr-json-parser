@@ -125,6 +125,17 @@ hdrProps.creationTime = { type: 'string', pattern: PATTERNS.time6 };
 hdrProps.transmissionDate = { type: 'string', pattern: PATTERNS.date8 };
 hdrProps.characterSet = { $ref: '#/definitions/CharacterSetCode' };
 
+schema.definitions.Conventions = {
+  additionalProperties: false,
+  properties: {
+    publisherShare: { type: 'string', enum: ['summed', 'perWriterChain'] },
+    writerControl: { type: 'string', enum: ['swrOnly', 'swrOwr'] },
+  },
+  required: ['publisherShare', 'writerControl'],
+  type: 'object',
+};
+hdrProps.conventions = { $ref: '#/definitions/Conventions' };
+
 // Flags
 const flags = schema.definitions.Flags as JsonSchema;
 const flagsProps = flags.properties as Record<string, JsonSchema>;

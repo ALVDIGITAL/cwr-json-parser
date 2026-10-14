@@ -144,6 +144,11 @@ export interface CanonicalWork {
   recordings?: Recording[];                                // Works -> Recordings -> Releases
 }
 
+export interface HeaderConventions {
+  writerControl: 'swrOnly' | 'swrOwr';
+  publisherShare: 'summed' | 'perWriterChain';
+}
+
 export interface HdrRecord {
   senderIdentifier?: string;
   senderName?: string;
@@ -155,6 +160,7 @@ export interface HdrRecord {
   revision?: string;
   softwarePackage?: string;
   softwarePackageVersion?: string;
+  conventions?: HeaderConventions;
 }
 
 export interface ParsedCwrFile {
