@@ -25,7 +25,7 @@ Integrators (including downstream export pipelines) should treat this page as th
 
 ## 2026-10-19 — Format 1.0.1 identifiers
 
-> Format bump. Schema filename stays `cwr-json-schema-v1.0.schema.json`. Ships in parser package `1.5.0`.
+> Format bump. Schema filename stays `cwr-json-schema-v1.0.schema.json`. Ships in parser package `1.5.1`. Parser `1.5.0` is the ACK release below.
 
 - `works[].iswc`, `works[].isrc`, `recordings[].isrc`, and `recordings[].releases[].ean` are string arrays. ISWC, ISRC, and EAN leave `identifiers[]`.
 - `identifiers[]` is a triple: `type`, `value`, and optional `source` (`type`, `value`, optional `name`). `source.type` is `ipiNameNumber`, `cisacSociety`, `cwrSubmitter`, or `dpid`.
@@ -37,7 +37,7 @@ Integrators (including downstream export pipelines) should treat this page as th
 
 ## 2026-10-14 — Optional `header.conventions`
 
-> Additive optional field on CWR-JSON v1.0. Files without `conventions` stay valid. A validator that has not picked up this schema rejects files that include it.
+> Additive optional field on CWR-JSON v1.0. Files without `conventions` stay valid. A validator that has not picked up this schema rejects files that include it. Ships in parser package `1.5.1`.
 
 - `header.conventions` declares how the file represents writers and publisher shares.
 - `writerControl`: `swrOnly` or `swrOwr`.

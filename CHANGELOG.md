@@ -1,6 +1,6 @@
 ## [Unreleased]
 
-## [1.5.0] - 2026-10-19
+## [1.5.1] - 2026-10-19
 
 ### Added
 
@@ -22,6 +22,24 @@
 - **CWR-JSON format 1.0.1.** Schema filename stays `cwr-json-schema-v1.0.schema.json`.
 - `header.conventions` is additive. Files without it stay valid. A validator built before that field rejects it as an extra header field.
 - Identifier field shapes changed. JSON that still uses `{ source, value }`, or string `iswc` / `isrc` / `ean`, fails validation.
+
+## [1.5.0] - 2026-07-26
+
+### Added
+
+- **ACK / MSG:** fixed-width layouts in `recordDefinitions` for field-level EDI preview.
+- GRH `TransactionType=ACK` starts a work block on each `ACK` row. Nested `NWR`/`REV` stay in that block.
+- Flat ACK fields on `works[].messages` (`type: "ack"`, `transactionStatus`, dates, creation numbers).
+- `MSG` maps to `messages.msgs[]` with `status`, `message`, `originalRecordSequence`, `recordType`, `messageLevel`, and `validationNumber`.
+- Sample fixture: `test/files/151708_CW260050035_MDW.V22`.
+
+### Fixed
+
+- Nested `NWR` after `ACK` no longer overwrites `messages.type`.
+
+### Notes
+
+- **Additive.** Existing `nwr`/`rev` shapes unchanged. `MessageType` includes `"ack"`. `msgs[]` allows the extra MSG columns.
 
 ## [1.4.3] - 2026-06-30
 
