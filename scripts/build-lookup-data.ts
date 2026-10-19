@@ -134,7 +134,7 @@ async function buildTisNumericCodes(): Promise<{
 
       codes: numericCodes,
 
-      source: `CISAC TIS database export (${tisPath}, sheet en, ${rows.length} territories)`,
+      source: `CISAC TIS database export (CISAC-TIS.xlsx, sheet en, ${rows.length} territories)`,
 
       tisEntryCount: rows.length,
 
@@ -247,11 +247,13 @@ const document = {
 mkdirSync(dirname(outPath), { recursive: true });
 
 writeFileSync(outPath, `${JSON.stringify(document, null, 2)}\n`, 'utf8');
-
 console.log(
-
   `Wrote ${outPath} (${Object.keys(document.sets).length} sets, ${tisNumericCodes.length} TIS validation strings)`
-
 );
+
+const runtimePath = join(root, 'src/cwr-sdk/lookups/cwr_lookup_data_types_v1.0.json');
+const runtimeDocument = { ...document, $id: 'cwr_lookup_data_types_v1.0' };
+writeFileSync(runtimePath, `${JSON.stringify(runtimeDocument, null, 2)}\n`, 'utf8');
+console.log(`Wrote ${runtimePath}`);
 
 

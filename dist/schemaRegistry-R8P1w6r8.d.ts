@@ -101,7 +101,21 @@ interface Messages {
     msgs?: {
         status?: string;
         message?: string;
+        originalRecordSequence?: string;
+        recordType?: string;
+        messageLevel?: string;
+        validationNumber?: string;
     }[];
+    creationDate?: string;
+    creationTime?: string;
+    originalGroupId?: string;
+    originalTransactionSequence?: string;
+    originalTransactionType?: string;
+    creationTitle?: string;
+    submitterCreationNumber?: string;
+    recipientCreationNumber?: string;
+    processingDate?: string;
+    transactionStatus?: string;
     societySpecific?: Record<string, unknown>;
     schema?: string;
     schemaDescription?: string;

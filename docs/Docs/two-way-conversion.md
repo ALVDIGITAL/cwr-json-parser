@@ -23,7 +23,7 @@ The `NWR` and `REV` records are the root of every CWR transaction.
 
 | CWR EDI Field | JSON Path | Notes |
 |---|---|---|
-| Record type | `work.messages.type` | Lowercased: `"nwr"` or `"rev"` |
+| Record type | `work.messages.type` | Lowercased: `"nwr"`, `"rev"`, or `"ack"` |
 | `Title` / `WorkTitle` | `work.titles[]` | `{ value, type: "TT" }` |
 | `ISWC` | `work.iswc[]` | Dotted ISO `T-NNN.NNN.NNN-C` |
 | `SubmitterWorkNumber` | `work.identifiers[]` | `{ type: "submitterWorkId", value, source: { type: "cwrSubmitter", value: HDR sender id, name } }` |

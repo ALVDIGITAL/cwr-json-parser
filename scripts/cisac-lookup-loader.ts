@@ -8,7 +8,7 @@ import { fileURLToPath } from 'node:url';
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 export const CISAC_LOOKUP_DIR = join(
   root,
-  'src/cwr-sdk/json-schemas/cisac-cwr08-3615r2_cwr_2x_lookup_2026-03-31_en'
+  'src/cwr-sdk/lookups/data/cisac-cwr08-3615r2_cwr_2x_lookup_2026-03-31_en'
 );
 
 export type CisacLookupEntry = {

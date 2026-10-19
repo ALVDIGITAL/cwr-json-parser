@@ -18,7 +18,7 @@ Supported for conversion today:
 - `NWR` / `REV` work registration transactions
 - Related detail records (`ALT`, `NAT`, parties, territories, `REC`, `ARI`, `XRF`, `MSG`, etc.)
 
-Acknowledgement (`ACK`) files may be parsed for preview; full ACK serialisation is [planned](./changelog).
+Acknowledgement (`ACK`) files are supported for field-level EDI preview and for v1 JSON: each ACK transaction maps to a work with `messages.type: "ack"`, flat ACK fields on `messages`, and `MSG` rows in `messages.msgs[]`. Nested `NWR`/`REV` detail still fills titles, identifiers, parties, and flags.
 
 ***
 

@@ -45,6 +45,24 @@ Integrators (including downstream export pipelines) should treat this page as th
 - When `conventions` is present, both fields are required.
 - Not mapped from the CWR `HDR` record. The sender sets it on the JSON file.
 
+## 2026-07-26 — Parser 1.5.0 (format additive)
+
+> **Additive only.** Existing `nwr`/`rev` shapes unchanged. `MessageType` gains `"ack"`; optional ACK fields and richer `msgs[]` properties documented.
+
+**Parser 1.5.0**
+- `ACK` / `MSG` fixed-width layouts in `recordDefinitions` (field-level EDI preview).
+- GRH `TransactionType=ACK` → work blocks start on each `ACK` row (nested `NWR`/`REV` stay in the same block).
+- Flat ACK fields on `works[].messages` (`type: "ack"`, `transactionStatus`, dates, creation numbers, …).
+- `MSG` → `messages.msgs[]` with `status`, `message`, plus `originalRecordSequence`, `recordType`, `messageLevel`, `validationNumber`.
+- Nested `NWR` after ACK no longer overwrites `messages.type`.
+- Sample: `test/files/151708_CW260050035_MDW.V22`.
+
+**Validation**
+- `MessageType` enum includes `"ack"`.
+- `msgs[]` allows the extra MSG columns listed above.
+
+---
+
 ## 2026-06-30 — Parser 1.4.3 (no format bump)
 
 > **No change to CWR-JSON v1.00 r0 object shapes.** `works[].identifiers[]` gains rows from `XRF` records; JSON Schema `identifierSources` enum widened.
@@ -149,7 +167,7 @@ Integrators (including downstream export pipelines) should treat this page as th
 - Optional root `$schema` for interchange (not emitted by Playground today)
 
 **Supported CWR record types (→ JSON)**
-`HDR` `NWR` `REV` `ALT` `NAT` `NWN` `NOW` `NPN` `SPU` `OPU` `SWR` `OWR` `PWR` `SWT` `OWT` `SPT` `OPT` `REC` `ARI` `XRF` `MSG`
+`HDR` `NWR` `REV` `ACK` `ALT` `NAT` `NWN` `NOW` `NPN` `SPU` `OPU` `SWR` `OWR` `PWR` `SWT` `OWT` `SPT` `OPT` `REC` `ARI` `XRF` `MSG`
 
 **Data model**
 - `parties`: writers at top level; publishers in `representedBy[]`; unlinked `E` publishers may appear at top level

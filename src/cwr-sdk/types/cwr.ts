@@ -133,11 +133,28 @@ export interface WorkTitle {
 }
 
 export interface Messages {
-  type?: string; // nwr, rev, etc.
+  type?: string; // nwr, rev, ack, etc.
   revocation?: { indicator: string; reason?: string };
   relinquishment?: { indicator: string };
   changeRequest?: Record<string, unknown>;
-  msgs?: { status?: string; message?: string }[]; // MSG records from ACK files
+  msgs?: {
+    status?: string;
+    message?: string;
+    originalRecordSequence?: string;
+    recordType?: string;
+    messageLevel?: string;
+    validationNumber?: string;
+  }[];
+  creationDate?: string;
+  creationTime?: string;
+  originalGroupId?: string;
+  originalTransactionSequence?: string;
+  originalTransactionType?: string;
+  creationTitle?: string;
+  submitterCreationNumber?: string;
+  recipientCreationNumber?: string;
+  processingDate?: string;
+  transactionStatus?: string;
   societySpecific?: Record<string, unknown>;
   schema?: string;
   schemaDescription?: string;

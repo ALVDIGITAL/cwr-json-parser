@@ -217,6 +217,20 @@ declare const recordDefinitions: {
         type: string;
         mandatory: boolean;
     }[];
+    ACK: {
+        label: string;
+        start: number;
+        length: number;
+        type: string;
+        mandatory: boolean;
+    }[];
+    MSG: {
+        label: string;
+        start: number;
+        length: number;
+        type: string;
+        mandatory: boolean;
+    }[];
 };
 
 export { parseRecordLine, recordDefinitions };

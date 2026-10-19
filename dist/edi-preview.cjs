@@ -41,7 +41,7 @@ __name(getRecordType, "getRecordType");
 
 // src/cwr-sdk/validators/recordOrderValidator.ts
 function validateRecordOrder(lines) {
-  const ignore = /* @__PURE__ */ new Set(["HDR", "GRH", "GRT", "TRL"]);
+  const ignore = /* @__PURE__ */ new Set(["HDR", "GRH", "GRT", "TRL", "MSG"]);
   const slots = [
     { type: ["NWR", "REV", "ISW", "EXC"], block: 0 },
     { type: ["SPU"], block: 1 },
@@ -87,15 +87,26 @@ function validateRecordOrder(lines) {
   const problems = [];
   let currentSlotIdx = 0;
   let sawWorkStart = false;
+  let ackHeader = false;
   const assignedSlots = new Array(lines.length).fill(null);
   for (let i = 0; i < lines.length; i++) {
     const type = getRecordType(lines[i]);
     if (ignore.has(type)) continue;
-    if (["NWR", "REV", "ISW", "EXC"].includes(type)) {
+    if (type === "ACK") {
       if (sawWorkStart) {
+        problems.push(`Unexpected ACK at line ${i + 1}`);
+      }
+      sawWorkStart = true;
+      ackHeader = true;
+      currentSlotIdx = 0;
+      continue;
+    }
+    if (["NWR", "REV", "ISW", "EXC"].includes(type)) {
+      if (sawWorkStart && !ackHeader) {
         problems.push(`Unexpected ${type} at line ${i + 1}; work blocks must start with a single NWR/REV/ISW/EXC.`);
       }
       sawWorkStart = true;
+      ackHeader = false;
       currentSlotIdx = 0;
     }
     const potentialMatches = slots.map((s, idx) => s.type.includes(type) ? idx : -1).filter((idx) => idx !== -1);
@@ -207,7 +218,9 @@ function detectWorkRecordType(lines) {
   const grh = lines.find((l) => getRecordType(l) === "GRH");
   if (!grh) return "NWR";
   const transactionType = grh.substring(3, 6).trim();
-  return transactionType === "REV" ? "REV" : "NWR";
+  if (transactionType === "REV") return "REV";
+  if (transactionType === "ACK") return "ACK";
+  return "NWR";
 }
 __name(detectWorkRecordType, "detectWorkRecordType");
 function splitIntoWorkBlocks(rawText) {

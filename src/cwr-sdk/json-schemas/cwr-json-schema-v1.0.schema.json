@@ -154,11 +154,53 @@
               },
               "status": {
                 "type": "string"
+              },
+              "originalRecordSequence": {
+                "type": "string"
+              },
+              "recordType": {
+                "type": "string"
+              },
+              "messageLevel": {
+                "type": "string"
+              },
+              "validationNumber": {
+                "type": "string"
               }
             },
             "type": "object"
           },
           "type": "array"
+        },
+        "creationDate": {
+          "type": "string"
+        },
+        "creationTime": {
+          "type": "string"
+        },
+        "originalGroupId": {
+          "type": "string"
+        },
+        "originalTransactionSequence": {
+          "type": "string"
+        },
+        "originalTransactionType": {
+          "type": "string"
+        },
+        "creationTitle": {
+          "type": "string"
+        },
+        "submitterCreationNumber": {
+          "type": "string"
+        },
+        "recipientCreationNumber": {
+          "type": "string"
+        },
+        "processingDate": {
+          "type": "string"
+        },
+        "transactionStatus": {
+          "type": "string"
         },
         "relinquishment": {
           "additionalProperties": false,
@@ -1718,7 +1760,8 @@
       "type": "string",
       "enum": [
         "nwr",
-        "rev"
+        "rev",
+        "ack"
       ]
     },
     "AiUsageIndicator": {

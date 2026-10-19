@@ -191,11 +191,53 @@ var cwr_json_schema_v1_0_schema_default = {
               },
               status: {
                 type: "string"
+              },
+              originalRecordSequence: {
+                type: "string"
+              },
+              recordType: {
+                type: "string"
+              },
+              messageLevel: {
+                type: "string"
+              },
+              validationNumber: {
+                type: "string"
               }
             },
             type: "object"
           },
           type: "array"
+        },
+        creationDate: {
+          type: "string"
+        },
+        creationTime: {
+          type: "string"
+        },
+        originalGroupId: {
+          type: "string"
+        },
+        originalTransactionSequence: {
+          type: "string"
+        },
+        originalTransactionType: {
+          type: "string"
+        },
+        creationTitle: {
+          type: "string"
+        },
+        submitterCreationNumber: {
+          type: "string"
+        },
+        recipientCreationNumber: {
+          type: "string"
+        },
+        processingDate: {
+          type: "string"
+        },
+        transactionStatus: {
+          type: "string"
         },
         relinquishment: {
           additionalProperties: false,
@@ -1755,7 +1797,8 @@ var cwr_json_schema_v1_0_schema_default = {
       type: "string",
       enum: [
         "nwr",
-        "rev"
+        "rev",
+        "ack"
       ]
     },
     AiUsageIndicator: {
@@ -2539,10 +2582,10 @@ var cwr_lookup_data_types_v1_0_default = {
   $id: "cwr_lookup_data_types_v1.0",
   version: "1.0.0",
   revision: "r1",
-  source: "CISAC TIS database export CISAC-TIS.xlsx, sheet en, 241 territories)",
+  source: "CISAC TIS database export (CISAC-TIS.xlsx, sheet en, 241 territories)",
   cisacSource: "CWR08-3615R2_CWR_2x_Lookup_Table_2026-03-31_EN.xml",
   cisacGeneratedAt: "2026-06-15",
-  generatedAt: "2026-06-14",
+  generatedAt: "2026-07-26",
   tisEntryCount: 241,
   sets: {
     roleCodes: [
@@ -3769,7 +3812,8 @@ var cwr_lookup_data_types_v1_0_default = {
     ],
     messageTypes: [
       "nwr",
-      "rev"
+      "rev",
+      "ack"
     ],
     writerRoles: [
       "A",

@@ -9,7 +9,9 @@ export function detectWorkRecordType(lines: string[]): string {
 
   // Transaction type sits at columns 4-6 (0-based 3-6).
   const transactionType = grh.substring(3, 6).trim();
-  return transactionType === 'REV' ? 'REV' : 'NWR';
+  if (transactionType === 'REV') return 'REV';
+  if (transactionType === 'ACK') return 'ACK';
+  return 'NWR';
 }
 
 export function splitIntoWorkBlocks(rawText: string) {

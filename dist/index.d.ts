@@ -1,5 +1,5 @@
-import { a as SchemaV1Output, S as SchemaId } from './schemaRegistry-BRkDRYOM.js';
-export { H as HdrRecord, b as HeaderConventions, P as Participant, R as Recording, c as SchemaV1Messages, d as SchemaV1WorkOutput, W as WorkIdentifier, e as WorkTitle } from './schemaRegistry-BRkDRYOM.js';
+import { a as SchemaV1Output, S as SchemaId } from './schemaRegistry-R8P1w6r8.js';
+export { H as HdrRecord, b as HeaderConventions, P as Participant, R as Recording, c as SchemaV1Messages, d as SchemaV1WorkOutput, W as WorkIdentifier, e as WorkTitle } from './schemaRegistry-R8P1w6r8.js';
 
 type ValidationMode = 'strict' | 'advisory';
 interface ValidationOptions {

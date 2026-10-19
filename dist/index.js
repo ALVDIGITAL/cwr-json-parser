@@ -125,10 +125,10 @@ var cwr_lookup_data_types_v1_0_default = {
   $id: "cwr_lookup_data_types_v1.0",
   version: "1.0.0",
   revision: "r1",
-  source: "CISAC TIS database export CISAC-TIS.xlsx, sheet en, 241 territories)",
+  source: "CISAC TIS database export (CISAC-TIS.xlsx, sheet en, 241 territories)",
   cisacSource: "CWR08-3615R2_CWR_2x_Lookup_Table_2026-03-31_EN.xml",
   cisacGeneratedAt: "2026-06-15",
-  generatedAt: "2026-06-14",
+  generatedAt: "2026-07-26",
   tisEntryCount: 241,
   sets: {
     roleCodes: [
@@ -1355,7 +1355,8 @@ var cwr_lookup_data_types_v1_0_default = {
     ],
     messageTypes: [
       "nwr",
-      "rev"
+      "rev",
+      "ack"
     ],
     writerRoles: [
       "A",
@@ -2758,6 +2759,32 @@ var recordDefinitions = {
     { label: "PublisherSequence", start: 29, length: 2, type: "N", mandatory: true },
     { label: "PublisherName", start: 31, length: 45, type: "A", mandatory: true },
     { label: "LanguageCode", start: 76, length: 2, type: "A", mandatory: false }
+  ],
+  ACK: [
+    { label: "RecordType", start: 1, length: 3, type: "A", mandatory: true },
+    { label: "TransactionSeq", start: 4, length: 8, type: "N", mandatory: true },
+    { label: "RecordSeq", start: 12, length: 8, type: "N", mandatory: true },
+    { label: "CreationDate", start: 20, length: 8, type: "N", mandatory: true },
+    { label: "CreationTime", start: 28, length: 6, type: "N", mandatory: true },
+    { label: "OriginalGroupId", start: 34, length: 5, type: "N", mandatory: true },
+    { label: "OriginalTransactionSeq", start: 39, length: 8, type: "N", mandatory: true },
+    { label: "OriginalTransactionType", start: 47, length: 3, type: "L", mandatory: true },
+    { label: "CreationTitle", start: 50, length: 60, type: "A", mandatory: false },
+    { label: "SubmitterCreationNumber", start: 110, length: 20, type: "A", mandatory: false },
+    { label: "RecipientCreationNumber", start: 130, length: 20, type: "A", mandatory: false },
+    { label: "ProcessingDate", start: 150, length: 8, type: "N", mandatory: true },
+    { label: "TransactionStatus", start: 158, length: 2, type: "L", mandatory: true }
+  ],
+  MSG: [
+    { label: "RecordType", start: 1, length: 3, type: "A", mandatory: true },
+    { label: "TransactionSeq", start: 4, length: 8, type: "N", mandatory: true },
+    { label: "RecordSeq", start: 12, length: 8, type: "N", mandatory: true },
+    { label: "MessageType", start: 20, length: 1, type: "L", mandatory: true },
+    { label: "OriginalRecordSequence", start: 21, length: 8, type: "N", mandatory: true },
+    { label: "MessageRecordType", start: 29, length: 3, type: "A", mandatory: true },
+    { label: "MessageLevel", start: 32, length: 1, type: "L", mandatory: true },
+    { label: "ValidationNumber", start: 33, length: 3, type: "A", mandatory: true },
+    { label: "MessageText", start: 36, length: 150, type: "A", mandatory: true }
   ]
 };
 
@@ -3206,13 +3233,30 @@ function buildWorkModel(lines) {
       };
       continue;
     }
+    if (type === "ACK") {
+      model.messages.type = "ack";
+      model.messages.creationDate = (obj.CreationDate || "").trim();
+      model.messages.creationTime = (obj.CreationTime || "").trim();
+      model.messages.originalGroupId = (obj.OriginalGroupId || "").trim();
+      model.messages.originalTransactionSequence = (obj.OriginalTransactionSeq || "").trim();
+      model.messages.originalTransactionType = (obj.OriginalTransactionType || "").trim();
+      model.messages.creationTitle = (obj.CreationTitle || "").trim();
+      model.messages.submitterCreationNumber = (obj.SubmitterCreationNumber || "").trim();
+      model.messages.recipientCreationNumber = (obj.RecipientCreationNumber || "").trim();
+      model.messages.processingDate = (obj.ProcessingDate || "").trim();
+      model.messages.transactionStatus = (obj.TransactionStatus || "").trim();
+      continue;
+    }
     if (type === "MSG") {
-      const rawMessage = (obj.Raw || line.substring(3)).trim();
-      const [statusToken, ...rest] = rawMessage.split(/\s+/);
-      const status = statusToken || "status";
-      const text = rest.join(" ") || rawMessage;
       const msgs = model.messages.msgs || [];
-      msgs.push({ status, message: text.trim() });
+      msgs.push({
+        status: (obj.MessageType || "").trim(),
+        message: (obj.MessageText || "").trim(),
+        originalRecordSequence: (obj.OriginalRecordSequence || "").trim(),
+        recordType: (obj.MessageRecordType || "").trim(),
+        messageLevel: (obj.MessageLevel || "").trim(),
+        validationNumber: (obj.ValidationNumber || "").trim()
+      });
       model.messages.msgs = msgs;
       continue;
     }
@@ -3249,7 +3293,9 @@ function buildWorkModel(lines) {
       continue;
     }
     if (type === "NWR" || type === "REV") {
-      model.messages.type = type.toLowerCase();
+      if (model.messages.type !== "ack") {
+        model.messages.type = type.toLowerCase();
+      }
       const mainTitle = (obj.Title || obj.WorkTitle || "").trim();
       if (mainTitle.length) model.titles.push({ value: mainTitle, type: "TT" });
       if (obj.ISWC) {
@@ -3651,7 +3697,7 @@ __name(tokenize, "tokenize");
 
 // src/cwr-sdk/validators/recordOrderValidator.ts
 function validateRecordOrder(lines) {
-  const ignore = /* @__PURE__ */ new Set(["HDR", "GRH", "GRT", "TRL"]);
+  const ignore = /* @__PURE__ */ new Set(["HDR", "GRH", "GRT", "TRL", "MSG"]);
   const slots = [
     { type: ["NWR", "REV", "ISW", "EXC"], block: 0 },
     { type: ["SPU"], block: 1 },
@@ -3697,15 +3743,26 @@ function validateRecordOrder(lines) {
   const problems = [];
   let currentSlotIdx = 0;
   let sawWorkStart = false;
+  let ackHeader = false;
   const assignedSlots = new Array(lines.length).fill(null);
   for (let i = 0; i < lines.length; i++) {
     const type = getRecordType(lines[i]);
     if (ignore.has(type)) continue;
-    if (["NWR", "REV", "ISW", "EXC"].includes(type)) {
+    if (type === "ACK") {
       if (sawWorkStart) {
+        problems.push(`Unexpected ACK at line ${i + 1}`);
+      }
+      sawWorkStart = true;
+      ackHeader = true;
+      currentSlotIdx = 0;
+      continue;
+    }
+    if (["NWR", "REV", "ISW", "EXC"].includes(type)) {
+      if (sawWorkStart && !ackHeader) {
         problems.push(`Unexpected ${type} at line ${i + 1}; work blocks must start with a single NWR/REV/ISW/EXC.`);
       }
       sawWorkStart = true;
+      ackHeader = false;
       currentSlotIdx = 0;
     }
     const potentialMatches = slots.map((s, idx) => s.type.includes(type) ? idx : -1).filter((idx) => idx !== -1);
@@ -3817,7 +3874,9 @@ function detectWorkRecordType(lines) {
   const grh = lines.find((l) => getRecordType(l) === "GRH");
   if (!grh) return "NWR";
   const transactionType = grh.substring(3, 6).trim();
-  return transactionType === "REV" ? "REV" : "NWR";
+  if (transactionType === "REV") return "REV";
+  if (transactionType === "ACK") return "ACK";
+  return "NWR";
 }
 __name(detectWorkRecordType, "detectWorkRecordType");
 function splitIntoWorkBlocks(rawText) {
@@ -4016,11 +4075,53 @@ var cwr_json_schema_v1_0_schema_default = {
               },
               status: {
                 type: "string"
+              },
+              originalRecordSequence: {
+                type: "string"
+              },
+              recordType: {
+                type: "string"
+              },
+              messageLevel: {
+                type: "string"
+              },
+              validationNumber: {
+                type: "string"
               }
             },
             type: "object"
           },
           type: "array"
+        },
+        creationDate: {
+          type: "string"
+        },
+        creationTime: {
+          type: "string"
+        },
+        originalGroupId: {
+          type: "string"
+        },
+        originalTransactionSequence: {
+          type: "string"
+        },
+        originalTransactionType: {
+          type: "string"
+        },
+        creationTitle: {
+          type: "string"
+        },
+        submitterCreationNumber: {
+          type: "string"
+        },
+        recipientCreationNumber: {
+          type: "string"
+        },
+        processingDate: {
+          type: "string"
+        },
+        transactionStatus: {
+          type: "string"
         },
         relinquishment: {
           additionalProperties: false,
@@ -5580,7 +5681,8 @@ var cwr_json_schema_v1_0_schema_default = {
       type: "string",
       enum: [
         "nwr",
-        "rev"
+        "rev",
+        "ack"
       ]
     },
     AiUsageIndicator: {

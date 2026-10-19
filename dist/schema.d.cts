@@ -1,4 +1,4 @@
-import { S as SchemaId } from './schemaRegistry-BRkDRYOM.cjs';
+import { S as SchemaId } from './schemaRegistry-R8P1w6r8.cjs';
 
 /**
  * Unified V1 schema asset (merged canonical + V1 output contract).
@@ -9,10 +9,10 @@ declare function getSchemaAsset(schemaId: SchemaId): Record<string, unknown>;
 var $id = "cwr_lookup_data_types_v1.0";
 var version = "1.0.0";
 var revision = "r1";
-var source = "CISAC TIS database export CISAC-TIS.xlsx, sheet en, 241 territories)";
+var source = "CISAC TIS database export (CISAC-TIS.xlsx, sheet en, 241 territories)";
 var cisacSource = "CWR08-3615R2_CWR_2x_Lookup_Table_2026-03-31_EN.xml";
 var cisacGeneratedAt = "2026-06-15";
-var generatedAt = "2026-06-14";
+var generatedAt = "2026-07-26";
 var tisEntryCount = 241;
 var sets = {
 	roleCodes: [
@@ -1239,7 +1239,8 @@ var sets = {
 	],
 	messageTypes: [
 		"nwr",
-		"rev"
+		"rev",
+		"ack"
 	],
 	writerRoles: [
 		"A",

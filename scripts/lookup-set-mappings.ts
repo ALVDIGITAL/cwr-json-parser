@@ -39,7 +39,7 @@ export const MANUAL_SETS: Record<string, string[]> = {
   shareTypes: ['own', 'coll'],
   controlled: ['yes', 'no'],
   identifierSources: ['iswc', 'isrc', 'submitterWorkNumber', 'proprietary', 'ean', 'catalogNumber'],
-  messageTypes: ['nwr', 'rev'],
+  messageTypes: ['nwr', 'rev', 'ack'],
 };
 
 /** Work-level identifier sources: canonical names + CISAC society codes (Q0 B / XRF). */
