@@ -32,16 +32,18 @@ export function normalizeCwrJson(payload: unknown): NormalizeCwrJsonResult {
   const data = deepClone(payload as unknown as SchemaV1Output);
 
   data.works.forEach((work, wi) => {
-    const iswcs = work.iswc || [];
-    for (let i = 0; i < iswcs.length; i++) {
-      const formatted = formatIswcForValidation(iswcs[i]);
-      if (formatted && formatted !== iswcs[i]) {
-        notes.push(
-          `/works/${wi}/iswc/${i}: ISWC "${iswcs[i]}" → "${formatted}" (dotted ISO)`
-        );
-        iswcs[i] = formatted;
-      }
-    }
+    (work.identifiers || []).forEach((entry, i) => {
+      if (!entry || !('iswc' in entry) || !Array.isArray(entry.iswc)) return;
+      entry.iswc.forEach((code, j) => {
+        const formatted = formatIswcForValidation(code);
+        if (formatted && formatted !== code) {
+          notes.push(
+            `/works/${wi}/identifiers/${i}/iswc/${j}: ISWC "${code}" → "${formatted}" (dotted ISO)`
+          );
+          entry.iswc[j] = formatted;
+        }
+      });
+    });
   });
 
   normalizeTerritoriesOnDocument(data.works, notes);

@@ -2,6 +2,7 @@ import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
 import { buildWorkModel } from '../src/cwr-sdk/mapper/workModel/buildWorkModel';
 import { mapXrfToIdentifier, pushIdentifier } from '../src/cwr-sdk/mapper/workModel/parseHelpers';
+import { isIswcIdentifier, type WorkIdentifierEntry } from '../src/cwr-sdk/types/cwr';
 import { parseCwr, validateParsedCwr } from '../src/index';
 import { cwrLine, minimalOneWorkCwr, xrfLine } from './helpers/cwrFixtures';
 
@@ -34,6 +35,39 @@ describe('mapXrfToIdentifier', () => {
         Validity: 'Y',
       }),
       { kind: 'iswc', value: 'T-000.000.001-0' }
+    );
+  });
+
+  it('maps a product EAN when IdentifierType is P', () => {
+    assert.deepEqual(
+      mapXrfToIdentifier({
+        OrganisationCode: 'EMI',
+        Identifier: '5099996897027',
+        IdentifierType: 'P',
+        Validity: 'Y',
+      }),
+      { kind: 'ean', value: '5099996897027' }
+    );
+  });
+
+  it('drops a recording id that is not an ISRC and skips video rows', () => {
+    assert.equal(
+      mapXrfToIdentifier({
+        OrganisationCode: 'ISR',
+        Identifier: 'NOT-AN-ISRC',
+        IdentifierType: 'R',
+        Validity: 'Y',
+      }),
+      null
+    );
+    assert.equal(
+      mapXrfToIdentifier({
+        OrganisationCode: 'EMI',
+        Identifier: 'VIDEO-1',
+        IdentifierType: 'V',
+        Validity: 'Y',
+      }),
+      null
     );
   });
 
@@ -134,10 +168,10 @@ describe('buildWorkModel XRF', () => {
     ];
     const model = buildWorkModel(lines);
 
-    assert.deepEqual(model.iswc, ['T-000.000.001-0']);
-    assert.deepEqual(model.isrc, ['USRC17607839']);
+    assert.deepEqual(iswcOf(model.identifiers), ['T-000.000.001-0']);
+    assert.deepEqual(model.recordings, [{ isrc: ['USRC17607839'] }]);
     assert.deepEqual(
-      model.identifiers.filter((i) => i.type !== 'submitterWorkId'),
+      model.identifiers.filter((i) => !isIswcIdentifier(i) && i.type !== 'submitterWorkId'),
       [
         {
           type: 'societyWorkId',
@@ -159,7 +193,7 @@ describe('buildWorkModel XRF', () => {
       xrfLine('00000001', '00000001', '000', '3987389001', 'W', 'Y'),
     ];
     const model = buildWorkModel(lines);
-    assert.ok(!model.identifiers.some((i) => i.value === '3987389001'));
+    assert.ok(!model.identifiers.some((i) => !isIswcIdentifier(i) && i.value === '3987389001'));
   });
 
   it('dedupes ISWC from NWR and XRF ISW', () => {
@@ -179,9 +213,30 @@ describe('buildWorkModel XRF', () => {
       xrfLine('00000001', '00000001', 'ISW', 'T0000000010', 'W', 'Y'),
     ];
     const model = buildWorkModel(lines);
-    assert.deepEqual(model.iswc, ['T-000.000.001-0']);
+    assert.deepEqual(iswcOf(model.identifiers), ['T-000.000.001-0']);
+  });
+
+  it('puts each unmatched ISRC and EAN on its own recording', () => {
+    const lines = [
+      ...minimalOneWorkCwr().split('\n'),
+      xrfLine('00000001', '00000001', 'ISR', 'USRC17607839', 'R', 'Y'),
+      xrfLine('00000001', '00000002', 'ISR', 'GBEMI7500001', 'R', 'Y'),
+      xrfLine('00000001', '00000003', 'EMI', '5099996897027', 'P', 'Y'),
+      xrfLine('00000001', '00000004', 'EMI', 'NOT-AN-EAN', 'P', 'Y'),
+      xrfLine('00000001', '00000005', 'EMI', 'VIDEO-1', 'V', 'Y'),
+    ];
+    const model = buildWorkModel(lines);
+    assert.deepEqual(model.recordings, [
+      { isrc: ['USRC17607839'] },
+      { isrc: ['GBEMI7500001'] },
+      { releases: [{ ean: ['5099996897027'] }] },
+    ]);
   });
 });
+
+function iswcOf(identifiers: WorkIdentifierEntry[]) {
+  return identifiers.find(isIswcIdentifier)?.iswc;
+}
 
 describe('parseCwr XRF validation', () => {
   it('output with XRF identifiers passes JSON Schema validation', () => {
@@ -196,12 +251,13 @@ describe('parseCwr XRF validation', () => {
     assert.ok(
       result.works[0].identifiers?.some(
         (i) =>
+          !isIswcIdentifier(i) &&
           i.type === 'societyWorkId' &&
           i.value === '3987389001' &&
           i.source?.type === 'cisacSociety' &&
           i.source.value === '035'
       )
     );
-    assert.deepEqual(result.works[0].isrc, ['USRC17607839']);
+    assert.deepEqual(result.works[0].recordings, [{ isrc: ['USRC17607839'] }]);
   });
 });

@@ -65,7 +65,7 @@ describe('schema validation (deep)', () => {
       works: [
         {
           ...validWork,
-          iswc: ['not-an-iswc'],
+          identifiers: [{ iswc: ['not-an-iswc'] }],
         },
       ],
     },
@@ -80,7 +80,7 @@ describe('schema validation (deep)', () => {
   it('accepts dotted, compact, and intermediate ISWC', () => {
     for (const iswc of ['T-034.524.680-1', 'T0345246801', 'T-034524680-1']) {
       const r = validateCwrJson(
-        { works: [{ ...validWork, iswc: [iswc] }] },
+        { works: [{ ...validWork, identifiers: [{ iswc: [iswc] }] }] },
         'strict',
         'cwr-json-v1-0',
         { normalize: false }

@@ -1,4 +1,4 @@
-import { ParsedCwrFile, type WorkIdentifier } from '../../types/cwr';
+import { ParsedCwrFile, type WorkIdentifier, isIswcIdentifier } from '../../types/cwr';
 import type { CwrJsonSchema } from '../schemaTypes';
 
 export interface SchemaAckMessage {
@@ -107,7 +107,8 @@ export const schemaAck: CwrJsonSchema<SchemaAckOutput> = {
               value: 'Accepted as is'
             }
           ];
-      const identifiers: SchemaAckIdentifier[] = Array.isArray(work.identifiers) ? [...work.identifiers] : [];
+      const identifiers: SchemaAckIdentifier[] = (Array.isArray(work.identifiers) ? work.identifiers : [])
+        .filter((entry): entry is WorkIdentifier => !isIswcIdentifier(entry));
       identifiers.push({
         type: 'societyWorkId',
         value: '3987389-001',

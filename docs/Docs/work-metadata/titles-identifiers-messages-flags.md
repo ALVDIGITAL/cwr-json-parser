@@ -39,20 +39,13 @@ The `titles` array contains all title entries for the work. Each element comes f
 
 ***
 
-# Foundational identifiers
+# Identifiers
 
-ISWC and a work-level ISRC cross-reference are string arrays. They are not rows in `identifiers[]`.
-
-| Field | Type | Req | CWR source |
-| --- | --- | --- | --- |
-| `iswc` | string[] | O | `NWR` / `REV` `ISWC`, `XRF` org `ISW` |
-| `isrc` | string[] | O | `XRF` org `ISR` when no recording already holds that ISRC |
+`identifiers[]` holds namespaced work ids and one ISWC entry. An ISWC entry is `{ "iswc": ["T-034.524.680-1"] }`. It is not a `{ type, value, source }` triple. `NWR` / `REV` `ISWC` and `XRF` org `ISW` with `IdentifierType` `W` append to that one array.
 
 Parser output writes every recognized ISWC as dotted ISO `T-NNN.NNN.NNN-C`. The schema also accepts compact `TNNNNNNNNNC` and intermediate `T-NNNNNNNNN-C`.
 
-# Generic identifiers
-
-`identifiers[]` holds namespaced work ids. Each item is `type`, then `value`, then optional `source`. Match on `source.type` and `source.value`. `source.name` is optional.
+Namespaced rows are `type`, then `value`, then optional `source`. Match on `source.type` and `source.value`. `source.name` is optional.
 
 | Field | Type | Req | Description |
 | --- | --- | --- | --- |
@@ -68,12 +61,14 @@ Parser output writes every recognized ISWC as dotted ISO `T-NNN.NNN.NNN-C`. The 
 | CWR source | `type` | `source` |
 | --- | --- | --- |
 | `NWR.SubmitterWorkNumber` | `submitterWorkId` | `cwrSubmitter`, value from `HDR` sender id, name from sender name |
-| `XRF` numeric society code (e.g. `035`) | `societyWorkId` | `cisacSociety`, value is the org code |
-| `XRF` 2–3 letter code (e.g. `EMI`) | `publisherWorkId` | `cwrSubmitter`, value is the org code |
-| `XRF` with no org | `proprietary` | omitted |
+| `XRF` `W` + numeric society code (e.g. `035`) | `societyWorkId` | `cisacSociety`, value is the org code |
+| `XRF` `W` + 2–3 letter code (e.g. `EMI`) | `publisherWorkId` | `cwrSubmitter`, value is the org code |
+| `XRF` `W` with no org, or any other org | `proprietary` | omitted |
 | `XRF` org `000` or `099` | _(skipped)_ | — |
-| `XRF` org `ISW` | — | appended to `iswc` |
-| `XRF` org `ISR` | — | recording `isrc` if it already matches, otherwise `works[].isrc` |
+| `XRF` `W` + org `ISW` | — | appended to the `{ iswc: string[] }` entry |
+| `XRF` `R` + valid ISRC | — | `recordings[].isrc` when it already matches, otherwise its own `{ isrc: [code] }` shell |
+| `XRF` `P` + 13-digit EAN | — | its own recording `{ releases: [{ ean: [code] }] }` |
+| `XRF` `V` | _(skipped)_ | video / asset ids are not mapped yet |
 
 All `Validity` values (`Y`, `N`, `U`) are emitted. The same ISWC from `NWR` and `XRF` `ISW` is stored once. Triples match on `type`, `value`, `source.type`, and `source.value`.
 
@@ -82,8 +77,8 @@ Recordings may carry `identifiers[]` when an asset id is present. Current EDI do
 ## Example
 
 ```json
-"iswc": ["T-034.524.680-1"],
 "identifiers": [
+  { "iswc": ["T-034.524.680-1"] },
   {
     "type": "submitterWorkId",
     "value": "SW00000000001",

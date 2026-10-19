@@ -5,15 +5,15 @@
 ### Added
 
 - **`header.conventions`:** optional file-level declaration of writer and publisher representation. `writerControl` is `swrOnly` or `swrOwr`. `publisherShare` is `summed` or `perWriterChain`. Both fields are required when the object is present. Not mapped from the CWR `HDR` record.
-- **Format 1.0.1 identifiers:** `works[].iswc`, `works[].isrc`, `recordings[].isrc`, and `recordings[].releases[].ean` are string arrays. ISWC, ISRC, and EAN leave `identifiers[]`.
-- **Identifier triple:** `identifiers[]` is `{ type, value, source? }`. `source.type` is `ipiNameNumber`, `cisacSociety`, `cwrSubmitter`, or `dpid`.
+- **Format 1.0.1 identifiers:** `identifiers[]` holds namespaced triples and one `{ iswc: string[] }` entry. `recordings[].isrc` and `recordings[].releases[].ean` are string arrays.
+- **Identifier triple:** a namespaced row is `{ type, value, source? }`. `source.type` is `ipiNameNumber`, `cisacSociety`, `cwrSubmitter`, or `dpid`. ISWC is not a triple.
 - **Tags:** optional on recordings and releases, `{ name, value: string[] }`. Not mapped from CWR EDI.
 
 ### Changed
 
 - `NWR.SubmitterWorkNumber` maps to `submitterWorkId` with `source.type` `cwrSubmitter` from the `HDR` sender.
-- `XRF` numeric society codes map to `societyWorkId` / `cisacSociety`. `XRF` 2–3 letter codes map to `publisherWorkId` / `cwrSubmitter`. A missing org is `{ type: "proprietary", value }` with no `source`.
-- An `XRF` `ISR` that matches a recording ISRC is not copied. One that matches no recording stays on `works[].isrc`.
+- `XRF.IdentifierType` chooses the node. `W` uses the org code: `ISW` appends to `{ iswc: string[] }`, digits are `societyWorkId` / `cisacSociety`, 2–3 letters are `publisherWorkId` / `cwrSubmitter`, anything else is `{ type: "proprietary", value }` with no `source`.
+- An `XRF` `R` ISRC that matches a recording is not copied. Each unmatched ISRC is its own recording, `{ isrc: [code] }`. An `XRF` `P` 13-digit EAN is its own recording, `{ releases: [{ ean: [code] }] }`. `V` is not mapped.
 - Release catalog number stays on `catno` only.
 - Schema accepts dotted `T-NNN.NNN.NNN-C`, compact `TNNNNNNNNNC`, and intermediate `T-NNNNNNNNN-C`. Parser output emits dotted ISO only.
 

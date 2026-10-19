@@ -205,10 +205,33 @@ schema.definitions.WorkIdentifier = {
   },
 };
 
+schema.definitions.IswcIdentifier = {
+  additionalProperties: false,
+  type: 'object',
+  required: ['iswc'],
+  properties: {
+    iswc: {
+      ...stringArray(PATTERNS.iswc),
+      minItems: 1,
+    },
+  },
+};
+
+const identifierItems = {
+  oneOf: [
+    { $ref: '#/definitions/WorkIdentifier' },
+    { $ref: '#/definitions/IswcIdentifier' },
+  ],
+};
+
 for (const defName of ['CanonicalWork', 'SchemaV1WorkOutput'] as const) {
   const props = (schema.definitions[defName] as JsonSchema).properties as Record<string, JsonSchema>;
-  props.iswc = stringArray(PATTERNS.iswc);
-  props.isrc = stringArray(PATTERNS.isrc);
+  delete props.iswc;
+  delete props.isrc;
+  props.identifiers = {
+    type: 'array',
+    items: identifierItems,
+  };
 }
 
 const recording = schema.definitions.Recording as JsonSchema;

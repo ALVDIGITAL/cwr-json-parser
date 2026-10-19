@@ -87,7 +87,7 @@ describe('validation messages', () => {
       works: [
         {
           messages: { schema: 'x', schemaDescription: 'y' },
-          iswc: ['T7021605949'],
+          identifiers: [{ iswc: ['T7021605949'] }],
           parties: [
             {
               role: 'CA',

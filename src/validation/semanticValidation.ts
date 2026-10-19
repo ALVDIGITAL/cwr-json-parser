@@ -115,7 +115,7 @@ function collectSubmitterIds(payload: SchemaV1Output): Map<string, number[]> {
   const map = new Map<string, number[]>();
   payload.works.forEach((work, wi) => {
     for (const id of work.identifiers || []) {
-      if (id.type !== 'submitterWorkId' || !id.value) continue;
+      if (!('type' in id) || id.type !== 'submitterWorkId' || !id.value) continue;
       const list = map.get(id.value) || [];
       list.push(wi);
       map.set(id.value, list);

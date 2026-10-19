@@ -7,7 +7,7 @@ import {
   isPublisherOwnEligible,
   mapXrfToIdentifier,
   pushIdentifier,
-  pushUnique,
+  pushIswc,
 } from './parseHelpers';
 import { formatIswcForValidation } from '../../../validation/normalizeIswc';
 import { PublisherRegistry } from './publisherRegistry';
@@ -27,8 +27,6 @@ export function buildWorkModel(lines: string[]): WorkModel {
     header: {},
     messages: {},
     flags: {},
-    iswc: [],
-    isrc: [],
     identifiers: [],
     titles: [],
     recordings: [],
@@ -357,8 +355,10 @@ export function buildWorkModel(lines: string[]): WorkModel {
           releases: [] as any[],
         };
         model.recordings.push(track);
-      } else if (isrc && !track.isrc.includes(isrc)) {
-        track.isrc.push(isrc);
+      } else {
+        if (isrc && !track.isrc.includes(isrc)) track.isrc.push(isrc);
+        if (!track.title && trackTitle) track.title = trackTitle;
+        if (!track.version && trackVersion) track.version = trackVersion;
       }
       if (ean) release.ean = [ean];
       if (release.title || ean || catalogNumber || release.label || release.releaseDate) {
@@ -375,7 +375,7 @@ export function buildWorkModel(lines: string[]): WorkModel {
       const mainTitle = (obj.Title || obj.WorkTitle || '').trim();
       if (mainTitle.length) model.titles.push({ value: mainTitle, type: 'TT' });
       if (obj.ISWC) {
-        pushUnique(model.iswc, formatIswcForValidation(obj.ISWC) || obj.ISWC.trim());
+        pushIswc(model.identifiers, formatIswcForValidation(obj.ISWC) || obj.ISWC.trim());
       }
       if (obj.SubmitterWorkNumber) {
         const senderId = model.header.senderIdentifier;
@@ -493,29 +493,26 @@ export function buildWorkModel(lines: string[]): WorkModel {
     if (type === 'XRF') {
       const mapped = mapXrfToIdentifier(obj);
       if (!mapped) continue;
-      if (mapped.kind === 'iswc') pushUnique(model.iswc, mapped.value);
+      if (mapped.kind === 'iswc') pushIswc(model.identifiers, mapped.value);
       else if (mapped.kind === 'isrc') {
         const onRecording = model.recordings.some(
           (r) => Array.isArray(r.isrc) && r.isrc.includes(mapped.value)
         );
-        if (!onRecording) pushUnique(model.isrc, mapped.value);
+        if (!onRecording) model.recordings.push({ isrc: [mapped.value] });
+      } else if (mapped.kind === 'ean') {
+        const onRelease = model.recordings.some((r) =>
+          (r.releases || []).some(
+            (rel: { ean?: string[] }) => Array.isArray(rel.ean) && rel.ean.includes(mapped.value)
+          )
+        );
+        if (!onRelease) model.recordings.push({ releases: [{ ean: [mapped.value] }] });
       } else pushIdentifier(model.identifiers, mapped.identifier);
       continue;
     }
   }
 
-  absorbWorkIsrcs(model);
   dedupeTitles(model);
   return model;
-}
-
-function absorbWorkIsrcs(model: WorkModel) {
-  if (!model.isrc.length) return;
-  const onRecordings = new Set<string>();
-  for (const recording of model.recordings) {
-    for (const code of recording.isrc || []) onRecordings.add(code);
-  }
-  model.isrc = model.isrc.filter((code) => !onRecordings.has(code));
 }
 
 function langOrUndefined(lang: string) {

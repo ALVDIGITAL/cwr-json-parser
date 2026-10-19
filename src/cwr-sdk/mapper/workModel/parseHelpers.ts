@@ -1,8 +1,12 @@
 import { presentSocietyCode } from '../../lookups';
 import { parseRecordLine } from '../../parser/recordParser';
 import type { ShareEntry } from '../territoryUtils';
-import type { WorkIdentifier } from '../../types/cwr';
+import type { WorkIdentifier, WorkIdentifierEntry } from '../../types/cwr';
+import { isIswcIdentifier } from '../../types/cwr';
 import { formatIswcForValidation } from '../../../validation/normalizeIswc';
+
+const ISRC_PATTERN = /^[A-Z]{2}[A-Z0-9]{3}\d{7}$/;
+const EAN_PATTERN = /^\d{13}$/;
 
 export function lineToObj(line: string): Record<string, string> {
   const parsed = parseRecordLine(line) as any;
@@ -58,19 +62,29 @@ export function isPublisherOwnEligible(role?: string) {
 export type XrfMapping =
   | { kind: 'iswc'; value: string }
   | { kind: 'isrc'; value: string }
+  | { kind: 'ean'; value: string }
   | { kind: 'identifier'; identifier: WorkIdentifier };
 
-/** Map CWR XRF (Work ID Cross Reference). Foundational ids leave the generic bag. */
+/** Map CWR XRF. IdentifierType picks the node. OrganisationCode picks the work-id kind. */
 export function mapXrfToIdentifier(obj: Record<string, string>): XrfMapping | null {
   const org = (obj.OrganisationCode || '').trim();
   const id = (obj.Identifier || '').trim();
+  const idType = (obj.IdentifierType || '').trim().toUpperCase();
   if (!id) return null;
   if (org === '000' || org === '099') return null;
+  if (idType === 'V') return null;
+
+  if (idType === 'R') {
+    return ISRC_PATTERN.test(id) ? { kind: 'isrc', value: id } : null;
+  }
+  if (idType === 'P') {
+    return EAN_PATTERN.test(id) ? { kind: 'ean', value: id } : null;
+  }
+  if (idType !== 'W') return null;
 
   if (org === 'ISW') {
     return { kind: 'iswc', value: formatIswcForValidation(id) || id };
   }
-  if (org === 'ISR') return { kind: 'isrc', value: id };
 
   if (/^\d+$/.test(org)) {
     return {
@@ -97,15 +111,25 @@ export function mapXrfToIdentifier(obj: Record<string, string>): XrfMapping | nu
   return { kind: 'identifier', identifier: { type: 'proprietary', value: id } };
 }
 
-export function pushIdentifier(identifiers: WorkIdentifier[], entry: WorkIdentifier) {
+export function pushIdentifier(identifiers: WorkIdentifierEntry[], entry: WorkIdentifier) {
   const exists = identifiers.some(
     (i) =>
+      !isIswcIdentifier(i) &&
       i.type === entry.type &&
       i.value === entry.value &&
       i.source?.type === entry.source?.type &&
       i.source?.value === entry.source?.value
   );
   if (!exists) identifiers.push(entry);
+}
+
+export function pushIswc(identifiers: WorkIdentifierEntry[], value: string) {
+  let bucket = identifiers.find(isIswcIdentifier);
+  if (!bucket) {
+    bucket = { iswc: [] };
+    identifiers.push(bucket);
+  }
+  pushUnique(bucket.iswc, value);
 }
 
 export function pushUnique(values: string[], value: string) {

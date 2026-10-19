@@ -102,6 +102,17 @@ export interface WorkIdentifier {
   source?: IdentifierSource;
 }
 
+/** ISWC lives in `identifiers[]` but is not a namespaced triple. */
+export interface IswcIdentifier {
+  iswc: string[];
+}
+
+export type WorkIdentifierEntry = WorkIdentifier | IswcIdentifier;
+
+export function isIswcIdentifier(entry: WorkIdentifierEntry): entry is IswcIdentifier {
+  return 'iswc' in entry && Array.isArray(entry.iswc);
+}
+
 export interface Tag {
   name: string;
   value: string[];
@@ -178,9 +189,7 @@ export interface Identifiers {
 export interface CanonicalWork {
   rawRecords?: string[]; // for debugging
   titles?: WorkTitle[];
-  iswc?: string[];
-  isrc?: string[];
-  identifiers?: WorkIdentifier[];
+  identifiers?: WorkIdentifierEntry[];
   messages?: Messages;
   flags?: Flags;
   parties?: Participant[];          // OWN% chains starting at parties
@@ -220,9 +229,7 @@ export interface SchemaV1WorkOutput {
   messages: SchemaV1Messages;
   flags?: Flags;
   titles?: WorkTitle[];
-  iswc?: string[];
-  isrc?: string[];
-  identifiers?: WorkIdentifier[];
+  identifiers?: WorkIdentifierEntry[];
   parties?: Participant[];
   recordings?: Recording[];
 }

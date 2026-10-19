@@ -2877,6 +2877,12 @@ function parseRecordLine(line) {
 }
 __name(parseRecordLine, "parseRecordLine");
 
+// src/cwr-sdk/types/cwr.ts
+function isIswcIdentifier(entry) {
+  return "iswc" in entry && Array.isArray(entry.iswc);
+}
+__name(isIswcIdentifier, "isIswcIdentifier");
+
 // src/validation/normalizeIswc.ts
 function formatIswcForValidation(value) {
   const compact = value.trim().toUpperCase().replace(/[.\s-]/g, "");
@@ -2888,6 +2894,8 @@ function formatIswcForValidation(value) {
 __name(formatIswcForValidation, "formatIswcForValidation");
 
 // src/cwr-sdk/mapper/workModel/parseHelpers.ts
+var ISRC_PATTERN = /^[A-Z]{2}[A-Z0-9]{3}\d{7}$/;
+var EAN_PATTERN = /^\d{13}$/;
 function lineToObj(line) {
   const parsed = parseRecordLine(line);
   const fields = parsed?.fields || parsed;
@@ -2936,12 +2944,20 @@ __name(isPublisherOwnEligible, "isPublisherOwnEligible");
 function mapXrfToIdentifier(obj) {
   const org = (obj.OrganisationCode || "").trim();
   const id = (obj.Identifier || "").trim();
+  const idType = (obj.IdentifierType || "").trim().toUpperCase();
   if (!id) return null;
   if (org === "000" || org === "099") return null;
+  if (idType === "V") return null;
+  if (idType === "R") {
+    return ISRC_PATTERN.test(id) ? { kind: "isrc", value: id } : null;
+  }
+  if (idType === "P") {
+    return EAN_PATTERN.test(id) ? { kind: "ean", value: id } : null;
+  }
+  if (idType !== "W") return null;
   if (org === "ISW") {
     return { kind: "iswc", value: formatIswcForValidation(id) || id };
   }
-  if (org === "ISR") return { kind: "isrc", value: id };
   if (/^\d+$/.test(org)) {
     return {
       kind: "identifier",
@@ -2967,11 +2983,20 @@ function mapXrfToIdentifier(obj) {
 __name(mapXrfToIdentifier, "mapXrfToIdentifier");
 function pushIdentifier(identifiers, entry) {
   const exists = identifiers.some(
-    (i) => i.type === entry.type && i.value === entry.value && i.source?.type === entry.source?.type && i.source?.value === entry.source?.value
+    (i) => !isIswcIdentifier(i) && i.type === entry.type && i.value === entry.value && i.source?.type === entry.source?.type && i.source?.value === entry.source?.value
   );
   if (!exists) identifiers.push(entry);
 }
 __name(pushIdentifier, "pushIdentifier");
+function pushIswc(identifiers, value) {
+  let bucket = identifiers.find(isIswcIdentifier);
+  if (!bucket) {
+    bucket = { iswc: [] };
+    identifiers.push(bucket);
+  }
+  pushUnique(bucket.iswc, value);
+}
+__name(pushIswc, "pushIswc");
 function pushUnique(values, value) {
   if (!values.includes(value)) values.push(value);
 }
@@ -3070,8 +3095,6 @@ function buildWorkModel(lines) {
     header: {},
     messages: {},
     flags: {},
-    iswc: [],
-    isrc: [],
     identifiers: [],
     titles: [],
     recordings: [],
@@ -3324,8 +3347,10 @@ function buildWorkModel(lines) {
           releases: []
         };
         model.recordings.push(track);
-      } else if (isrc && !track.isrc.includes(isrc)) {
-        track.isrc.push(isrc);
+      } else {
+        if (isrc && !track.isrc.includes(isrc)) track.isrc.push(isrc);
+        if (!track.title && trackTitle) track.title = trackTitle;
+        if (!track.version && trackVersion) track.version = trackVersion;
       }
       if (ean) release.ean = [ean];
       if (release.title || ean || catalogNumber || release.label || release.releaseDate) {
@@ -3341,7 +3366,7 @@ function buildWorkModel(lines) {
       const mainTitle = (obj.Title || obj.WorkTitle || "").trim();
       if (mainTitle.length) model.titles.push({ value: mainTitle, type: "TT" });
       if (obj.ISWC) {
-        pushUnique(model.iswc, formatIswcForValidation(obj.ISWC) || obj.ISWC.trim());
+        pushIswc(model.identifiers, formatIswcForValidation(obj.ISWC) || obj.ISWC.trim());
       }
       if (obj.SubmitterWorkNumber) {
         const senderId = model.header.senderIdentifier;
@@ -3446,30 +3471,27 @@ function buildWorkModel(lines) {
     if (type === "XRF") {
       const mapped = mapXrfToIdentifier(obj);
       if (!mapped) continue;
-      if (mapped.kind === "iswc") pushUnique(model.iswc, mapped.value);
+      if (mapped.kind === "iswc") pushIswc(model.identifiers, mapped.value);
       else if (mapped.kind === "isrc") {
         const onRecording = model.recordings.some(
           (r) => Array.isArray(r.isrc) && r.isrc.includes(mapped.value)
         );
-        if (!onRecording) pushUnique(model.isrc, mapped.value);
+        if (!onRecording) model.recordings.push({ isrc: [mapped.value] });
+      } else if (mapped.kind === "ean") {
+        const onRelease = model.recordings.some(
+          (r) => (r.releases || []).some(
+            (rel) => Array.isArray(rel.ean) && rel.ean.includes(mapped.value)
+          )
+        );
+        if (!onRelease) model.recordings.push({ releases: [{ ean: [mapped.value] }] });
       } else pushIdentifier(model.identifiers, mapped.identifier);
       continue;
     }
   }
-  absorbWorkIsrcs(model);
   dedupeTitles(model);
   return model;
 }
 __name(buildWorkModel, "buildWorkModel");
-function absorbWorkIsrcs(model) {
-  if (!model.isrc.length) return;
-  const onRecordings = /* @__PURE__ */ new Set();
-  for (const recording of model.recordings) {
-    for (const code of recording.isrc || []) onRecordings.add(code);
-  }
-  model.isrc = model.isrc.filter((code) => !onRecordings.has(code));
-}
-__name(absorbWorkIsrcs, "absorbWorkIsrcs");
 function langOrUndefined(lang) {
   return lang || void 0;
 }
@@ -3562,9 +3584,7 @@ function projectCanonicalFromModel(model) {
       {
         messages: model.messages,
         titles: model.titles,
-        iswc: model.iswc.length ? model.iswc : void 0,
-        isrc: model.isrc.length ? model.isrc : void 0,
-        identifiers: model.identifiers,
+        identifiers: model.identifiers.length ? model.identifiers : void 0,
         flags: model.flags,
         parties: interestedParties,
         recordings: model.recordings
@@ -3673,26 +3693,33 @@ var schemaV1 = {
                 required: ["value"]
               }
             },
-            iswc: { type: "array", items: { type: "string" } },
-            isrc: { type: "array", items: { type: "string" } },
             identifiers: {
               type: "array",
               items: {
-                type: "object",
-                properties: {
-                  type: { type: "string" },
-                  value: { type: "string" },
-                  source: {
+                oneOf: [
+                  {
+                    type: "object",
+                    required: ["iswc"],
+                    properties: { iswc: { type: "array", items: { type: "string" }, minItems: 1 } }
+                  },
+                  {
                     type: "object",
                     properties: {
                       type: { type: "string" },
                       value: { type: "string" },
-                      name: { type: "string" }
+                      source: {
+                        type: "object",
+                        properties: {
+                          type: { type: "string" },
+                          value: { type: "string" },
+                          name: { type: "string" }
+                        },
+                        required: ["type", "value"]
+                      }
                     },
                     required: ["type", "value"]
                   }
-                },
-                required: ["type", "value"]
+                ]
               }
             },
             messages: { type: "object" },
@@ -3720,8 +3747,6 @@ var schemaV1 = {
         },
         flags: work.flags,
         titles: work.titles,
-        iswc: work.iswc,
-        isrc: work.isrc,
         identifiers: work.identifiers,
         parties: work.parties,
         recordings: work.recordings
@@ -3990,10 +4015,17 @@ var cwr_json_schema_v1_0_schema_default = {
           $ref: "#/definitions/Flags"
         },
         identifiers: {
+          type: "array",
           items: {
-            $ref: "#/definitions/WorkIdentifier"
-          },
-          type: "array"
+            oneOf: [
+              {
+                $ref: "#/definitions/WorkIdentifier"
+              },
+              {
+                $ref: "#/definitions/IswcIdentifier"
+              }
+            ]
+          }
         },
         messages: {
           $ref: "#/definitions/Messages"
@@ -4021,20 +4053,6 @@ var cwr_json_schema_v1_0_schema_default = {
             $ref: "#/definitions/WorkTitle"
           },
           type: "array"
-        },
-        iswc: {
-          type: "array",
-          items: {
-            type: "string",
-            pattern: "^(?:T-\\d{3}\\.\\d{3}\\.\\d{3}-\\d|T\\d{10}|T-\\d{9}-\\d)$"
-          }
-        },
-        isrc: {
-          type: "array",
-          items: {
-            type: "string",
-            pattern: "^[A-Z]{2}[A-Z0-9]{3}\\d{7}$"
-          }
         }
       },
       type: "object"
@@ -4586,10 +4604,17 @@ var cwr_json_schema_v1_0_schema_default = {
           $ref: "#/definitions/Flags"
         },
         identifiers: {
+          type: "array",
           items: {
-            $ref: "#/definitions/WorkIdentifier"
-          },
-          type: "array"
+            oneOf: [
+              {
+                $ref: "#/definitions/WorkIdentifier"
+              },
+              {
+                $ref: "#/definitions/IswcIdentifier"
+              }
+            ]
+          }
         },
         messages: {
           $ref: "#/definitions/SchemaV1Messages"
@@ -4611,20 +4636,6 @@ var cwr_json_schema_v1_0_schema_default = {
             $ref: "#/definitions/WorkTitle"
           },
           type: "array"
-        },
-        iswc: {
-          type: "array",
-          items: {
-            type: "string",
-            pattern: "^(?:T-\\d{3}\\.\\d{3}\\.\\d{3}-\\d|T\\d{10}|T-\\d{9}-\\d)$"
-          }
-        },
-        isrc: {
-          type: "array",
-          items: {
-            type: "string",
-            pattern: "^[A-Z]{2}[A-Z0-9]{3}\\d{7}$"
-          }
         }
       },
       required: [
@@ -6486,6 +6497,23 @@ var cwr_json_schema_v1_0_schema_default = {
           }
         }
       }
+    },
+    IswcIdentifier: {
+      additionalProperties: false,
+      type: "object",
+      required: [
+        "iswc"
+      ],
+      properties: {
+        iswc: {
+          type: "array",
+          items: {
+            type: "string",
+            pattern: "^(?:T-\\d{3}\\.\\d{3}\\.\\d{3}-\\d|T\\d{10}|T-\\d{9}-\\d)$"
+          },
+          minItems: 1
+        }
+      }
     }
   }
 };
@@ -6819,16 +6847,18 @@ function normalizeCwrJson(payload) {
   }
   const data = deepClone(payload);
   data.works.forEach((work, wi) => {
-    const iswcs = work.iswc || [];
-    for (let i = 0; i < iswcs.length; i++) {
-      const formatted = formatIswcForValidation(iswcs[i]);
-      if (formatted && formatted !== iswcs[i]) {
-        notes.push(
-          `/works/${wi}/iswc/${i}: ISWC "${iswcs[i]}" \u2192 "${formatted}" (dotted ISO)`
-        );
-        iswcs[i] = formatted;
-      }
-    }
+    (work.identifiers || []).forEach((entry, i) => {
+      if (!entry || !("iswc" in entry) || !Array.isArray(entry.iswc)) return;
+      entry.iswc.forEach((code, j) => {
+        const formatted = formatIswcForValidation(code);
+        if (formatted && formatted !== code) {
+          notes.push(
+            `/works/${wi}/identifiers/${i}/iswc/${j}: ISWC "${code}" \u2192 "${formatted}" (dotted ISO)`
+          );
+          entry.iswc[j] = formatted;
+        }
+      });
+    });
   });
   normalizeTerritoriesOnDocument(data.works, notes);
   normalizeShareSocietiesOnDocument(data.works, notes);
@@ -6943,7 +6973,7 @@ function collectSubmitterIds(payload) {
   const map = /* @__PURE__ */ new Map();
   payload.works.forEach((work, wi) => {
     for (const id of work.identifiers || []) {
-      if (id.type !== "submitterWorkId" || !id.value) continue;
+      if (!("type" in id) || id.type !== "submitterWorkId" || !id.value) continue;
       const list = map.get(id.value) || [];
       list.push(wi);
       map.set(id.value, list);

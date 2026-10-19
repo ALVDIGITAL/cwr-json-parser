@@ -31,10 +31,17 @@ var cwr_json_schema_v1_0_schema_default = {
           $ref: "#/definitions/Flags"
         },
         identifiers: {
+          type: "array",
           items: {
-            $ref: "#/definitions/WorkIdentifier"
-          },
-          type: "array"
+            oneOf: [
+              {
+                $ref: "#/definitions/WorkIdentifier"
+              },
+              {
+                $ref: "#/definitions/IswcIdentifier"
+              }
+            ]
+          }
         },
         messages: {
           $ref: "#/definitions/Messages"
@@ -62,20 +69,6 @@ var cwr_json_schema_v1_0_schema_default = {
             $ref: "#/definitions/WorkTitle"
           },
           type: "array"
-        },
-        iswc: {
-          type: "array",
-          items: {
-            type: "string",
-            pattern: "^(?:T-\\d{3}\\.\\d{3}\\.\\d{3}-\\d|T\\d{10}|T-\\d{9}-\\d)$"
-          }
-        },
-        isrc: {
-          type: "array",
-          items: {
-            type: "string",
-            pattern: "^[A-Z]{2}[A-Z0-9]{3}\\d{7}$"
-          }
         }
       },
       type: "object"
@@ -627,10 +620,17 @@ var cwr_json_schema_v1_0_schema_default = {
           $ref: "#/definitions/Flags"
         },
         identifiers: {
+          type: "array",
           items: {
-            $ref: "#/definitions/WorkIdentifier"
-          },
-          type: "array"
+            oneOf: [
+              {
+                $ref: "#/definitions/WorkIdentifier"
+              },
+              {
+                $ref: "#/definitions/IswcIdentifier"
+              }
+            ]
+          }
         },
         messages: {
           $ref: "#/definitions/SchemaV1Messages"
@@ -652,20 +652,6 @@ var cwr_json_schema_v1_0_schema_default = {
             $ref: "#/definitions/WorkTitle"
           },
           type: "array"
-        },
-        iswc: {
-          type: "array",
-          items: {
-            type: "string",
-            pattern: "^(?:T-\\d{3}\\.\\d{3}\\.\\d{3}-\\d|T\\d{10}|T-\\d{9}-\\d)$"
-          }
-        },
-        isrc: {
-          type: "array",
-          items: {
-            type: "string",
-            pattern: "^[A-Z]{2}[A-Z0-9]{3}\\d{7}$"
-          }
         }
       },
       required: [
@@ -2525,6 +2511,23 @@ var cwr_json_schema_v1_0_schema_default = {
             type: "string",
             minLength: 1
           }
+        }
+      }
+    },
+    IswcIdentifier: {
+      additionalProperties: false,
+      type: "object",
+      required: [
+        "iswc"
+      ],
+      properties: {
+        iswc: {
+          type: "array",
+          items: {
+            type: "string",
+            pattern: "^(?:T-\\d{3}\\.\\d{3}\\.\\d{3}-\\d|T\\d{10}|T-\\d{9}-\\d)$"
+          },
+          minItems: 1
         }
       }
     }

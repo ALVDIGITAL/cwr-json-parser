@@ -62,6 +62,11 @@ interface WorkIdentifier {
     value: string;
     source?: IdentifierSource;
 }
+/** ISWC lives in `identifiers[]` but is not a namespaced triple. */
+interface IswcIdentifier {
+    iswc: string[];
+}
+type WorkIdentifierEntry = WorkIdentifier | IswcIdentifier;
 interface Tag {
     name: string;
     value: string[];
@@ -131,9 +136,7 @@ interface Flags {
 interface CanonicalWork {
     rawRecords?: string[];
     titles?: WorkTitle[];
-    iswc?: string[];
-    isrc?: string[];
-    identifiers?: WorkIdentifier[];
+    identifiers?: WorkIdentifierEntry[];
     messages?: Messages;
     flags?: Flags;
     parties?: Participant[];
@@ -168,9 +171,7 @@ interface SchemaV1WorkOutput {
     messages: SchemaV1Messages;
     flags?: Flags;
     titles?: WorkTitle[];
-    iswc?: string[];
-    isrc?: string[];
-    identifiers?: WorkIdentifier[];
+    identifiers?: WorkIdentifierEntry[];
     parties?: Participant[];
     recordings?: Recording[];
 }

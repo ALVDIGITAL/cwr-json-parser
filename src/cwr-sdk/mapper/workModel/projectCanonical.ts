@@ -86,9 +86,7 @@ export function projectCanonicalFromModel(model: WorkModel): ParsedCwrFile {
       {
         messages: model.messages,
         titles: model.titles,
-        iswc: model.iswc.length ? model.iswc : undefined,
-        isrc: model.isrc.length ? model.isrc : undefined,
-        identifiers: model.identifiers,
+        identifiers: model.identifiers.length ? model.identifiers : undefined,
         flags: model.flags,
         parties: interestedParties,
         recordings: model.recordings,

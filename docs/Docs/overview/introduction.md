@@ -38,8 +38,7 @@ A CWR-JSON file produced by the **CWR-JSON Playground** reference implementation
 |---|---|
 | `header` | File-level metadata from the CWR `HDR` record (sender, dates, CWR version, software) |
 | `works[].titles` | All titles — original, alternate, non-Roman |
-| `works[].iswc` | ISWC array from `NWR` / `REV` and `XRF` `ISW` |
-| `works[].identifiers` | Namespaced triples: submitter, society, and publisher work ids from `XRF` |
+| `works[].identifiers` | One `{ iswc: string[] }` entry, plus namespaced triples from `XRF` |
 | `works[].parties` | Ownership chain: writers → original publishers → sub-publishers; `own` shares without TIS scope, `coll` shares per TIS |
 | `works[].recordings` | Commercial recordings (ISRC, album, label, release date) |
 | `works[].messages` | Registration type, revocation flags, ACK messages, schema metadata |
@@ -87,7 +86,7 @@ Future **format** versions (e.g. v1.1) can add a new serialiser against the same
 |---|---|
 | **CWR 2.x** (through **2.2 Rev3**) | Source EDI format — CWR-JSON is a JSON encoding of CWR registration data |
 | **CAF-JSON** | Sibling format — Common Agreement Format in JSON (agreements/shares between publishers and societies) |
-| **ISWC (ISO 15707)** | Work identifier in `works[].iswc[]`, emitted as `T-NNN.NNN.NNN-C` |
+| **ISWC (ISO 15707)** | Work identifier in `works[].identifiers[]` as `{ iswc: string[] }`, emitted as `T-NNN.NNN.NNN-C` |
 | **TIS Numeric Codes** | Territory identifier system used in `parties[].territories[]` |
 | **IPI Name/Base Numbers** | Interested Party identifier used in `parties[].ipi` |
 

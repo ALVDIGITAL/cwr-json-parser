@@ -109,7 +109,7 @@ Note: AJV-only validation does not run semantic rules (territory overlap, sub-pu
 - Required fields, types, closed objects
 - Lookup enums: role codes, TIS codes, title types, message types, AI indicators, character sets, society codes, language codes, revocation/anomalous reasons
 - `identifiers[].type` and `identifiers[].source.type` closed enums
-- `works[].iswc[]` accepts dotted `T-NNN.NNN.NNN-C`, compact `TNNNNNNNNNC`, and intermediate `T-NNNNNNNNN-C`
+- `identifiers[]` is a namespaced triple or one `{ iswc: string[] }` entry. That array accepts dotted `T-NNN.NNN.NNN-C`, compact `TNNNNNNNNNC`, and intermediate `T-NNNNNNNNN-C`
 - Patterns: dates (`YYYYMMDD`), times (`HHMMSS`), IPI (11 digits), ISRC, EAN
 - Optional `tags` on recordings and releases: `name` plus `value` string array (`minItems` 1)
 - Share percentages `0`–`100`

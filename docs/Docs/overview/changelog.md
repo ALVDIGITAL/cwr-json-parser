@@ -27,10 +27,10 @@ Integrators (including downstream export pipelines) should treat this page as th
 
 > Format bump. Schema filename stays `cwr-json-schema-v1.0.schema.json`. Ships in parser package `1.5.1`. Parser `1.5.0` is the ACK release below.
 
-- `works[].iswc`, `works[].isrc`, `recordings[].isrc`, and `recordings[].releases[].ean` are string arrays. ISWC, ISRC, and EAN leave `identifiers[]`.
-- `identifiers[]` is a triple: `type`, `value`, and optional `source` (`type`, `value`, optional `name`). `source.type` is `ipiNameNumber`, `cisacSociety`, `cwrSubmitter`, or `dpid`.
-- `NWR.SubmitterWorkNumber` is `submitterWorkId` with `source.type` `cwrSubmitter` from the `HDR` sender. `XRF` society codes are `societyWorkId` / `cisacSociety`. `XRF` 2–3 letter codes are `publisherWorkId` / `cwrSubmitter`. A missing org is `{ "type": "proprietary", "value" }` with no `source`.
-- An `XRF` `ISR` that matches a recording ISRC is not copied again. One that matches no recording is kept on `works[].isrc`.
+- `identifiers[]` holds namespaced triples and one `{ "iswc": ["T-034.524.680-1"] }` entry. `recordings[].isrc` and `recordings[].releases[].ean` are string arrays.
+- A namespaced row is `type`, `value`, and optional `source` (`type`, `value`, optional `name`). `source.type` is `ipiNameNumber`, `cisacSociety`, `cwrSubmitter`, or `dpid`. ISWC is not a triple.
+- `NWR.SubmitterWorkNumber` is `submitterWorkId` with `source.type` `cwrSubmitter` from the `HDR` sender. `XRF` `IdentifierType` `W` uses the org code: society codes are `societyWorkId` / `cisacSociety`, 2–3 letter codes are `publisherWorkId` / `cwrSubmitter`, org `ISW` appends to the `iswc` entry, and any other org is `{ "type": "proprietary", "value" }` with no `source`.
+- `XRF` `R` with a valid ISRC stays on `recordings[].isrc` when it already matches. Each unmatched code is its own recording. `XRF` `P` with a 13-digit EAN is its own recording with one release. `V` is not mapped.
 - Release catalog number stays on `catno` only.
 - Schema accepts dotted `T-NNN.NNN.NNN-C`, compact `TNNNNNNNNNC`, and intermediate `T-NNNNNNNNN-C`. Parser output emits dotted ISO only.
 - Optional `tags` on recordings and releases: `{ "name": "mood", "value": ["happy", "fun"] }`. Not mapped from CWR EDI.

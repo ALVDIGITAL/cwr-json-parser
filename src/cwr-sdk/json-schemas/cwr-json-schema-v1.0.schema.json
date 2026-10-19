@@ -27,10 +27,17 @@
           "$ref": "#/definitions/Flags"
         },
         "identifiers": {
+          "type": "array",
           "items": {
-            "$ref": "#/definitions/WorkIdentifier"
-          },
-          "type": "array"
+            "oneOf": [
+              {
+                "$ref": "#/definitions/WorkIdentifier"
+              },
+              {
+                "$ref": "#/definitions/IswcIdentifier"
+              }
+            ]
+          }
         },
         "messages": {
           "$ref": "#/definitions/Messages"
@@ -58,20 +65,6 @@
             "$ref": "#/definitions/WorkTitle"
           },
           "type": "array"
-        },
-        "iswc": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "pattern": "^(?:T-\\d{3}\\.\\d{3}\\.\\d{3}-\\d|T\\d{10}|T-\\d{9}-\\d)$"
-          }
-        },
-        "isrc": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "pattern": "^[A-Z]{2}[A-Z0-9]{3}\\d{7}$"
-          }
         }
       },
       "type": "object"
@@ -623,10 +616,17 @@
           "$ref": "#/definitions/Flags"
         },
         "identifiers": {
+          "type": "array",
           "items": {
-            "$ref": "#/definitions/WorkIdentifier"
-          },
-          "type": "array"
+            "oneOf": [
+              {
+                "$ref": "#/definitions/WorkIdentifier"
+              },
+              {
+                "$ref": "#/definitions/IswcIdentifier"
+              }
+            ]
+          }
         },
         "messages": {
           "$ref": "#/definitions/SchemaV1Messages"
@@ -648,20 +648,6 @@
             "$ref": "#/definitions/WorkTitle"
           },
           "type": "array"
-        },
-        "iswc": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "pattern": "^(?:T-\\d{3}\\.\\d{3}\\.\\d{3}-\\d|T\\d{10}|T-\\d{9}-\\d)$"
-          }
-        },
-        "isrc": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "pattern": "^[A-Z]{2}[A-Z0-9]{3}\\d{7}$"
-          }
         }
       },
       "required": [
@@ -2521,6 +2507,23 @@
             "type": "string",
             "minLength": 1
           }
+        }
+      }
+    },
+    "IswcIdentifier": {
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "iswc"
+      ],
+      "properties": {
+        "iswc": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^(?:T-\\d{3}\\.\\d{3}\\.\\d{3}-\\d|T\\d{10}|T-\\d{9}-\\d)$"
+          },
+          "minItems": 1
         }
       }
     }

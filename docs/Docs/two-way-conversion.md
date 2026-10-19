@@ -25,7 +25,7 @@ The `NWR` and `REV` records are the root of every CWR transaction.
 |---|---|---|
 | Record type | `work.messages.type` | Lowercased: `"nwr"`, `"rev"`, or `"ack"` |
 | `Title` / `WorkTitle` | `work.titles[]` | `{ value, type: "TT" }` |
-| `ISWC` | `work.iswc[]` | Dotted ISO `T-NNN.NNN.NNN-C` |
+| `ISWC` | `work.identifiers[].iswc[]` | Dotted ISO `T-NNN.NNN.NNN-C`. One `{ iswc }` entry |
 | `SubmitterWorkNumber` | `work.identifiers[]` | `{ type: "submitterWorkId", value, source: { type: "cwrSubmitter", value: HDR sender id, name } }` |
 | `RevocationIndicator` | `work.messages.revocation.indicator` | |
 | `RevocationReason` | `work.messages.revocation.reason` | |
@@ -47,11 +47,13 @@ CWR 2.2 **`XRF`** records carry additional work identifiers (society work number
 
 | CWR EDI Field | JSON Path | Notes |
 |---|---|---|
-| `OrganisationCode = ISW` | `work.iswc[]` | Dotted ISO. Deduped with `NWR` / `REV` ISWC |
-| `OrganisationCode = ISR` | `recordings[].isrc[]` or `work.isrc[]` | Matching recording ISRC is not copied. Unmatched ISRC stays on the work |
-| Numeric society code | `work.identifiers[]` | `{ type: "societyWorkId", source: { type: "cisacSociety", value: org } }` |
-| 2–3 letter submitter code | `work.identifiers[]` | `{ type: "publisherWorkId", source: { type: "cwrSubmitter", value: org } }` |
-| Missing org | `work.identifiers[]` | `{ type: "proprietary", value }` and no `source` |
+| `IdentifierType = W`, org `ISW` | `work.identifiers[].iswc[]` | Dotted ISO. Deduped with `NWR` / `REV` ISWC |
+| `IdentifierType = W`, numeric society code | `work.identifiers[]` | `{ type: "societyWorkId", source: { type: "cisacSociety", value: org } }` |
+| `IdentifierType = W`, 2–3 letter submitter code | `work.identifiers[]` | `{ type: "publisherWorkId", source: { type: "cwrSubmitter", value: org } }` |
+| `IdentifierType = W`, other or missing org | `work.identifiers[]` | `{ type: "proprietary", value }` and no `source` |
+| `IdentifierType = R`, valid ISRC | `recordings[].isrc[]` | Matching recording ISRC is not copied. Each unmatched code is its own recording shell |
+| `IdentifierType = P`, 13-digit EAN | `recordings[].releases[].ean[]` | Its own recording with one release. Not attached to other recordings |
+| `IdentifierType = V` | — | Not mapped |
 | `OrganisationCode` `000` / `099` | — | Skipped |
 | `Validity` | — | Not emitted in JSON (all Y/N/U rows included) |
 

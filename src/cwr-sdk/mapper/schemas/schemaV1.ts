@@ -30,26 +30,33 @@ export const schemaV1: CwrJsonSchema<SchemaV1Output> = {
                 required: ['value']
               }
             },
-            iswc: { type: 'array', items: { type: 'string' } },
-            isrc: { type: 'array', items: { type: 'string' } },
             identifiers: {
               type: 'array',
               items: {
-                type: 'object',
-                properties: {
-                  type: { type: 'string' },
-                  value: { type: 'string' },
-                  source: {
+                oneOf: [
+                  {
+                    type: 'object',
+                    required: ['iswc'],
+                    properties: { iswc: { type: 'array', items: { type: 'string' }, minItems: 1 } }
+                  },
+                  {
                     type: 'object',
                     properties: {
                       type: { type: 'string' },
                       value: { type: 'string' },
-                      name: { type: 'string' }
+                      source: {
+                        type: 'object',
+                        properties: {
+                          type: { type: 'string' },
+                          value: { type: 'string' },
+                          name: { type: 'string' }
+                        },
+                        required: ['type', 'value']
+                      }
                     },
                     required: ['type', 'value']
                   }
-                },
-                required: ['type', 'value']
+                ]
               }
             },
             messages: { type: 'object' },
@@ -78,8 +85,6 @@ export const schemaV1: CwrJsonSchema<SchemaV1Output> = {
         },
         flags: work.flags,
         titles: work.titles,
-        iswc: work.iswc,
-        isrc: work.isrc,
         identifiers: work.identifiers,
         parties: work.parties,
         recordings: work.recordings

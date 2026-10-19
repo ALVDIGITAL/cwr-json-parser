@@ -11,9 +11,9 @@ privacy:
 ---
 ## Deduplication by ISRC
 
-A recording is the same recording when any stored ISRC matches the incoming `REC.ISRC`. Those rows merge into one entry with multiple releases. An `XRF` `ISR` that matches a stored ISRC is not copied again.
+A recording is the same recording when any stored ISRC matches the incoming `REC.ISRC`. Those rows merge into one entry with multiple releases. An `XRF` `R` ISRC that matches a stored ISRC is not copied again.
 
-Records with no ISRC always create a new recording entry. An `XRF` `ISR` that matches no recording is kept on `works[].isrc` so the cross-reference is not dropped.
+An `XRF` `R` ISRC that matches no recording becomes its own recording, `{ "isrc": ["GBEMI7500001"] }`, with no title or releases. Each unmatched code is a separate recording. An `XRF` `P` EAN that matches no release becomes its own recording, `{ "releases": [{ "ean": ["5099996897027"] }] }`, and is not attached to the other recordings. A later `REC` with the same ISRC fills the empty title and version on that shell.
 
 ***
 
