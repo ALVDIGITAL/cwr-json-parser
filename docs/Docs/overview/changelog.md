@@ -23,14 +23,25 @@ Integrators (including downstream export pipelines) should treat this page as th
 
 ---
 
+## 2026-10-19 — Parser 1.5.2 identifier placement
+
+> Format `1.0.1`. Schema filename stays `cwr-json-schema-v1.0.schema.json`. Supersedes the `works[].iswc` and `works[].isrc` placement in parser `1.5.1`.
+
+- ISWC is one `identifiers[]` entry, `{ "iswc": ["T-034.524.680-1"] }`. It is not a `{ type, value, source }` triple. `works[].iswc` is removed.
+- `works[].isrc` is removed. `XRF.IdentifierType` chooses the node.
+- `W` uses the org code. `ISW` appends to the `iswc` entry. Digits are `societyWorkId` / `cisacSociety`. 2–3 letters are `publisherWorkId` / `cwrSubmitter`. Any other org is `{ "type": "proprietary", "value" }` with no `source`.
+- `R` with a valid ISRC stays on `recordings[].isrc` when it already matches. Each unmatched code is its own recording, `{ "isrc": ["..."] }`.
+- `P` with a 13-digit EAN is its own recording, `{ "releases": [{ "ean": ["..."] }] }`. It is not attached to other recordings.
+- `V` is not mapped.
+
 ## 2026-10-19 — Format 1.0.1 identifiers
 
-> Format bump. Schema filename stays `cwr-json-schema-v1.0.schema.json`. Ships in parser package `1.5.1`. Parser `1.5.0` is the ACK release below.
+> Format bump. Schema filename stays `cwr-json-schema-v1.0.schema.json`. Ships in parser package `1.5.1`. Parser `1.5.2` moves ISWC and unmatched ISRC. Parser `1.5.0` is the ACK release below.
 
-- `identifiers[]` holds namespaced triples and one `{ "iswc": ["T-034.524.680-1"] }` entry. `recordings[].isrc` and `recordings[].releases[].ean` are string arrays.
-- A namespaced row is `type`, `value`, and optional `source` (`type`, `value`, optional `name`). `source.type` is `ipiNameNumber`, `cisacSociety`, `cwrSubmitter`, or `dpid`. ISWC is not a triple.
-- `NWR.SubmitterWorkNumber` is `submitterWorkId` with `source.type` `cwrSubmitter` from the `HDR` sender. `XRF` `IdentifierType` `W` uses the org code: society codes are `societyWorkId` / `cisacSociety`, 2–3 letter codes are `publisherWorkId` / `cwrSubmitter`, org `ISW` appends to the `iswc` entry, and any other org is `{ "type": "proprietary", "value" }` with no `source`.
-- `XRF` `R` with a valid ISRC stays on `recordings[].isrc` when it already matches. Each unmatched code is its own recording. `XRF` `P` with a 13-digit EAN is its own recording with one release. `V` is not mapped.
+- `works[].iswc`, `works[].isrc`, `recordings[].isrc`, and `recordings[].releases[].ean` are string arrays. ISWC, ISRC, and EAN leave `identifiers[]`.
+- `identifiers[]` is a triple: `type`, `value`, and optional `source` (`type`, `value`, optional `name`). `source.type` is `ipiNameNumber`, `cisacSociety`, `cwrSubmitter`, or `dpid`.
+- `NWR.SubmitterWorkNumber` is `submitterWorkId` with `source.type` `cwrSubmitter` from the `HDR` sender. `XRF` society codes are `societyWorkId` / `cisacSociety`. `XRF` 2–3 letter codes are `publisherWorkId` / `cwrSubmitter`. A missing org is `{ "type": "proprietary", "value" }` with no `source`.
+- An `XRF` `ISR` that matches a recording ISRC is not copied again. One that matches no recording is kept on `works[].isrc`.
 - Release catalog number stays on `catno` only.
 - Schema accepts dotted `T-NNN.NNN.NNN-C`, compact `TNNNNNNNNNC`, and intermediate `T-NNNNNNNNN-C`. Parser output emits dotted ISO only.
 - Optional `tags` on recordings and releases: `{ "name": "mood", "value": ["happy", "fun"] }`. Not mapped from CWR EDI.

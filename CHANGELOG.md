@@ -1,19 +1,36 @@
 ## [Unreleased]
 
+## [1.5.2] - 2026-10-19
+
+### Changed
+
+- **ISWC** is no longer `works[].iswc`. One `identifiers[]` entry is `{ iswc: string[] }`. It is not a `{ type, value, source }` triple. `NWR` / `REV` `ISWC` and `XRF` org `ISW` with `IdentifierType` `W` append to that array.
+- **`works[].isrc` is removed.** `XRF.IdentifierType` chooses the node.
+  - `W`: org code still picks the work id (`ISW`, society, 2–3 letter publisher, or `proprietary`).
+  - `R`: a valid ISRC stays on `recordings[].isrc` when it already matches. Each unmatched code is its own recording, `{ isrc: [code] }`.
+  - `P`: a 13-digit EAN is its own recording, `{ releases: [{ ean: [code] }] }`. It is not attached to other recordings.
+  - `V`: not mapped.
+- A later `REC` with the same ISRC fills the empty title and version on that shell.
+
+### Notes
+
+- **CWR-JSON format 1.0.1.** Schema filename stays `cwr-json-schema-v1.0.schema.json`.
+- Supersedes the `works[].iswc` and `works[].isrc` placement in parser `1.5.1`.
+
 ## [1.5.1] - 2026-10-19
 
 ### Added
 
 - **`header.conventions`:** optional file-level declaration of writer and publisher representation. `writerControl` is `swrOnly` or `swrOwr`. `publisherShare` is `summed` or `perWriterChain`. Both fields are required when the object is present. Not mapped from the CWR `HDR` record.
-- **Format 1.0.1 identifiers:** `identifiers[]` holds namespaced triples and one `{ iswc: string[] }` entry. `recordings[].isrc` and `recordings[].releases[].ean` are string arrays.
-- **Identifier triple:** a namespaced row is `{ type, value, source? }`. `source.type` is `ipiNameNumber`, `cisacSociety`, `cwrSubmitter`, or `dpid`. ISWC is not a triple.
+- **Format 1.0.1 identifiers:** `works[].iswc`, `works[].isrc`, `recordings[].isrc`, and `recordings[].releases[].ean` are string arrays. ISWC, ISRC, and EAN leave `identifiers[]`.
+- **Identifier triple:** `identifiers[]` is `{ type, value, source? }`. `source.type` is `ipiNameNumber`, `cisacSociety`, `cwrSubmitter`, or `dpid`.
 - **Tags:** optional on recordings and releases, `{ name, value: string[] }`. Not mapped from CWR EDI.
 
 ### Changed
 
 - `NWR.SubmitterWorkNumber` maps to `submitterWorkId` with `source.type` `cwrSubmitter` from the `HDR` sender.
-- `XRF.IdentifierType` chooses the node. `W` uses the org code: `ISW` appends to `{ iswc: string[] }`, digits are `societyWorkId` / `cisacSociety`, 2–3 letters are `publisherWorkId` / `cwrSubmitter`, anything else is `{ type: "proprietary", value }` with no `source`.
-- An `XRF` `R` ISRC that matches a recording is not copied. Each unmatched ISRC is its own recording, `{ isrc: [code] }`. An `XRF` `P` 13-digit EAN is its own recording, `{ releases: [{ ean: [code] }] }`. `V` is not mapped.
+- `XRF` numeric society codes map to `societyWorkId` / `cisacSociety`. `XRF` 2–3 letter codes map to `publisherWorkId` / `cwrSubmitter`. A missing org is `{ type: "proprietary", value }` with no `source`.
+- An `XRF` `ISR` that matches a recording ISRC is not copied. One that matches no recording stays on `works[].isrc`.
 - Release catalog number stays on `catno` only.
 - Schema accepts dotted `T-NNN.NNN.NNN-C`, compact `TNNNNNNNNNC`, and intermediate `T-NNNNNNNNN-C`. Parser output emits dotted ISO only.
 
