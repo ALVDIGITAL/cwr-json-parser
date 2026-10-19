@@ -1,4 +1,4 @@
-import { ParsedCwrFile } from '../../types/cwr';
+import { ParsedCwrFile, type WorkIdentifier } from '../../types/cwr';
 import type { CwrJsonSchema } from '../schemaTypes';
 
 export interface SchemaAckMessage {
@@ -6,10 +6,7 @@ export interface SchemaAckMessage {
   value: string;
 }
 
-export interface SchemaAckIdentifier {
-  source: string;
-  value: string;
-}
+export type SchemaAckIdentifier = WorkIdentifier;
 
 export interface SchemaAckWorkOutput {
   messages: Record<string, unknown>;
@@ -65,10 +62,19 @@ export const schemaAck: CwrJsonSchema<SchemaAckOutput> = {
               items: {
                 type: 'object',
                 properties: {
-                  source: { type: 'string' },
-                  value: { type: 'string' }
+                  type: { type: 'string' },
+                  value: { type: 'string' },
+                  source: {
+                    type: 'object',
+                    properties: {
+                      type: { type: 'string' },
+                      value: { type: 'string' },
+                      name: { type: 'string' }
+                    },
+                    required: ['type', 'value']
+                  }
                 },
-                required: ['source', 'value']
+                required: ['type', 'value']
               }
             },
             flags: { type: 'object' },
@@ -103,8 +109,9 @@ export const schemaAck: CwrJsonSchema<SchemaAckOutput> = {
           ];
       const identifiers: SchemaAckIdentifier[] = Array.isArray(work.identifiers) ? [...work.identifiers] : [];
       identifiers.push({
-        source: '035',
-        value: '3987389-001'
+        type: 'societyWorkId',
+        value: '3987389-001',
+        source: { type: 'cisacSociety', value: '035' },
       });
 
       output.works.push({

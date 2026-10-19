@@ -1,4 +1,5 @@
 import type { ShareEntry, AgreementNumber } from '../territoryUtils';
+import type { WorkIdentifier } from '../../types/cwr';
 
 /** Mutable party node built during phase 1; projected to canonical Participant in phase 2. */
 export type PartyNode = {
@@ -62,7 +63,9 @@ export type WorkModel = {
   header: Record<string, string | undefined>;
   messages: Record<string, unknown>;
   flags: Record<string, unknown>;
-  identifiers: { source: string; value: string }[];
+  iswc: string[];
+  isrc: string[];
+  identifiers: WorkIdentifier[];
   titles: { value: string; type: string; language?: string }[];
   recordings: any[];
   ariRecords: AriRecord[];

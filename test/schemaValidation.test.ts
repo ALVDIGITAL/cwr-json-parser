@@ -65,7 +65,7 @@ describe('schema validation (deep)', () => {
       works: [
         {
           ...validWork,
-          identifiers: [{ source: 'iswc', value: 'not-an-iswc' }],
+          iswc: ['not-an-iswc'],
         },
       ],
     },
@@ -75,6 +75,42 @@ describe('schema validation (deep)', () => {
     );
     assert.equal(r.valid, false);
     assert.ok(r.errors.some((e) => e.includes('ISWC')));
+  });
+
+  it('accepts dotted, compact, and intermediate ISWC', () => {
+    for (const iswc of ['T-034.524.680-1', 'T0345246801', 'T-034524680-1']) {
+      const r = validateCwrJson(
+        { works: [{ ...validWork, iswc: [iswc] }] },
+        'strict',
+        'cwr-json-v1-0',
+        { normalize: false }
+      );
+      assert.equal(r.valid, true, `${iswc}: ${r.errors.join('\n')}`);
+    }
+  });
+
+  it('accepts recording and release tags', () => {
+    const r = validateCwrJson({
+      works: [
+        {
+          ...validWork,
+          recordings: [
+            {
+              isrc: ['USRC17607839'],
+              tags: [{ name: 'mood', value: ['happy', 'fun'] }],
+              releases: [
+                {
+                  ean: ['5099996897027'],
+                  catno: 'EMTC-101',
+                  tags: [{ name: 'format', value: ['album'] }],
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    });
+    assert.equal(r.valid, true, r.errors.join('\n'));
   });
 
   it('accepts minimal valid work', () => {

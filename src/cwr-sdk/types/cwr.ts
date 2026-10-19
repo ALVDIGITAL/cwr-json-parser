@@ -81,11 +81,38 @@ export interface Participant {
   representedBy?: Participant[]; // for ownership chains (writer -> publisher -> sub-publisher)
 }
 
+export type IdentifierSourceType = 'ipiNameNumber' | 'cisacSociety' | 'cwrSubmitter' | 'dpid';
+
+export interface IdentifierSource {
+  type: IdentifierSourceType;
+  value: string;
+  name?: string;
+}
+
+export type IdentifierKind =
+  | 'publisherWorkId'
+  | 'societyWorkId'
+  | 'submitterWorkId'
+  | 'assetId'
+  | 'proprietary';
+
+export interface WorkIdentifier {
+  type: IdentifierKind;
+  value: string;
+  source?: IdentifierSource;
+}
+
+export interface Tag {
+  name: string;
+  value: string[];
+}
+
 export interface RecordingRelease {
   title?: string;
-  ean?: string;
+  ean?: string[];
   catno?: string;
   identifiers?: WorkIdentifier[];
+  tags?: Tag[];
   label?: string;
   releaseDate?: string;
 }
@@ -93,13 +120,10 @@ export interface RecordingRelease {
 export interface Recording {
   version?: string;
   title?: string;
-  isrc?: string;
+  isrc?: string[];
+  identifiers?: WorkIdentifier[];
+  tags?: Tag[];
   releases?: RecordingRelease[];
-}
-
-export interface WorkIdentifier {
-  source: string;
-  value: string;
 }
 
 export interface WorkTitle {
@@ -129,7 +153,7 @@ export interface Flags {
 }
 
 export interface Identifiers {
-  iswc?: string;
+  iswc?: string[];
   submitterWorkNumber?: string;
   proprietaryIds?: { value: string; source?: string }[];
 }
@@ -137,6 +161,8 @@ export interface Identifiers {
 export interface CanonicalWork {
   rawRecords?: string[]; // for debugging
   titles?: WorkTitle[];
+  iswc?: string[];
+  isrc?: string[];
   identifiers?: WorkIdentifier[];
   messages?: Messages;
   flags?: Flags;
@@ -177,6 +203,8 @@ export interface SchemaV1WorkOutput {
   messages: SchemaV1Messages;
   flags?: Flags;
   titles?: WorkTitle[];
+  iswc?: string[];
+  isrc?: string[];
   identifiers?: WorkIdentifier[];
   parties?: Participant[];
   recordings?: Recording[];

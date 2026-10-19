@@ -50,23 +50,38 @@ interface Participant {
     roleSplitT?: number;
     representedBy?: Participant[];
 }
+type IdentifierSourceType = 'ipiNameNumber' | 'cisacSociety' | 'cwrSubmitter' | 'dpid';
+interface IdentifierSource {
+    type: IdentifierSourceType;
+    value: string;
+    name?: string;
+}
+type IdentifierKind = 'publisherWorkId' | 'societyWorkId' | 'submitterWorkId' | 'assetId' | 'proprietary';
+interface WorkIdentifier {
+    type: IdentifierKind;
+    value: string;
+    source?: IdentifierSource;
+}
+interface Tag {
+    name: string;
+    value: string[];
+}
 interface RecordingRelease {
     title?: string;
-    ean?: string;
+    ean?: string[];
     catno?: string;
     identifiers?: WorkIdentifier[];
+    tags?: Tag[];
     label?: string;
     releaseDate?: string;
 }
 interface Recording {
     version?: string;
     title?: string;
-    isrc?: string;
+    isrc?: string[];
+    identifiers?: WorkIdentifier[];
+    tags?: Tag[];
     releases?: RecordingRelease[];
-}
-interface WorkIdentifier {
-    source: string;
-    value: string;
 }
 interface WorkTitle {
     value: string;
@@ -102,6 +117,8 @@ interface Flags {
 interface CanonicalWork {
     rawRecords?: string[];
     titles?: WorkTitle[];
+    iswc?: string[];
+    isrc?: string[];
     identifiers?: WorkIdentifier[];
     messages?: Messages;
     flags?: Flags;
@@ -137,6 +154,8 @@ interface SchemaV1WorkOutput {
     messages: SchemaV1Messages;
     flags?: Flags;
     titles?: WorkTitle[];
+    iswc?: string[];
+    isrc?: string[];
     identifiers?: WorkIdentifier[];
     parties?: Participant[];
     recordings?: Recording[];

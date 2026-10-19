@@ -1,12 +1,27 @@
 ## [Unreleased]
 
+## [1.5.0] - 2026-10-19
+
 ### Added
 
 - **`header.conventions`:** optional file-level declaration of writer and publisher representation. `writerControl` is `swrOnly` or `swrOwr`. `publisherShare` is `summed` or `perWriterChain`. Both fields are required when the object is present. Not mapped from the CWR `HDR` record.
+- **Format 1.0.1 identifiers:** `works[].iswc`, `works[].isrc`, `recordings[].isrc`, and `recordings[].releases[].ean` are string arrays. ISWC, ISRC, and EAN leave `identifiers[]`.
+- **Identifier triple:** `identifiers[]` is `{ type, value, source? }`. `source.type` is `ipiNameNumber`, `cisacSociety`, `cwrSubmitter`, or `dpid`.
+- **Tags:** optional on recordings and releases, `{ name, value: string[] }`. Not mapped from CWR EDI.
+
+### Changed
+
+- `NWR.SubmitterWorkNumber` maps to `submitterWorkId` with `source.type` `cwrSubmitter` from the `HDR` sender.
+- `XRF` numeric society codes map to `societyWorkId` / `cisacSociety`. `XRF` 2–3 letter codes map to `publisherWorkId` / `cwrSubmitter`. A missing org is `{ type: "proprietary", value }` with no `source`.
+- An `XRF` `ISR` that matches a recording ISRC is not copied. One that matches no recording stays on `works[].isrc`.
+- Release catalog number stays on `catno` only.
+- Schema accepts dotted `T-NNN.NNN.NNN-C`, compact `TNNNNNNNNNC`, and intermediate `T-NNNNNNNNN-C`. Parser output emits dotted ISO only.
 
 ### Notes
 
-- Additive on CWR-JSON v1.0. Files without `conventions` stay valid. A validator built before this change rejects the property as an extra header field.
+- **CWR-JSON format 1.0.1.** Schema filename stays `cwr-json-schema-v1.0.schema.json`.
+- `header.conventions` is additive. Files without it stay valid. A validator built before that field rejects it as an extra header field.
+- Identifier field shapes changed. JSON that still uses `{ source, value }`, or string `iswc` / `isrc` / `ean`, fails validation.
 
 ## [1.4.3] - 2026-06-30
 

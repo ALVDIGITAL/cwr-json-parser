@@ -30,7 +30,7 @@ The schema embeds lookup enums and field patterns derived from the lookup table.
 | `shareTypes` | `shareTypes[].type` (`own`, `coll`) |
 | `controlled` | `parties[].controlled` |
 | `titleTypes` | `titles[].type` |
-| `identifierSources` | `identifiers[].source` (canonical names, CISAC society codes, `isrc`; or 2–3 letter submitter ID pattern) |
+| `identifierSources` | Lookup set retained for tooling. Format 1.0.1 `identifiers[]` uses `type` plus `source.type` (`ipiNameNumber`, `cisacSociety`, `cwrSubmitter`, `dpid`) instead of this enum |
 | `messageTypes` | `messages.type` |
 | `aiUsageIndicators` | `flags.aiUsage` |
 | `characterSets` | `header.characterSet` |
@@ -107,8 +107,11 @@ Note: AJV-only validation does not run semantic rules (territory overlap, sub-pu
 **JSON Schema (structural + lookups)** — enforced via AJV against the published schema:
 
 - Required fields, types, closed objects
-- Lookup enums: role codes, TIS codes, title types, identifier sources, message types, AI indicators, character sets, society codes, language codes, revocation/anomalous reasons
-- Patterns: dates (`YYYYMMDD`), times (`HHMMSS`), IPI (11 digits), ISWC, ISRC, EAN
+- Lookup enums: role codes, TIS codes, title types, message types, AI indicators, character sets, society codes, language codes, revocation/anomalous reasons
+- `identifiers[].type` and `identifiers[].source.type` closed enums
+- `works[].iswc[]` accepts dotted `T-NNN.NNN.NNN-C`, compact `TNNNNNNNNNC`, and intermediate `T-NNNNNNNNN-C`
+- Patterns: dates (`YYYYMMDD`), times (`HHMMSS`), IPI (11 digits), ISRC, EAN
+- Optional `tags` on recordings and releases: `name` plus `value` string array (`minItems` 1)
 - Share percentages `0`–`100`
 - **Conditional:** `own` territories must have empty TIS `include` / `exclude`
 
@@ -120,12 +123,12 @@ Note: AJV-only validation does not run semantic rules (territory overlap, sub-pu
 | `OWN_EMPTY_TIS` | Redundant check for `own` + non-empty TIS |
 | `SUBPUB_NO_OWN` | `SE`, `AM`, `PA` must not have `own` |
 | `PUB_OWN_E_ONLY` | Non-`E` publishers must not have `own` |
-| `ID_UNIQUE_SUBMITTER` | `submitterWorkNumber` unique per file |
+| `ID_UNIQUE_SUBMITTER` | `identifiers[]` `type: "submitterWorkId"` unique per file |
 | `TIS_UNKNOWN` | Unknown TIS (when not caught by schema enum) |
 
 **Optional normalization (Validation 1.1.1)** — before validation:
 
-- Compact ISWC → `T-NNNNNNNNN-C`
+- Recognized ISWC → dotted `T-NNN.NNN.NNN-C`
 - Split combined `own`/`coll` territory rows
 - Strip invalid `own` on sub-publishers
 

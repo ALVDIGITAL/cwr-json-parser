@@ -64,9 +64,13 @@ Download the `.json` file for storage, APIs, or further processing.
       "titles": [
         { "value": "BOHEMIAN RHAPSODY", "type": "TT" }
       ],
+      "iswc": ["T-000.000.001-0"],
       "identifiers": [
-        { "source": "iswc", "value": "T-000.000.001-0" },
-        { "source": "submitterWorkNumber", "value": "EMI-00042" }
+        {
+          "type": "submitterWorkId",
+          "value": "EMI-00042",
+          "source": { "type": "cwrSubmitter", "value": "00000000001", "name": "EMI" }
+        }
       ]
     }
   ]

@@ -7,7 +7,9 @@ import {
   isPublisherOwnEligible,
   mapXrfToIdentifier,
   pushIdentifier,
+  pushUnique,
 } from './parseHelpers';
+import { formatIswcForValidation } from '../../../validation/normalizeIswc';
 import { PublisherRegistry } from './publisherRegistry';
 import type {
   WorkModel,
@@ -25,6 +27,8 @@ export function buildWorkModel(lines: string[]): WorkModel {
     header: {},
     messages: {},
     flags: {},
+    iswc: [],
+    isrc: [],
     identifiers: [],
     titles: [],
     recordings: [],
@@ -43,8 +47,6 @@ export function buildWorkModel(lines: string[]): WorkModel {
   let currentPublisherChain: PublisherChain | null = null;
   let currentWriterGroup: WriterGroup | null = null;
   let currentWriterBlock: 'controlled' | 'other' = 'controlled';
-
-  const trackByIsrc: Record<string, any> = {};
 
   const chainsForBlock = (block: PublisherBlock) =>
     block === 'submitter' ? model.submitterPublisherChains : model.otherPublisherChains;
@@ -307,33 +309,40 @@ export function buildWorkModel(lines: string[]): WorkModel {
     }
 
     if (type === 'REC') {
-      const isrc = obj.ISRC || '';
+      const isrc = (obj.ISRC || '').trim();
       const trackTitle = obj.RecordingTitle || '';
       const trackVersion = obj.VersionTitle || '';
       const releaseTitle = obj.AlbumTitle || '';
       const ean = obj.EAN || obj.Ean || obj.EanCode || obj.EanNumber || undefined;
       const catalogNumber = obj.ReleaseCatalogNumber || undefined;
-      const releaseIdentifiers: { source: string; value: string }[] = [];
-      if (ean) releaseIdentifiers.push({ source: 'ean', value: ean });
-      if (catalogNumber) releaseIdentifiers.push({ source: 'catalogNumber', value: catalogNumber });
 
-      const release = {
+      const release: {
+        title?: string;
+        ean?: string[];
+        catno?: string;
+        label?: string;
+        releaseDate?: string;
+      } = {
         title: releaseTitle || undefined,
-        identifiers: releaseIdentifiers.length ? releaseIdentifiers : undefined,
+        catno: catalogNumber || undefined,
         label: obj.RecordLabel || undefined,
         releaseDate: obj.ReleaseDate || undefined,
       };
-      let track = isrc ? trackByIsrc[isrc] : null;
+      let track = isrc
+        ? model.recordings.find((r) => Array.isArray(r.isrc) && r.isrc.includes(isrc))
+        : null;
       if (!track) {
         track = {
           version: trackVersion || undefined,
           title: trackTitle || undefined,
-          isrc: isrc || undefined,
+          isrc: isrc ? [isrc] : undefined,
           releases: [] as any[],
         };
-        if (isrc) trackByIsrc[isrc] = track;
         model.recordings.push(track);
+      } else if (isrc && !track.isrc.includes(isrc)) {
+        track.isrc.push(isrc);
       }
+      if (ean) release.ean = [ean];
       if (release.title || ean || catalogNumber || release.label || release.releaseDate) {
         track.releases = track.releases || [];
         track.releases.push(release);
@@ -345,11 +354,23 @@ export function buildWorkModel(lines: string[]): WorkModel {
       model.messages.type = type.toLowerCase();
       const mainTitle = (obj.Title || obj.WorkTitle || '').trim();
       if (mainTitle.length) model.titles.push({ value: mainTitle, type: 'TT' });
-      if (obj.ISWC) pushIdentifier(model.identifiers, { source: 'iswc', value: obj.ISWC });
+      if (obj.ISWC) {
+        pushUnique(model.iswc, formatIswcForValidation(obj.ISWC) || obj.ISWC.trim());
+      }
       if (obj.SubmitterWorkNumber) {
+        const senderId = model.header.senderIdentifier;
         pushIdentifier(model.identifiers, {
-          source: 'submitterWorkNumber',
+          type: 'submitterWorkId',
           value: obj.SubmitterWorkNumber,
+          ...(senderId
+            ? {
+                source: {
+                  type: 'cwrSubmitter' as const,
+                  value: senderId,
+                  ...(model.header.senderName ? { name: model.header.senderName } : {}),
+                },
+              }
+            : {}),
         });
       }
       if (obj.RevocationIndicator) {
@@ -451,13 +472,30 @@ export function buildWorkModel(lines: string[]): WorkModel {
 
     if (type === 'XRF') {
       const mapped = mapXrfToIdentifier(obj);
-      if (mapped) pushIdentifier(model.identifiers, mapped);
+      if (!mapped) continue;
+      if (mapped.kind === 'iswc') pushUnique(model.iswc, mapped.value);
+      else if (mapped.kind === 'isrc') {
+        const onRecording = model.recordings.some(
+          (r) => Array.isArray(r.isrc) && r.isrc.includes(mapped.value)
+        );
+        if (!onRecording) pushUnique(model.isrc, mapped.value);
+      } else pushIdentifier(model.identifiers, mapped.identifier);
       continue;
     }
   }
 
+  absorbWorkIsrcs(model);
   dedupeTitles(model);
   return model;
+}
+
+function absorbWorkIsrcs(model: WorkModel) {
+  if (!model.isrc.length) return;
+  const onRecordings = new Set<string>();
+  for (const recording of model.recordings) {
+    for (const code of recording.isrc || []) onRecordings.add(code);
+  }
+  model.isrc = model.isrc.filter((code) => !onRecordings.has(code));
 }
 
 function langOrUndefined(lang: string) {

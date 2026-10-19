@@ -67,20 +67,19 @@ Additional CWR title type codes are passed through as-is when present.
 
 ---
 
-# Identifier Sources
+# Identifier types
 
-Used in `identifiers[].source` and `recordings[].releases[].identifiers[].source`.
+Used on `identifiers[].type`. ISWC, ISRC, and EAN are first-class string arrays, not rows here.
 
-| Source | Description | Format |
+| `type` | `source.type` | Description |
 |---|---|---|
-| `iswc` | International Standard Work Code (ISO 15707) | `T-NNNNNNNNN-C` |
-| `isrc` | ISRC from `XRF` (`OrganisationCode = ISR`) | `CCXXXYYNNNNN` |
-| `submitterWorkNumber` | Submitter's internal work ID | Alphanumeric, unique per submitter |
-| CISAC society code | Society work ID from `XRF` (e.g. `035`) | Varies per society |
-| CWR submitter ID | Publisher/submitter work ID from `XRF` (e.g. `EMI`) | 2–3 uppercase letters + value |
-| `proprietary` | Fallback when org code is absent | Varies |
-| `ean` | EAN barcode (release-level) | 13-digit numeric string |
-| `catalogNumber` | Release catalogue number | Alphanumeric |
+| `submitterWorkId` | `cwrSubmitter` | `NWR.SubmitterWorkNumber`. Source value is the `HDR` sender id |
+| `societyWorkId` | `cisacSociety` | Society work id from `XRF`. Source value is the society code |
+| `publisherWorkId` | `cwrSubmitter` or `ipiNameNumber` | Publisher work id. `XRF` 2–3 letter codes use `cwrSubmitter` |
+| `assetId` | `dpid` | Recording asset id. Allowed by schema; current EDI does not emit it |
+| `proprietary` | _(omitted)_ | `XRF` row with no organisation code |
+
+`source.type` is `ipiNameNumber`, `cisacSociety`, `cwrSubmitter`, or `dpid`.
 
 ---
 

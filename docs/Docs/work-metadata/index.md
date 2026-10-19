@@ -16,7 +16,9 @@ privacy:
 | `messages`    | object | M   | Registration metadata, ACK messages, and schema metadata (`schema`, `schemaDescription`)                                                   |
 | `flags`       | object | O   | Boolean indicators from the registration record                                                                                            |
 | `titles`      | array  | O   | All titles for the work (original, alternate, non-Roman)                                                                                   |
-| `identifiers` | array  | O   | All identifiers (ISWC, submitter work number, `XRF` cross-refs)                                                                              |
+| `iswc`        | array  | O   | ISWC codes (`NWR` / `REV` and `XRF` `ISW`), dotted ISO in parser output                                                                    |
+| `isrc`        | array  | O   | Work-level ISRC cross-refs that match no recording                                                                                         |
+| `identifiers` | array  | O   | Namespaced triples (submitter, society, publisher). ISWC, ISRC, and EAN are not in this array                                              |
 | `parties`     | array  | O   | **Ownership chain** — writers and publishers with hierarchical `representedBy` nesting and per-territory shares (ownership and collection) |
 | `recordings`  | array  | O   | Commercial recordings (ISRC, album, label, release date)                                                                                   |
 
@@ -45,9 +47,13 @@ See [Interested Parties](./interested-parties) and [Territories & Shares](./terr
   "titles": [
     { "value": "BOHEMIAN RHAPSODY", "type": "TT" }
   ],
+  "iswc": ["T-000.000.001-0"],
   "identifiers": [
-    { "source": "iswc", "value": "T-000.000.001-0" },
-    { "source": "submitterWorkNumber", "value": "EMI-00042" }
+    {
+      "type": "submitterWorkId",
+      "value": "EMI-00042",
+      "source": { "type": "cwrSubmitter", "value": "00000000001", "name": "EMI" }
+    }
   ]
 }
 ```

@@ -1,4 +1,4 @@
-import { S as SchemaId } from './schemaRegistry-BT5z4Jmj.js';
+import { S as SchemaId } from './schemaRegistry-BRkDRYOM.js';
 
 /**
  * Unified V1 schema asset (merged canonical + V1 output contract).

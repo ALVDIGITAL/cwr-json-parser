@@ -6,7 +6,7 @@ import { parseCwr, validateParsedCwr } from '../src/index';
 import { cwrLine, minimalOneWorkCwr, xrfLine } from './helpers/cwrFixtures';
 
 describe('mapXrfToIdentifier', () => {
-  it('maps society work number (org as source)', () => {
+  it('maps society work number to a namespaced triple', () => {
     assert.deepEqual(
       mapXrfToIdentifier({
         OrganisationCode: '035',
@@ -14,11 +14,18 @@ describe('mapXrfToIdentifier', () => {
         IdentifierType: 'W',
         Validity: 'Y',
       }),
-      { source: '035', value: '3987389001' }
+      {
+        kind: 'identifier',
+        identifier: {
+          type: 'societyWorkId',
+          value: '3987389001',
+          source: { type: 'cisacSociety', value: '035' },
+        },
+      }
     );
   });
 
-  it('maps ISW to iswc source', () => {
+  it('maps ISW onto the work ISWC array', () => {
     assert.deepEqual(
       mapXrfToIdentifier({
         OrganisationCode: 'ISW',
@@ -26,11 +33,11 @@ describe('mapXrfToIdentifier', () => {
         IdentifierType: 'W',
         Validity: 'Y',
       }),
-      { source: 'iswc', value: 'T-000.000.001-0' }
+      { kind: 'iswc', value: 'T-000.000.001-0' }
     );
   });
 
-  it('maps ISR to isrc source', () => {
+  it('maps ISR onto an ISRC array', () => {
     assert.deepEqual(
       mapXrfToIdentifier({
         OrganisationCode: 'ISR',
@@ -38,11 +45,11 @@ describe('mapXrfToIdentifier', () => {
         IdentifierType: 'R',
         Validity: 'Y',
       }),
-      { source: 'isrc', value: 'USRC17607839' }
+      { kind: 'isrc', value: 'USRC17607839' }
     );
   });
 
-  it('maps publisher submitter code as source', () => {
+  it('maps a submitter code to a publisher work id', () => {
     assert.deepEqual(
       mapXrfToIdentifier({
         OrganisationCode: 'EMI',
@@ -50,7 +57,14 @@ describe('mapXrfToIdentifier', () => {
         IdentifierType: 'W',
         Validity: 'Y',
       }),
-      { source: 'EMI', value: 'EMI-00042' }
+      {
+        kind: 'identifier',
+        identifier: {
+          type: 'publisherWorkId',
+          value: 'EMI-00042',
+          source: { type: 'cwrSubmitter', value: 'EMI' },
+        },
+      }
     );
   });
 
@@ -83,16 +97,28 @@ describe('mapXrfToIdentifier', () => {
         IdentifierType: 'W',
         Validity: 'N',
       }),
-      { source: '035', value: 'BADID' }
+      {
+        kind: 'identifier',
+        identifier: {
+          type: 'societyWorkId',
+          value: 'BADID',
+          source: { type: 'cisacSociety', value: '035' },
+        },
+      }
     );
   });
 });
 
 describe('pushIdentifier', () => {
-  it('dedupes on source and value', () => {
-    const ids: { source: string; value: string }[] = [];
-    pushIdentifier(ids, { source: 'iswc', value: 'T-000.000.001-0' });
-    pushIdentifier(ids, { source: 'iswc', value: 'T-000.000.001-0' });
+  it('dedupes on type, value, and source', () => {
+    const ids = [];
+    const entry = {
+      type: 'societyWorkId' as const,
+      value: '3987389001',
+      source: { type: 'cisacSociety' as const, value: '035' },
+    };
+    pushIdentifier(ids, entry);
+    pushIdentifier(ids, { ...entry, source: { ...entry.source, name: 'GEMA' } });
     assert.equal(ids.length, 1);
   });
 });
@@ -108,13 +134,21 @@ describe('buildWorkModel XRF', () => {
     ];
     const model = buildWorkModel(lines);
 
+    assert.deepEqual(model.iswc, ['T-000.000.001-0']);
+    assert.deepEqual(model.isrc, ['USRC17607839']);
     assert.deepEqual(
-      model.identifiers.filter((i) => i.source !== 'submitterWorkNumber'),
+      model.identifiers.filter((i) => i.type !== 'submitterWorkId'),
       [
-        { source: '035', value: '3987389001' },
-        { source: 'iswc', value: 'T0000000010' },
-        { source: 'isrc', value: 'USRC17607839' },
-        { source: 'EMI', value: 'EMI-00042' },
+        {
+          type: 'societyWorkId',
+          value: '3987389001',
+          source: { type: 'cisacSociety', value: '035' },
+        },
+        {
+          type: 'publisherWorkId',
+          value: 'EMI-00042',
+          source: { type: 'cwrSubmitter', value: 'EMI' },
+        },
       ]
     );
   });
@@ -145,9 +179,7 @@ describe('buildWorkModel XRF', () => {
       xrfLine('00000001', '00000001', 'ISW', 'T0000000010', 'W', 'Y'),
     ];
     const model = buildWorkModel(lines);
-    const iswc = model.identifiers.filter((i) => i.source === 'iswc');
-    assert.equal(iswc.length, 1);
-    assert.equal(iswc[0].value, 'T0000000010');
+    assert.deepEqual(model.iswc, ['T-000.000.001-0']);
   });
 });
 
@@ -163,13 +195,13 @@ describe('parseCwr XRF validation', () => {
     assert.equal(validation.valid, true, validation.errors.join('\n'));
     assert.ok(
       result.works[0].identifiers?.some(
-        (i) => i.source === '035' && i.value === '3987389001'
+        (i) =>
+          i.type === 'societyWorkId' &&
+          i.value === '3987389001' &&
+          i.source?.type === 'cisacSociety' &&
+          i.source.value === '035'
       )
     );
-    assert.ok(
-      result.works[0].identifiers?.some(
-        (i) => i.source === 'isrc' && i.value === 'USRC17607839'
-      )
-    );
+    assert.deepEqual(result.works[0].isrc, ['USRC17607839']);
   });
 });

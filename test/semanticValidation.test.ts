@@ -64,7 +64,7 @@ describe('semantic validation', () => {
   it('flags duplicate submitterWorkNumber across works', () => {
     const work = {
       messages: baseMessages,
-      identifiers: [{ source: 'submitterWorkNumber', value: 'DUP-1' }],
+      identifiers: [{ type: 'submitterWorkId', value: 'DUP-1' }],
       parties: [{ role: 'C', territories: [] }],
     };
     const r = validateCwrJson({ works: [work, { ...work }] }, 'strict', 'cwr-json-v1-0', {

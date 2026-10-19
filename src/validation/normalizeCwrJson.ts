@@ -32,14 +32,14 @@ export function normalizeCwrJson(payload: unknown): NormalizeCwrJsonResult {
   const data = deepClone(payload as unknown as SchemaV1Output);
 
   data.works.forEach((work, wi) => {
-    for (const id of work.identifiers || []) {
-      if (id.source !== 'iswc' || !id.value) continue;
-      const formatted = formatIswcForValidation(id.value);
-      if (formatted && formatted !== id.value) {
+    const iswcs = work.iswc || [];
+    for (let i = 0; i < iswcs.length; i++) {
+      const formatted = formatIswcForValidation(iswcs[i]);
+      if (formatted && formatted !== iswcs[i]) {
         notes.push(
-          `/works/${wi}/identifiers: ISWC "${id.value}" → "${formatted}" (display format)`
+          `/works/${wi}/iswc/${i}: ISWC "${iswcs[i]}" → "${formatted}" (dotted ISO)`
         );
-        id.value = formatted;
+        iswcs[i] = formatted;
       }
     }
   });

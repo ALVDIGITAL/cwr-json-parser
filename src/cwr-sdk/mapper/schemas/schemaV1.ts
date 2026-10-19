@@ -5,7 +5,7 @@ export const schemaV1: CwrJsonSchema<SchemaV1Output> = {
   id: 'cwr-json-v1-0',
   label: 'CWR-JSON Schema v1.0',
   description: 'Complete canonical representation with both ownership and collection data. This schema preserves all CWR semantics including hierarchical ownership chains and territorial collection splits.',
-  version: '1.0.0',
+  version: '1.0.1',
   jsonSchema: {
     $schema: 'https://json-schema.org/draft/2020-12/schema',
     $id: 'https://example.org/cwr-json/schema-v1.0.json',
@@ -30,15 +30,26 @@ export const schemaV1: CwrJsonSchema<SchemaV1Output> = {
                 required: ['value']
               }
             },
+            iswc: { type: 'array', items: { type: 'string' } },
+            isrc: { type: 'array', items: { type: 'string' } },
             identifiers: {
               type: 'array',
               items: {
                 type: 'object',
                 properties: {
-                  source: { type: 'string' }, // e.g., iswc, submitterWorkNumber, proprietary
-                  value: { type: 'string' }
+                  type: { type: 'string' },
+                  value: { type: 'string' },
+                  source: {
+                    type: 'object',
+                    properties: {
+                      type: { type: 'string' },
+                      value: { type: 'string' },
+                      name: { type: 'string' }
+                    },
+                    required: ['type', 'value']
+                  }
                 },
-                required: ['source', 'value']
+                required: ['type', 'value']
               }
             },
             messages: { type: 'object' },
@@ -67,6 +78,8 @@ export const schemaV1: CwrJsonSchema<SchemaV1Output> = {
         },
         flags: work.flags,
         titles: work.titles,
+        iswc: work.iswc,
+        isrc: work.isrc,
         identifiers: work.identifiers,
         parties: work.parties,
         recordings: work.recordings

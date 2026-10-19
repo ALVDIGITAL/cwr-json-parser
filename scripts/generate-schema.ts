@@ -18,7 +18,7 @@ const PATTERNS = {
   date8: '^\\d{8}$',
   time6: '^\\d{6}$',
   ipi11: '^\\d{11}$',
-  iswc: '^T-\\d{9}-\\d$',
+  iswc: '^(?:T-\\d{3}\\.\\d{3}\\.\\d{3}-\\d|T\\d{10}|T-\\d{9}-\\d)$',
   isrc: '^[A-Z]{2}[A-Z0-9]{3}\\d{7}$',
   ean13: '^\\d{13}$',
   sharePercent: { minimum: 0, maximum: 100 },
@@ -157,62 +157,78 @@ const workTitleProps = workTitle.properties as Record<string, JsonSchema>;
 workTitleProps.type = { $ref: '#/definitions/TitleTypeCode' };
 workTitleProps.language = { $ref: '#/definitions/LanguageCode' };
 
-// WorkIdentifier — society/submitter source codes + conditional value patterns
+function stringArray(pattern?: string): JsonSchema {
+  const items: JsonSchema = { type: 'string' };
+  if (pattern) items.pattern = pattern;
+  return { type: 'array', items };
+}
+
+schema.definitions.IdentifierNamespace = {
+  additionalProperties: false,
+  type: 'object',
+  required: ['type', 'value'],
+  properties: {
+    type: {
+      type: 'string',
+      enum: ['ipiNameNumber', 'cisacSociety', 'cwrSubmitter', 'dpid'],
+    },
+    value: { type: 'string' },
+    name: { type: 'string' },
+  },
+};
+
+schema.definitions.Tag = {
+  additionalProperties: false,
+  type: 'object',
+  required: ['name', 'value'],
+  properties: {
+    name: { type: 'string', minLength: 1 },
+    value: {
+      type: 'array',
+      minItems: 1,
+      items: { type: 'string', minLength: 1 },
+    },
+  },
+};
+
 schema.definitions.WorkIdentifier = {
   additionalProperties: false,
   type: 'object',
-  required: ['source', 'value'],
+  required: ['type', 'value'],
   properties: {
-    source: {
-      oneOf: [
-        { $ref: '#/definitions/IdentifierSource' },
-        { type: 'string', pattern: '^[A-Z]{2,3}$' },
-      ],
+    type: {
+      type: 'string',
+      enum: ['publisherWorkId', 'societyWorkId', 'submitterWorkId', 'assetId', 'proprietary'],
     },
     value: { type: 'string' },
+    source: { $ref: '#/definitions/IdentifierNamespace' },
   },
-  allOf: [
-    {
-      if: {
-        properties: { source: { const: 'iswc' } },
-        required: ['source'],
-      },
-      then: {
-        properties: { value: { type: 'string', pattern: PATTERNS.iswc } },
-      },
-    },
-    {
-      if: {
-        properties: { source: { const: 'isrc' } },
-        required: ['source'],
-      },
-      then: {
-        properties: { value: { type: 'string', pattern: PATTERNS.isrc } },
-      },
-    },
-    {
-      if: {
-        properties: { source: { const: 'ean' } },
-        required: ['source'],
-      },
-      then: {
-        properties: { value: { type: 'string', pattern: PATTERNS.ean13 } },
-      },
-    },
-  ],
 };
 
-// Recording
+for (const defName of ['CanonicalWork', 'SchemaV1WorkOutput'] as const) {
+  const props = (schema.definitions[defName] as JsonSchema).properties as Record<string, JsonSchema>;
+  props.iswc = stringArray(PATTERNS.iswc);
+  props.isrc = stringArray(PATTERNS.isrc);
+}
+
 const recording = schema.definitions.Recording as JsonSchema;
-(recording.properties as Record<string, JsonSchema>).isrc = {
-  type: 'string',
-  pattern: PATTERNS.isrc,
+const recordingProps = recording.properties as Record<string, JsonSchema>;
+recordingProps.isrc = stringArray(PATTERNS.isrc);
+recordingProps.identifiers = {
+  type: 'array',
+  items: { $ref: '#/definitions/WorkIdentifier' },
+};
+recordingProps.tags = {
+  type: 'array',
+  items: { $ref: '#/definitions/Tag' },
 };
 
 const release = schema.definitions.RecordingRelease as JsonSchema;
-(release.properties as Record<string, JsonSchema>).ean = {
-  type: 'string',
-  pattern: PATTERNS.ean13,
+const releaseProps = release.properties as Record<string, JsonSchema>;
+releaseProps.ean = stringArray(PATTERNS.ean13);
+releaseProps.tags = {
+  type: 'array',
+  items: { $ref: '#/definitions/Tag' },
 };
 (release.properties as Record<string, JsonSchema>).releaseDate = {
   type: 'string',

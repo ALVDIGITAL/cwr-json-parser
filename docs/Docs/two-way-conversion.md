@@ -25,8 +25,8 @@ The `NWR` and `REV` records are the root of every CWR transaction.
 |---|---|---|
 | Record type | `work.messages.type` | Lowercased: `"nwr"` or `"rev"` |
 | `Title` / `WorkTitle` | `work.titles[]` | `{ value, type: "TT" }` |
-| `ISWC` | `work.identifiers[]` | `{ source: "iswc", value }` |
-| `SubmitterWorkNumber` | `work.identifiers[]` | `{ source: "submitterWorkNumber", value }` |
+| `ISWC` | `work.iswc[]` | Dotted ISO `T-NNN.NNN.NNN-C` |
+| `SubmitterWorkNumber` | `work.identifiers[]` | `{ type: "submitterWorkId", value, source: { type: "cwrSubmitter", value: HDR sender id, name } }` |
 | `RevocationIndicator` | `work.messages.revocation.indicator` | |
 | `RevocationReason` | `work.messages.revocation.reason` | |
 | `AnomalousWorkIndicator` | `work.flags.anomalous` | `"Y"` → `true` |
@@ -47,15 +47,17 @@ CWR 2.2 **`XRF`** records carry additional work identifiers (society work number
 
 | CWR EDI Field | JSON Path | Notes |
 |---|---|---|
-| `OrganisationCode = ISW` | `work.identifiers[]` | `{ source: "iswc", value: Identifier }` |
-| `OrganisationCode = ISR` | `work.identifiers[]` | `{ source: "isrc", value: Identifier }` |
-| Other `OrganisationCode` | `work.identifiers[]` | `{ source: <OrganisationCode>, value: Identifier }` (e.g. `"035"`, `"EMI"`) |
+| `OrganisationCode = ISW` | `work.iswc[]` | Dotted ISO. Deduped with `NWR` / `REV` ISWC |
+| `OrganisationCode = ISR` | `recordings[].isrc[]` or `work.isrc[]` | Matching recording ISRC is not copied. Unmatched ISRC stays on the work |
+| Numeric society code | `work.identifiers[]` | `{ type: "societyWorkId", source: { type: "cisacSociety", value: org } }` |
+| 2–3 letter submitter code | `work.identifiers[]` | `{ type: "publisherWorkId", source: { type: "cwrSubmitter", value: org } }` |
+| Missing org | `work.identifiers[]` | `{ type: "proprietary", value }` and no `source` |
 | `OrganisationCode` `000` / `099` | — | Skipped |
 | `Validity` | — | Not emitted in JSON (all Y/N/U rows included) |
 
 ## Notes
 
-- Duplicate `{source, value}` pairs are deduplicated against `NWR`/`REV` and other `XRF` rows.
-- `REC` recordings are unchanged; `ISR` XRF also appears in `identifiers[]` (not auto-merged into `recordings[]`).
+- Triples match on `type`, `value`, `source.type`, and `source.value`.
+- `REC.ISRC` is one entry in `recordings[].isrc[]`. `REC` EAN is `releases[].ean[]`. Catalog number stays on `releases[].catno`.
 
 ---

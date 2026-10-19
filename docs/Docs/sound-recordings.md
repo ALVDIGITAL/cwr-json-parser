@@ -11,9 +11,9 @@ privacy:
 ---
 ## Deduplication by ISRC
 
-ISRC is used as the dedup key. Multiple `REC` records with the same ISRC are merged into a single recording entry with multiple releases in `releases[]`.
+A recording is the same recording when any stored ISRC matches the incoming `REC.ISRC`. Those rows merge into one entry with multiple releases. An `XRF` `ISR` that matches a stored ISRC is not copied again.
 
-Records with no ISRC always create a new recording entry.
+Records with no ISRC always create a new recording entry. An `XRF` `ISR` that matches no recording is kept on `works[].isrc` so the cross-reference is not dropped.
 
 ***
 
@@ -21,10 +21,12 @@ Records with no ISRC always create a new recording entry.
 
 | Field      | Type   | Req | Source Field         | Description                                               |
 | ---------- | ------ | --- | -------------------- | --------------------------------------------------------- |
-| `title`    | string | O   | `REC.RecordingTitle` | Title of the recording                                    |
-| `version`  | string | O   | `REC.VersionTitle`   | Version or remix title                                    |
-| `isrc`     | string | O   | `REC.ISRC`           | International Standard Recording Code. Used as dedup key. |
-| `releases` | array  | O   | —                    | Commercial releases of this recording                     |
+| `title`       | string | O   | `REC.RecordingTitle` | Title of the recording |
+| `version`     | string | O   | `REC.VersionTitle`   | Version or remix title |
+| `isrc`        | string[] | O | `REC.ISRC`           | ISRC codes. Any match dedupes the recording. |
+| `identifiers` | array  | O   | —                    | Asset ids only. Not produced from current EDI. |
+| `tags`        | array  | O   | —                    | `{ name, value[] }`. Not mapped from CWR EDI. |
+| `releases`    | array  | O   | —                    | Commercial releases of this recording |
 
 ***
 
@@ -32,17 +34,15 @@ Records with no ISRC always create a new recording entry.
 
 | Field         | Type   | Req | Source Field      | Description                     |
 | ------------- | ------ | --- | ----------------- | ------------------------------- |
-| `title`       | string | O   | `REC.AlbumTitle`  | Album or release title          |
-| `label`       | string | O   | `REC.RecordLabel` | Record label name               |
-| `releaseDate` | string | O   | `REC.ReleaseDate` | Format: `YYYYMMDD`              |
-| `identifiers` | array  | O   | —                 | Release identifiers — see below |
+| `title`       | string   | O   | `REC.AlbumTitle`           | Album or release title |
+| `label`       | string   | O   | `REC.RecordLabel`          | Record label name |
+| `releaseDate` | string   | O   | `REC.ReleaseDate`          | Format: `YYYYMMDD` |
+| `ean`         | string[] | O   | `REC.EAN` / `Ean` / `EanCode` / `EanNumber` | EAN barcodes |
+| `catno`       | string   | O   | `REC.ReleaseCatalogNumber` | Catalogue number. Not an identifier triple. |
+| `identifiers` | array    | O   | —                          | Other release ids. EAN is not copied here. |
+| `tags`        | array    | O   | —                          | `{ name, value[] }`. Not mapped from CWR EDI. |
 
-### Release identifiers
-
-| `source`          | CWR Source Field                      | Description      |
-| ----------------- | ------------------------------------- | ---------------- |
-| `"ean"`           | `REC.EAN` / `REC.Ean` / `REC.EanCode` | EAN barcode      |
-| `"catalogNumber"` | `REC.ReleaseCatalogNumber`            | Catalogue number |
+`tags[].name` is one label. `tags[].value` is a string array with at least one string.
 
 ***
 
@@ -52,16 +52,15 @@ Records with no ISRC always create a new recording entry.
 "recordings": [
   {
     "title": "BOHEMIAN RHAPSODY",
-    "isrc": "GB-EMI-75-00001",
+    "isrc": ["GBEMI7500001"],
+    "tags": [{ "name": "mood", "value": ["happy", "fun"] }],
     "releases": [
       {
         "title": "A NIGHT AT THE OPERA",
         "label": "EMI RECORDS",
         "releaseDate": "19751031",
-        "identifiers": [
-          { "source": "catalogNumber", "value": "EMTC-101" },
-          { "source": "ean", "value": "5099996897027" }
-        ]
+        "ean": ["5099996897027"],
+        "catno": "EMTC-101"
       },
       {
         "title": "GREATEST HITS",

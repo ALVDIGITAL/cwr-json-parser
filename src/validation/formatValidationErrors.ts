@@ -10,11 +10,11 @@ export type ValidationIssue = {
 const AJV_RULE_HINTS: Record<string, (err: ErrorObject, path: string) => ValidationIssue | null> = {
   pattern: (err, path) => {
     const pattern = (err.params as { pattern?: string })?.pattern;
-    if (path.includes('/identifiers/') && pattern?.includes('T-')) {
+    if (path.includes('/iswc') && pattern?.includes('T')) {
       return {
         path,
         code: 'ISWC_FORMAT',
-        message: 'ISWC must use display form T-NNNNNNNNN-C (e.g. T-702160594-9)',
+        message: 'ISWC must be dotted T-NNN.NNN.NNN-C, compact TNNNNNNNNNC, or intermediate T-NNNNNNNNN-C',
         detail: err.message || undefined,
       };
     }

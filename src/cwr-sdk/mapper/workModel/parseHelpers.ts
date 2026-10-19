@@ -1,6 +1,8 @@
 import { presentSocietyCode } from '../../lookups';
 import { parseRecordLine } from '../../parser/recordParser';
 import type { ShareEntry } from '../territoryUtils';
+import type { WorkIdentifier } from '../../types/cwr';
+import { formatIswcForValidation } from '../../../validation/normalizeIswc';
 
 export function lineToObj(line: string): Record<string, string> {
   const parsed = parseRecordLine(line) as any;
@@ -53,25 +55,59 @@ export function isPublisherOwnEligible(role?: string) {
   return (role || '').trim() === 'E';
 }
 
-export type WorkIdentifierEntry = { source: string; value: string };
+export type XrfMapping =
+  | { kind: 'iswc'; value: string }
+  | { kind: 'isrc'; value: string }
+  | { kind: 'identifier'; identifier: WorkIdentifier };
 
-/** Map CWR XRF (Work ID Cross Reference) to a work-level identifier (Q0 B). */
-export function mapXrfToIdentifier(obj: Record<string, string>): WorkIdentifierEntry | null {
+/** Map CWR XRF (Work ID Cross Reference). Foundational ids leave the generic bag. */
+export function mapXrfToIdentifier(obj: Record<string, string>): XrfMapping | null {
   const org = (obj.OrganisationCode || '').trim();
   const id = (obj.Identifier || '').trim();
   if (!id) return null;
   if (org === '000' || org === '099') return null;
 
-  if (org === 'ISW') return { source: 'iswc', value: id };
-  if (org === 'ISR') return { source: 'isrc', value: id };
+  if (org === 'ISW') {
+    return { kind: 'iswc', value: formatIswcForValidation(id) || id };
+  }
+  if (org === 'ISR') return { kind: 'isrc', value: id };
 
-  return { source: org || 'proprietary', value: id };
+  if (/^\d+$/.test(org)) {
+    return {
+      kind: 'identifier',
+      identifier: {
+        type: 'societyWorkId',
+        value: id,
+        source: { type: 'cisacSociety', value: org },
+      },
+    };
+  }
+
+  if (/^[A-Za-z]{2,3}$/.test(org)) {
+    return {
+      kind: 'identifier',
+      identifier: {
+        type: 'publisherWorkId',
+        value: id,
+        source: { type: 'cwrSubmitter', value: org.toUpperCase() },
+      },
+    };
+  }
+
+  return { kind: 'identifier', identifier: { type: 'proprietary', value: id } };
 }
 
-export function pushIdentifier(
-  identifiers: WorkIdentifierEntry[],
-  entry: WorkIdentifierEntry
-) {
-  const exists = identifiers.some((i) => i.source === entry.source && i.value === entry.value);
+export function pushIdentifier(identifiers: WorkIdentifier[], entry: WorkIdentifier) {
+  const exists = identifiers.some(
+    (i) =>
+      i.type === entry.type &&
+      i.value === entry.value &&
+      i.source?.type === entry.source?.type &&
+      i.source?.value === entry.source?.value
+  );
   if (!exists) identifiers.push(entry);
+}
+
+export function pushUnique(values: string[], value: string) {
+  if (!values.includes(value)) values.push(value);
 }

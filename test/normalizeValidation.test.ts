@@ -9,8 +9,9 @@ import {
 
 describe('normalizeCwrJson', () => {
   it('formats compact ISWC for validation', () => {
-    assert.equal(formatIswcForValidation('T7021605949'), 'T-702160594-9');
-    assert.equal(formatIswcForValidation('T-702160594-9'), 'T-702160594-9');
+    assert.equal(formatIswcForValidation('T7021605949'), 'T-702.160.594-9');
+    assert.equal(formatIswcForValidation('T-702160594-9'), 'T-702.160.594-9');
+    assert.equal(formatIswcForValidation('T-702.160.594-9'), 'T-702.160.594-9');
   });
 
   it('splits own+coll on the same territory entry', () => {
@@ -86,7 +87,7 @@ describe('validation messages', () => {
       works: [
         {
           messages: { schema: 'x', schemaDescription: 'y' },
-          identifiers: [{ source: 'iswc', value: 'T7021605949' }],
+          iswc: ['T7021605949'],
           parties: [
             {
               role: 'CA',

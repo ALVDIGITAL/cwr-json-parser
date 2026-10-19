@@ -95,6 +95,20 @@ var cwr_json_schema_v1_0_schema_default = {
             $ref: "#/definitions/WorkTitle"
           },
           type: "array"
+        },
+        iswc: {
+          type: "array",
+          items: {
+            type: "string",
+            pattern: "^(?:T-\\d{3}\\.\\d{3}\\.\\d{3}-\\d|T\\d{10}|T-\\d{9}-\\d)$"
+          }
+        },
+        isrc: {
+          type: "array",
+          items: {
+            type: "string",
+            pattern: "^[A-Z]{2}[A-Z0-9]{3}\\d{7}$"
+          }
         }
       },
       type: "object"
@@ -396,8 +410,11 @@ var cwr_json_schema_v1_0_schema_default = {
       additionalProperties: false,
       properties: {
         isrc: {
-          type: "string",
-          pattern: "^[A-Z]{2}[A-Z0-9]{3}\\d{7}$"
+          type: "array",
+          items: {
+            type: "string",
+            pattern: "^[A-Z]{2}[A-Z0-9]{3}\\d{7}$"
+          }
         },
         releases: {
           items: {
@@ -410,6 +427,18 @@ var cwr_json_schema_v1_0_schema_default = {
         },
         version: {
           type: "string"
+        },
+        identifiers: {
+          type: "array",
+          items: {
+            $ref: "#/definitions/WorkIdentifier"
+          }
+        },
+        tags: {
+          type: "array",
+          items: {
+            $ref: "#/definitions/Tag"
+          }
         }
       },
       type: "object"
@@ -421,8 +450,11 @@ var cwr_json_schema_v1_0_schema_default = {
           type: "string"
         },
         ean: {
-          type: "string",
-          pattern: "^\\d{13}$"
+          type: "array",
+          items: {
+            type: "string",
+            pattern: "^\\d{13}$"
+          }
         },
         identifiers: {
           items: {
@@ -439,6 +471,12 @@ var cwr_json_schema_v1_0_schema_default = {
         },
         title: {
           type: "string"
+        },
+        tags: {
+          type: "array",
+          items: {
+            $ref: "#/definitions/Tag"
+          }
         }
       },
       type: "object"
@@ -605,6 +643,20 @@ var cwr_json_schema_v1_0_schema_default = {
             $ref: "#/definitions/WorkTitle"
           },
           type: "array"
+        },
+        iswc: {
+          type: "array",
+          items: {
+            type: "string",
+            pattern: "^(?:T-\\d{3}\\.\\d{3}\\.\\d{3}-\\d|T\\d{10}|T-\\d{9}-\\d)$"
+          }
+        },
+        isrc: {
+          type: "array",
+          items: {
+            type: "string",
+            pattern: "^[A-Z]{2}[A-Z0-9]{3}\\d{7}$"
+          }
         }
       },
       required: [
@@ -660,87 +712,27 @@ var cwr_json_schema_v1_0_schema_default = {
       additionalProperties: false,
       type: "object",
       required: [
-        "source",
+        "type",
         "value"
       ],
       properties: {
-        source: {
-          oneOf: [
-            {
-              $ref: "#/definitions/IdentifierSource"
-            },
-            {
-              type: "string",
-              pattern: "^[A-Z]{2,3}$"
-            }
+        type: {
+          type: "string",
+          enum: [
+            "publisherWorkId",
+            "societyWorkId",
+            "submitterWorkId",
+            "assetId",
+            "proprietary"
           ]
         },
         value: {
           type: "string"
-        }
-      },
-      allOf: [
-        {
-          if: {
-            properties: {
-              source: {
-                const: "iswc"
-              }
-            },
-            required: [
-              "source"
-            ]
-          },
-          then: {
-            properties: {
-              value: {
-                type: "string",
-                pattern: "^T-\\d{9}-\\d$"
-              }
-            }
-          }
         },
-        {
-          if: {
-            properties: {
-              source: {
-                const: "isrc"
-              }
-            },
-            required: [
-              "source"
-            ]
-          },
-          then: {
-            properties: {
-              value: {
-                type: "string",
-                pattern: "^[A-Z]{2}[A-Z0-9]{3}\\d{7}$"
-              }
-            }
-          }
-        },
-        {
-          if: {
-            properties: {
-              source: {
-                const: "ean"
-              }
-            },
-            required: [
-              "source"
-            ]
-          },
-          then: {
-            properties: {
-              value: {
-                type: "string",
-                pattern: "^\\d{13}$"
-              }
-            }
-          }
+        source: {
+          $ref: "#/definitions/IdentifierNamespace"
         }
-      ]
+      }
     },
     WorkTitle: {
       additionalProperties: false,
@@ -2478,6 +2470,53 @@ var cwr_json_schema_v1_0_schema_default = {
         "writerControl"
       ],
       type: "object"
+    },
+    IdentifierNamespace: {
+      additionalProperties: false,
+      type: "object",
+      required: [
+        "type",
+        "value"
+      ],
+      properties: {
+        type: {
+          type: "string",
+          enum: [
+            "ipiNameNumber",
+            "cisacSociety",
+            "cwrSubmitter",
+            "dpid"
+          ]
+        },
+        value: {
+          type: "string"
+        },
+        name: {
+          type: "string"
+        }
+      }
+    },
+    Tag: {
+      additionalProperties: false,
+      type: "object",
+      required: [
+        "name",
+        "value"
+      ],
+      properties: {
+        name: {
+          type: "string",
+          minLength: 1
+        },
+        value: {
+          type: "array",
+          minItems: 1,
+          items: {
+            type: "string",
+            minLength: 1
+          }
+        }
+      }
     }
   }
 };

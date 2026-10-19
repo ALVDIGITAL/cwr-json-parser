@@ -11,7 +11,7 @@ content:
 
 ## Schema stability (read first)
 
-**CWR-JSON format version `1.00` / revision `0` remains the current interchange schema.** Field names, object shapes, and JSON Schema ([`cwr-json-schema-v1.0.schema.json`](https://d7ap24707c.execute-api.eu-west-1.amazonaws.com/staging/api/v1/schemas/cwr-json-schema-v1.0.schema.json)) are frozen unless this changelog records an explicit **format** bump.
+**CWR-JSON format version `1.0.1` is the current interchange schema.** The schema file stays [`cwr-json-schema-v1.0.schema.json`](https://d7ap24707c.execute-api.eu-west-1.amazonaws.com/staging/api/v1/schemas/cwr-json-schema-v1.0.schema.json). Further field-shape changes are frozen unless this changelog records an explicit **format** bump.
 
 | Change type | Affects your integration? |
 |---|---|
@@ -22,6 +22,18 @@ content:
 Integrators (including downstream export pipelines) should treat this page as the source of truth for format and validation changes. Contact the SPF committee for advance notice of any planned format revision.
 
 ---
+
+## 2026-10-19 — Format 1.0.1 identifiers
+
+> Format bump. Schema filename stays `cwr-json-schema-v1.0.schema.json`. Ships in parser package `1.5.0`.
+
+- `works[].iswc`, `works[].isrc`, `recordings[].isrc`, and `recordings[].releases[].ean` are string arrays. ISWC, ISRC, and EAN leave `identifiers[]`.
+- `identifiers[]` is a triple: `type`, `value`, and optional `source` (`type`, `value`, optional `name`). `source.type` is `ipiNameNumber`, `cisacSociety`, `cwrSubmitter`, or `dpid`.
+- `NWR.SubmitterWorkNumber` is `submitterWorkId` with `source.type` `cwrSubmitter` from the `HDR` sender. `XRF` society codes are `societyWorkId` / `cisacSociety`. `XRF` 2–3 letter codes are `publisherWorkId` / `cwrSubmitter`. A missing org is `{ "type": "proprietary", "value" }` with no `source`.
+- An `XRF` `ISR` that matches a recording ISRC is not copied again. One that matches no recording is kept on `works[].isrc`.
+- Release catalog number stays on `catno` only.
+- Schema accepts dotted `T-NNN.NNN.NNN-C`, compact `TNNNNNNNNNC`, and intermediate `T-NNNNNNNNN-C`. Parser output emits dotted ISO only.
+- Optional `tags` on recordings and releases: `{ "name": "mood", "value": ["happy", "fun"] }`. Not mapped from CWR EDI.
 
 ## 2026-10-14 — Optional `header.conventions`
 
@@ -121,7 +133,7 @@ Integrators (including downstream export pipelines) should treat this page as th
 
 ---
 
-## v1.00 r0 — Initial Release *(current format)*
+## v1.00 r0 — Initial Release
 
 > First public specification draft for CWR-JSON v1.0.
 
