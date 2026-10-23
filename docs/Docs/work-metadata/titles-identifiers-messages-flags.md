@@ -127,6 +127,7 @@ The `messages` object carries registration metadata, status flags, and ACK messa
 | `schema`                   | string | M   | _(injected by schemaV1)_      | Schema label used for this output               |
 | `schemaDescription`        | string | M   | _(injected by schemaV1)_      | Schema description                              |
 | `societySpecific`          | object | O   | _(reserved)_                  | Reserved for society-specific extension data    |
+| `tags`                     | array  | O   | —                             | `{ name, value[] }`. Not mapped from CWR EDI. Set on the JSON file. |
 
 ### `msgs[]` items
 
@@ -138,6 +139,15 @@ The `messages` object carries registration metadata, status flags, and ACK messa
 | `recordType`              | string | `MSG.MessageRecordType`       | Record type that caused the message |
 | `messageLevel`            | string | `MSG.MessageLevel`            | Edit level: `F`/`R`/`T`/`G`/`E` |
 | `validationNumber`        | string | `MSG.ValidationNumber`        | Spec validation number |
+
+`tags[].name` is one label. `tags[].value` is a string array with at least one string. The same object is used on `header.tags`. A work-level example:
+
+```json
+"messages": {
+  "type": "nwr",
+  "tags": [{ "name": "IC", "value": ["Universal Music Publishing"] }]
+}
+```
 
 ## Example (NWR)
 

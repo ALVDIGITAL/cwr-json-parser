@@ -129,6 +129,12 @@ var cwr_json_schema_v1_0_schema_default = {
         },
         conventions: {
           $ref: "#/definitions/Conventions"
+        },
+        tags: {
+          type: "array",
+          items: {
+            $ref: "#/definitions/Tag"
+          }
         }
       },
       type: "object"
@@ -238,6 +244,12 @@ var cwr_json_schema_v1_0_schema_default = {
         },
         type: {
           $ref: "#/definitions/MessageType"
+        },
+        tags: {
+          type: "array",
+          items: {
+            $ref: "#/definitions/Tag"
+          }
         }
       },
       type: "object"

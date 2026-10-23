@@ -113,6 +113,56 @@ describe('schema validation (deep)', () => {
     assert.equal(r.valid, true, r.errors.join('\n'));
   });
 
+  it('accepts header and messages tags', () => {
+    const r = validateCwrJson(
+      {
+        header: {
+          tags: [{ name: 'IC', value: ['Universal Music Publishing'] }],
+        },
+        works: [
+          {
+            ...validWork,
+            messages: {
+              ...validWork.messages,
+              tags: [{ name: 'IC', value: ['Universal Music Publishing'] }],
+            },
+          },
+        ],
+      },
+      'strict',
+      'cwr-json-v1-0',
+      { normalize: false }
+    );
+    assert.equal(r.valid, true, r.errors.join('\n'));
+  });
+
+  it('rejects a tag with an empty value or a missing name', () => {
+    const emptyValue = validateCwrJson(
+      {
+        header: { tags: [{ name: 'IC', value: [] }] },
+        works: [validWork],
+      },
+      'strict',
+      'cwr-json-v1-0',
+      { normalize: false }
+    );
+    assert.equal(emptyValue.valid, false);
+    const missingName = validateCwrJson(
+      {
+        works: [
+          {
+            ...validWork,
+            messages: { ...validWork.messages, tags: [{ value: ['x'] }] },
+          },
+        ],
+      },
+      'strict',
+      'cwr-json-v1-0',
+      { normalize: false }
+    );
+    assert.equal(missingName.valid, false);
+  });
+
   it('accepts minimal valid work', () => {
     const r = validateCwrJson({ works: [validWork] });
     assert.equal(r.valid, true, r.errors.join('\n'));

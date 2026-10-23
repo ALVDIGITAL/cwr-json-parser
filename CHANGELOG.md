@@ -1,5 +1,15 @@
 ## [Unreleased]
 
+## [1.5.3] - 2026-10-23
+
+### Added
+
+- Optional `tags` on `header` and `works[].messages`: `{ name, value: string[] }`. Same shape as recording and release tags. Not mapped from CWR EDI.
+
+### Notes
+
+- **CWR-JSON format 1.0.1.** Schema filename stays `cwr-json-schema-v1.0.schema.json`.
+
 ## [1.5.2] - 2026-10-19
 
 ### Changed

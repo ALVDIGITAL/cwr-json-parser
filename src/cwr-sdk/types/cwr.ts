@@ -169,6 +169,7 @@ export interface Messages {
   societySpecific?: Record<string, unknown>;
   schema?: string;
   schemaDescription?: string;
+  tags?: Tag[];
   /** Preview / society layers may add labels here; parser may add more fields over time */
   [key: string]: unknown;
 }
@@ -213,6 +214,7 @@ export interface HdrRecord {
   softwarePackage?: string;
   softwarePackageVersion?: string;
   conventions?: HeaderConventions;
+  tags?: Tag[];
 }
 
 export interface ParsedCwrFile {

@@ -57,6 +57,7 @@ The `header` object is derived from the CWR `HDR` record. The Playground current
 | `version`          | string | O   | `Version`          | **CWR EDI version** from the source file (e.g. `"2.1"`, `"2.2"`) — not the CWR-JSON format version |
 | `softwarePackage`  | string | O   | `SoftwarePackage`  | Software that generated the source file                                                            |
 | `conventions`      | object | O   | —                  | File-level writer and publisher representation. Not mapped from `HDR`. Set on the JSON file.       |
+| `tags`             | array  | O   | —                  | File-level tags. `{ name, value[] }`. Not mapped from `HDR`. Set on the JSON file.                 |
 
 Additional HDR fields (`transmissionDate`, `characterSet`, `revision`, `softwarePackageVersion`) are defined in the TypeScript model and JSON Schema but are **not yet populated** by the mapper — see [Changelog](./changelog).
 
@@ -75,6 +76,16 @@ Optional. When present, both fields are required. The CWR EDI mapper does not em
     "writerControl": "swrOnly",
     "publisherShare": "perWriterChain"
   }
+}
+```
+
+### `header.tags`
+
+Optional. Not mapped from the CWR `HDR` record. The sender sets them on the JSON file. Each tag is a `name` plus a `value` string array with at least one string. Parties who agree on a name can carry extra fields without a format change. A file-level example:
+
+```json
+"header": {
+  "tags": [{ "name": "IC", "value": ["Universal Music Publishing"] }]
 }
 ```
 

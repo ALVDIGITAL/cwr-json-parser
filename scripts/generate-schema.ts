@@ -245,6 +245,14 @@ recordingProps.tags = {
   type: 'array',
   items: { $ref: '#/definitions/Tag' },
 };
+hdrProps.tags = {
+  type: 'array',
+  items: { $ref: '#/definitions/Tag' },
+};
+messagesProps.tags = {
+  type: 'array',
+  items: { $ref: '#/definitions/Tag' },
+};
 
 const release = schema.definitions.RecordingRelease as JsonSchema;
 const releaseProps = release.properties as Record<string, JsonSchema>;

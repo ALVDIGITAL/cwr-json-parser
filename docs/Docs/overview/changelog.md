@@ -23,6 +23,14 @@ Integrators (including downstream export pipelines) should treat this page as th
 
 ---
 
+## 2026-10-23 — Parser 1.5.3 tags on header and messages
+
+> Format `1.0.1`. Schema filename stays `cwr-json-schema-v1.0.schema.json`. Not mapped from CWR EDI. The sender sets the tags on the JSON file.
+
+- Optional `tags` on `header` (file level) and `works[].messages` (work level).
+- Each tag is `{ "name": "IC", "value": ["Universal Music Publishing"] }`. `name` is required. `value` is a string array with at least one string.
+- Same object already used on recordings and releases.
+
 ## 2026-10-19 — Parser 1.5.2 identifier placement
 
 > Format `1.0.1`. Schema filename stays `cwr-json-schema-v1.0.schema.json`. Supersedes the `works[].iswc` and `works[].isrc` placement in parser `1.5.1`.

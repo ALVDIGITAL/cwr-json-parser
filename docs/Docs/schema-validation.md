@@ -111,7 +111,7 @@ Note: AJV-only validation does not run semantic rules (territory overlap, sub-pu
 - `identifiers[].type` and `identifiers[].source.type` closed enums
 - `identifiers[]` is a namespaced triple or one `{ iswc: string[] }` entry. That array accepts dotted `T-NNN.NNN.NNN-C`, compact `TNNNNNNNNNC`, and intermediate `T-NNNNNNNNN-C`
 - Patterns: dates (`YYYYMMDD`), times (`HHMMSS`), IPI (11 digits), ISRC, EAN
-- Optional `tags` on recordings and releases: `name` plus `value` string array (`minItems` 1)
+- Optional `tags` on `header`, `works[].messages`, recordings, and releases: `name` plus `value` string array (`minItems` 1). Not mapped from CWR EDI.
 - Share percentages `0`–`100`
 - **Conditional:** `own` territories must have empty TIS `include` / `exclude`
 

@@ -125,6 +125,12 @@
         },
         "conventions": {
           "$ref": "#/definitions/Conventions"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Tag"
+          }
         }
       },
       "type": "object"
@@ -234,6 +240,12 @@
         },
         "type": {
           "$ref": "#/definitions/MessageType"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Tag"
+          }
         }
       },
       "type": "object"
