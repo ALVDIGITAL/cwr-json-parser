@@ -145,7 +145,7 @@ The `messages` object carries registration metadata, status flags, and ACK messa
 ```json
 "messages": {
   "type": "nwr",
-  "tags": [{ "name": "IC", "value": ["Universal Music Publishing"] }]
+  "tags": [{ "name": "custom", "value": ["example"] }]
 }
 ```
 

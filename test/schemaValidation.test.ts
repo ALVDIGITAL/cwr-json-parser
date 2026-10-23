@@ -117,14 +117,14 @@ describe('schema validation (deep)', () => {
     const r = validateCwrJson(
       {
         header: {
-          tags: [{ name: 'IC', value: ['Universal Music Publishing'] }],
+          tags: [{ name: 'custom', value: ['example'] }],
         },
         works: [
           {
             ...validWork,
             messages: {
               ...validWork.messages,
-              tags: [{ name: 'IC', value: ['Universal Music Publishing'] }],
+              tags: [{ name: 'custom', value: ['example'] }],
             },
           },
         ],
@@ -139,7 +139,7 @@ describe('schema validation (deep)', () => {
   it('rejects a tag with an empty value or a missing name', () => {
     const emptyValue = validateCwrJson(
       {
-        header: { tags: [{ name: 'IC', value: [] }] },
+        header: { tags: [{ name: 'custom', value: [] }] },
         works: [validWork],
       },
       'strict',

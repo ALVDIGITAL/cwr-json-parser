@@ -85,7 +85,7 @@ Optional. Not mapped from the CWR `HDR` record. The sender sets them on the JSON
 
 ```json
 "header": {
-  "tags": [{ "name": "IC", "value": ["Universal Music Publishing"] }]
+  "tags": [{ "name": "custom", "value": ["example"] }]
 }
 ```
 
