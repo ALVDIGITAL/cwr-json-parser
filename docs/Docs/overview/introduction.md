@@ -76,7 +76,7 @@ schemaV1.convert             SchemaV1Output (Playground / download JSON)
 
 The Playground stores **`ParsedCwrFile`** after upload. The JSON tree and download apply **`schemaV1.convert()`**, which adds `messages.schema` and `messages.schemaDescription` on each work.
 
-Future **format** versions (e.g. v1.1) can add a new serialiser against the same canonical model — CWR line parsing does not need to change. Any format bump will be announced in the [Changelog](./changelog) before publication.
+Future **format** versions (e.g. v1.1) can add a new serialiser against the same canonical model — CWR line parsing does not need to change. Any format bump is a release entry under [Version governance](./changelog#version-governance). The format number is public when that entry is on the changelog.
 
 ---
 
@@ -97,9 +97,11 @@ Future **format** versions (e.g. v1.1) can add a new serialiser against the same
 | Property | Value |
 |---|---|
 | Document ID | `PUBCWRJSON21-0703` |
-| Format Version | `1.00` |
+| Format Version | `1.0.1` |
 | Revision | `0` |
-| Status | DRAFT – For Committee Review |
+| Status | Published |
 | Prepared by | Society Publisher Forum (SPF) |
 | Related document | PUBCWRJSON21-0704 – CWR-JSON User Guide |
 | Reference implementation | CWR-JSON Playground — `src/cwr-sdk` in this repository |
+
+Format `1.0.1` is **Published**. When each version level changes: [Version governance](./changelog#version-governance).

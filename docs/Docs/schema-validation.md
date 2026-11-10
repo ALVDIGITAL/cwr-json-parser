@@ -14,7 +14,7 @@ content:
 
 | Asset | URL |
 |---|---|
-| JSON Schema | [cwr-json-schema-v1.0.schema.json](https://d7ap24707c.execute-api.eu-west-1.amazonaws.com/staging/api/v1/schemas/cwr-json-schema-v1.0.schema.json) — validates the CWR-JSON v1.0 output shape (draft-07) |
+| JSON Schema | [cwr-json-schema-v1.0.schema.json](https://d7ap24707c.execute-api.eu-west-1.amazonaws.com/staging/api/v1/schemas/cwr-json-schema-v1.0.schema.json) — published JSON Schema for format 1.0 |
 | Lookup table | [cwr_lookup_data_types_v1.0.json](https://d7ap24707c.execute-api.eu-west-1.amazonaws.com/staging/api/v1/lookups/cwr_lookup_data_types_v1.0.json) — allowed value sets (role codes, TIS, title types, …) |
 
 The schema embeds lookup enums and field patterns derived from the lookup table. CISAC CWR 2.x lookup tables (`CWR08-3615R2`) are the source for most enum sets; TIS codes come from the CISAC TIS export. Regenerate locally with `npm run schema:generate`.
@@ -142,7 +142,9 @@ Note: AJV-only validation does not run semantic rules (territory overlap, sub-pu
 
 ## Schema versioning
 
-Published schema filenames are expected to encode version and revision:
+Which level changes, and when, is in [Version governance](./overview/changelog#version-governance). Those rules apply to every release after format `1.0.1`.
+
+Published schema filenames encode the format major and minor:
 
 ```
 cwr-json-schema-v{MAJOR}.{MINOR}.schema.json

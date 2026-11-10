@@ -21,6 +21,24 @@ content:
 
 Integrators (including downstream export pipelines) should treat this page as the source of truth for format and validation changes. Contact the SPF committee for advance notice of any planned format revision.
 
+### Version governance
+
+Societies implement the **format version** `MAJOR.MINOR.PATCH`. Current value: **1.0.1**, status **Published**. A changelog release entry on this page assigns the format number and the status **Published**.
+
+These rules apply to every release after format `1.0.1`. Format `1.0.1` stays as published.
+
+- **MAJOR** (`2.0.0`): a previous reader cannot accept the new file, or a new reader cannot accept the previous file, without a migration. Field removed or renamed, type changed, new required field, meaning change. New schema file `cwr-json-schema-v{MAJOR}.0.schema.json`. The previous major stays available. At most two format versions stay in active circulation; the oldest is retired when a third would ship.
+- **MINOR** (`1.1.0`): additive and optional only. New optional field or optional enum value. Files from the previous minor still validate. Schema filename bumps to `cwr-json-schema-v{MAJOR}.{MINOR}.schema.json`.
+- **PATCH** (`1.0.2`): same JSON shape. Errata, examples, wording, parser bugfix with the same output. Schema filename stays `v{MAJOR}.{MINOR}`.
+
+Record the following on their own lines. They leave the format version unchanged:
+
+- **Parser package** (npm `1.x.y`): code release. May ship on the current format version.
+- **Validation** (`1.x.y`): stricter schema, lookup checks, or semantic rules on the same shapes. Hand-edited JSON may start failing. Lookup file revision suffix `_rN` bumps only when lookup content changes (`cwr_lookup_data_types_v{MAJOR}.{MINOR}_r{N}.json`).
+- **Document revision** in the [Introduction](./introduction) identity table tracks spec-text revision of the current format. Wording-only edits bump that revision. Format MAJOR, MINOR, and PATCH stay put.
+
+The format number is public when the changelog entry for that number is the release entry.
+
 ---
 
 ## 2026-10-23 — Parser 1.5.3 tags on header and messages
@@ -172,7 +190,7 @@ Integrators (including downstream export pipelines) should treat this page as th
 
 ## v1.00 r0 — Initial Release
 
-> First public specification draft for CWR-JSON v1.0.
+> First public specification release for CWR-JSON v1.0.
 
 **Architecture**
 - Two-phase mapper: `buildWorkModel` → `projectCanonicalFromModel`
@@ -181,7 +199,7 @@ Integrators (including downstream export pipelines) should treat this page as th
 
 **Format**
 - JSON encoding of **CWR 2.x** work-registration records (primary target: **CWR 2.2 Revision 3** EDI)
-- JSON Schema: [cwr-json-schema-v1.0.schema.json](https://d7ap24707c.execute-api.eu-west-1.amazonaws.com/staging/api/v1/schemas/cwr-json-schema-v1.0.schema.json) (draft-07)
+- JSON Schema: [cwr-json-schema-v1.0.schema.json](https://d7ap24707c.execute-api.eu-west-1.amazonaws.com/staging/api/v1/schemas/cwr-json-schema-v1.0.schema.json) — published JSON Schema for format 1.0
 - Lookup table: [cwr_lookup_data_types_v1.0_r0.json](https://d7ap24707c.execute-api.eu-west-1.amazonaws.com/staging/api/v1/lookups/cwr_lookup_data_types_v1.0_r0.json)
 - Optional root `$schema` for interchange (not emitted by Playground today)
 
