@@ -1,21 +1,27 @@
 ---
-title: Introduction
-slug: introduction
-metadata:
-  robots: index
+appearance:
+  table_of_contents: default
+category:
+  uri: Docs
+parent:
+  uri: overview
+position: 0
 privacy:
   view: public
-content:
-  excerpt: 'What CWR-JSON is, why it exists, and how it relates to CWR EDI.'
+slug: introduction
+title: Introduction
 ---
-
 # CWR-JSON
 
-**CWR-JSON** is a JSON encoding of the [Common Works Registration (CWR)](https://www.cisac.org/formats) format — the global standard for registering musical works between publishers and collecting societies (PROs / MROs).
+**CWR-JSON** is a JSON encoding of the <Anchor target="_blank" href="https://www.alv-software.com/cwr/">Common Works Registration (CWR)</Anchor> format — the global standard for registering musical works between publishers and collecting societies (PROs / MROs).
 
 It preserves the full semantics of CWR EDI while replacing fixed-width ASCII records with a structured, human-readable JSON document. The result is a format that can be validated with JSON Schema, consumed directly by REST APIs, and read without a CWR parser.
 
 ---
+
+<Callout icon="🔗" theme="info">
+  ### <Anchor target="_blank" href="https://www.alv-software.com/cwr/">CWR for Music Publishers</Anchor>
+</Callout>
 
 ## Why CWR-JSON?
 

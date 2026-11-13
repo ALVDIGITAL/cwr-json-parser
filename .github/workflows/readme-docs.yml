@@ -1,0 +1,32 @@
+name: Upload docs to ReadMe
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'docs/Docs/**'
+      - '.github/workflows/readme-docs.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: readme-docs
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Upload guides
+        env:
+          README_API_KEY: ${{ secrets.README_API_KEY }}
+          README_BRANCH: ${{ vars.README_BRANCH || 'v1.0' }}
+        run: npx --yes rdme@10 docs upload docs/Docs --key "$README_API_KEY" --branch "$README_BRANCH"

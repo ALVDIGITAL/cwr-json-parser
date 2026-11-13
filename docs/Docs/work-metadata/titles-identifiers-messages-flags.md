@@ -1,9 +1,15 @@
 ---
-title: 'Titles, Identifiers, Messages, Flags'
-metadata:
-  robots: index
+appearance:
+  table_of_contents: default
+category:
+  uri: Docs
+parent:
+  uri: work-metadata
+position: 0
 privacy:
   view: public
+slug: titles-identifiers-messages-flags
+title: Titles, Identifiers, Messages, Flags
 ---
 # Titles
 
@@ -14,7 +20,7 @@ The `titles` array contains all title entries for the work. Each element comes f
 | Field      | Type   | Req | Description                                                                          |
 | ---------- | ------ | --- | ------------------------------------------------------------------------------------ |
 | `value`    | string | M   | The title text                                                                       |
-| `type`     | string | O   | CWR title type code — see [Title Types](/docs/role-codes-rights-types-title-types#title-types) |
+| `type`     | string | O   | CWR title type code — see [Title Types](/docs/role-codes-rights-title-types#title-types) |
 | `language` | string | O   | ISO language code (e.g., `"JA"`, `"ZH"`, `"KO"`). Present on `NAT` titles only.      |
 
 ## Sources
@@ -215,5 +221,3 @@ The `flags` object holds boolean and indicator fields extracted from the `NWR` /
   "aiUsage": "M"
 }
 ```
-
-<br />

@@ -1,15 +1,18 @@
 ---
-title: Schema Validation
-slug: schema-validation
-metadata:
-  robots: index
+appearance:
+  table_of_contents: default
+category:
+  uri: Docs
+content:
+  excerpt: >-
+    How to validate CWR-JSON files using the published JSON Schema and lookup
+    tables.
+position: 2
 privacy:
   view: public
-content:
-  excerpt: How to validate CWR-JSON files using the published JSON Schema and lookup tables.
+slug: schema-validation
+title: Schema Validation
 ---
-
-
 ## Published assets (format 1.0.1)
 
 | Asset | File | Notes |

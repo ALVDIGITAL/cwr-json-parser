@@ -1,9 +1,15 @@
 ---
-title: Territories & Shares
-metadata:
-  robots: index
+appearance:
+  table_of_contents: default
+category:
+  uri: Docs
+parent:
+  uri: interested-parties
+position: 0
 privacy:
   view: public
+slug: territories-shares
+title: Territories & Shares
 ---
 Territory entries appear in `parties[].territories[]` (v1.0). **Collection** shares are tied to TIS codes; **ownership** shares are not.
 

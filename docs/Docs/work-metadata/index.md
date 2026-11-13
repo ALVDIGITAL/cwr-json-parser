@@ -1,13 +1,17 @@
 ---
-title: Work Metadata
-metadata:
-  robots: index
+appearance:
+  table_of_contents: default
+category:
+  uri: Docs
 content:
   excerpt: >-
-    Each entry in the `works` array corresponds to one `NWR`, `REV` or `ACK`
+    Each entry in the `works` array corresponds to one `NWR` or `REV`
     transaction in the source CWR file.
+position: 3
 privacy:
   view: public
+slug: work-metadata
+title: Work Metadata
 ---
 ## Fields
 
@@ -62,4 +66,4 @@ See [Interested Parties](/docs/interested-parties) and [Territories & Shares](/d
 
 ## Complete work object
 
-See [Examples](/docs/example-simple-nwr) for complete parser-generated documents with parties, territories, recordings and an ACK.
+See [Examples](/docs/examples) for complete parser-generated documents with parties, territories, recordings and an ACK.

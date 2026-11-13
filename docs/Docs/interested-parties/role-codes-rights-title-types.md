@@ -1,16 +1,16 @@
 ---
-title: 'Role Codes, Rights & Title types'
-slug: role-codes-rights-types-title-types
-metadata:
-  robots: index
+appearance:
+  table_of_contents: default
+category:
+  uri: Docs
+parent:
+  uri: interested-parties
+position: 1
 privacy:
   view: public
-content:
-  excerpt: >-
-    Lookup tables for role codes, rights types, title types, identifier types,
-    and share types.
+slug: role-codes-rights-title-types
+title: Role Codes, Rights & Title types
 ---
-
 # Role Codes
 
 Used in `parties[].role`.

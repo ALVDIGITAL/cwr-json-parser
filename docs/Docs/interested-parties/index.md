@@ -1,9 +1,13 @@
 ---
-title: Interested Parties
-metadata:
-  robots: index
+appearance:
+  table_of_contents: default
+category:
+  uri: Docs
+position: 4
 privacy:
   view: public
+slug: interested-parties
+title: Interested Parties
 ---
 The `parties` array is the **ownership and collection view** of a work. It lists interested parties — writers at the top level, with original publishers and sub-publishers nested via `representedBy`. **Ownership** (`own`) and **collection** (`coll`) shares both use `territories[]`, but only **collection** is tied to TIS codes; see [Territories & Shares](/docs/territories-shares#ownership-vs-collection-important).
 
@@ -37,7 +41,7 @@ Used throughout `parties[]` and inside `representedBy[]`.
 
 | Field             | Type   | Req | Description                                                                                        |
 | ----------------- | ------ | --- | -------------------------------------------------------------------------------------------------- |
-| `role`            | string | M   | Role code — see [Role Codes](/docs/role-codes-rights-types-title-types#role-codes)                           |
+| `role`            | string | M   | Role code — see [Role Codes](/docs/role-codes-rights-title-types#role-codes)                           |
 | `roleName`        | string | O   | Human-readable role name                                                                           |
 | `name`            | string | O   | Legal name of the party (writers: `WriterLastName` + space + `WriterFirstName`)                    |
 | `ipi`             | string | O   | IPI Name Number or IPI Base Number (11-digit string)                                               |

@@ -1,14 +1,20 @@
 ---
-title: TIS Territory Codes
-slug: tis-territory-codes
-metadata:
-  robots: index
+appearance:
+  table_of_contents: default
+category:
+  uri: Docs
+content:
+  excerpt: >-
+    CISAC TIS numeric codes used in territory include/exclude and the bundled
+    lookup table.
+parent:
+  uri: interested-parties
+position: 2
 privacy:
   view: public
-content:
-  excerpt: CISAC TIS numeric codes used in territory include/exclude and the published lookup table.
+slug: tis-territory-codes
+title: TIS Territory Codes
 ---
-
 Territory codes follow the **CISAC Territory Information System (TIS)**. They appear in:
 
 - `parties[].territories[].territory.include[]` / `exclude[]` (collection scope)

@@ -1,13 +1,25 @@
 ---
-title: Getting Started
-metadata:
-  robots: index
+appearance:
+  table_of_contents: default
+category:
+  uri: Docs
 content:
   excerpt: >-
     This guide takes you from a raw CWR EDI file to a CWR-JSON document in three
     steps using the **CWR-JSON Playground** reference implementation.
+  next:
+    pages:
+      - slug: schema-validation
+        title: Schema Validation
+        type: basic
+      - slug: work-metadata
+        title: Work Metadata
+        type: basic
+position: 1
 privacy:
   view: public
+slug: getting-started
+title: Getting Started
 ---
 ## Step 1. Upload your CWR file
 
@@ -95,7 +107,7 @@ Parser output (passes the published JSON Schema and the semantic rules in strict
 - `NWR.SubmitterWorkNumber` becomes `type: "submitterWorkId"`. `source.value` and `source.name` come from the `HDR` sender identifier and sender name.
 - `messages.schema` and `messages.schemaDescription` are required on every work.
 
-More complete outputs (parties, territories, recordings, ACK) are on the [Examples](/docs/example-simple-nwr) page.
+More complete outputs (parties, territories, recordings, ACK) are on the [Examples](/docs/examples) page.
 
 > Do not add a root `$schema` property. The format `1.0.1` schema does not allow extra root properties, so a file with `$schema` fails validation (`EXTRA_PROPERTY`). This is an open item for the CWR-JSON subgroup; see [Schema Validation](/docs/schema-validation#declaring-the-schema-version).
 

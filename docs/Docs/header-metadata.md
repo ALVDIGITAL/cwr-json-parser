@@ -1,14 +1,18 @@
 ---
-title: Header Metadata
-metadata:
-  robots: index
+appearance:
+  table_of_contents: default
+category:
+  uri: Docs
 content:
   excerpt: >-
     This section defines the top-level CWR-JSON document structure and the
     metadata used to identify the sender, creation/transmission timestamps, and
     originating software.
+position: 6
 privacy:
   view: public
+slug: header-metadata
+title: Header Metadata
 ---
 ## Top-level object
 
@@ -102,7 +106,7 @@ Optional. Not mapped from the CWR `HDR` record. The sender sets them on the JSON
 
 ### Example
 
-Parser output for the CWR 2.2 `HDR` of `BC-key008.V22` (see [Examples](/docs/example-simple-nwr)):
+Parser output for the CWR 2.2 `HDR` of `BC-key008.V22` (see [Examples](/docs/examples)):
 
 ```json
 "header": {
@@ -133,7 +137,7 @@ All field values follow these type rules:
 | D    | string    | Date format `YYYYMMDD`. Use `"00000000"` when no date is available.                                                |
 | N    | number    | Decimal percentage, e.g., `50.00`. Omit if null and optional.                                                      |
 | T    | string    | Time/duration format `HHMMSS` (24-hour). Omit if null and optional.                                                |
-| L    | string    | Lookup value. Valid values from a code table — see [Role Codes & related tables](/docs/role-codes-rights-types-title-types). |
+| L    | string    | Lookup value. Valid values from a code table — see [Role Codes & related tables](/docs/role-codes-rights-title-types). |
 
 ### Optional fields
 

@@ -1,13 +1,17 @@
 ---
-title: Sound Recordings
-metadata:
-  robots: index
+appearance:
+  table_of_contents: default
+category:
+  uri: Docs
 content:
   excerpt: >-
     The `recordings` array contains commercial recordings of the work. Each
     entry is derived from one or more `REC` records in the source CWR file.
+position: 5
 privacy:
   view: public
+slug: sound-recordings
+title: Sound Recordings
 ---
 ## Deduplication by ISRC
 
