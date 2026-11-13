@@ -1,15 +1,18 @@
 ---
-title: Changelog
-slug: changelog
-metadata:
-  robots: index
-privacy:
-  view: public
+appearance:
+  table_of_contents: default
+category:
+  uri: Docs
 content:
   excerpt: Version history for CWR-JSON.
+parent:
+  uri: overview
+position: 2
+privacy:
+  view: public
+slug: changelog
+title: Changelog
 ---
-
-## Schema stability (read first)
 
 **CWR-JSON format version `1.0.1` is the current interchange schema.** The schema file stays [`cwr-json-schema-v1.0.schema.json`](https://d7ap24707c.execute-api.eu-west-1.amazonaws.com/staging/api/v1/schemas/cwr-json-schema-v1.0.schema.json). Further field-shape changes are frozen unless this changelog records an explicit **format** bump.
 
@@ -86,7 +89,9 @@ The format number is public when the changelog entry for that number is the rele
 
 > **Additive only.** Existing `nwr`/`rev` shapes unchanged. `MessageType` gains `"ack"`; optional ACK fields and richer `msgs[]` properties documented.
 
+
 **Parser 1.5.0**
+
 - `ACK` / `MSG` fixed-width layouts in `recordDefinitions` (field-level EDI preview).
 - GRH `TransactionType=ACK` → work blocks start on each `ACK` row (nested `NWR`/`REV` stay in the same block).
 - Flat ACK fields on `works[].messages` (`type: "ack"`, `transactionStatus`, dates, creation numbers, …).
@@ -95,82 +100,91 @@ The format number is public when the changelog entry for that number is the rele
 - Sample: `test/files/151708_CW260050035_MDW.V22`.
 
 **Validation**
+
 - `MessageType` enum includes `"ack"`.
 - `msgs[]` allows the extra MSG columns listed above.
 
----
+***
 
 ## 2026-06-30 — Parser 1.4.3 (no format bump)
 
 > **No change to CWR-JSON v1.00 r0 object shapes.** `works[].identifiers[]` gains rows from `XRF` records; JSON Schema `identifierSources` enum widened.
 
 **Parser 1.4.3**
-- **`XRF` (Work ID Cross Reference)** → `works[].identifiers[]`: `OrganisationCode` becomes `source`, `Identifier` becomes `value`.
+
+- `XRF`**&#x20;(Work ID Cross Reference)** → `works[].identifiers[]`: `OrganisationCode` becomes `source`, `Identifier` becomes `value`.
 - Special org codes: `ISW` → `source: "iswc"`; `ISR` → `source: "isrc"`.
 - Society codes (e.g. `035`) and CWR submitter IDs (e.g. `EMI`) are valid `source` values; org `000` / `099` rows are skipped.
 - Duplicate `{source, value}` pairs are deduplicated (including overlap with `NWR` ISWC).
 - Sample file: `test/files/XRF-identifiers-sample.V22`.
 
 **Validation**
+
 - `identifierSources` lookup set merges canonical sources with CISAC society codes and `isrc`.
 - `identifiers[].source` accepts the enum **or** `^[A-Z]{2,3}$` for publisher submitter codes.
 - ISRC format enforced on `identifiers[]` when `source` is `isrc`.
 
----
+***
 
 ## 2026-06-22 — Parser 1.4.2 (no format bump)
 
 > **No change to CWR-JSON v1.00 r0 field shapes.** Collection territory mapping and sub-publisher chain deduplication fixes.
 
 **Parser 1.4.2**
+
 - Zero-share `SPT`/`SWT` records merge TIS `include`/`exclude` into the active `coll` territory instead of spawning a separate territory with zero-value shares.
 - Share arrays omit `value: 0` entries (aligned with [Territories & Shares](../interested-parties/territories-shares)).
 - Duplicate `SPU` for the same sub-publisher under one `E` chain is deduplicated; same `partyId` under different `E` parents remains separate (KEY008, KEY044).
+
 ## 2026-06-17 — Society code normalization (no format bump)
 
 > **No change to CWR-JSON v1.00 r0 field shapes.**
 
 **Validation 1.1.2 (patch)**
+
 - Optional normalization strips empty and `000` society codes on shares before validation.
 - Parser output omits blank/`000` society fields (matches CWR EDI semantics).
 
----
+***
 
 ## 2026-06-15 — Validation 1.1.2 (no format bump)
 
 > **No change to CWR-JSON v1.00 r0 field shapes.**
 
 **Validation 1.1.2**
+
 - Lookup revision **r1**: CISAC society, character set, language, revocation, and anomalous-work enums in published lookup + JSON Schema.
 - JSON Schema validates `shares[].society`, `header.characterSet`, `revocation.reason`, `flags.anomalousReason`.
 - **EDI validators** on npm package (`validateCwrEdi`, etc.) for raw CWR text before parse — see package [README](https://github.com/ALVDIGITAL/cwr-json-parser#typical-pipeline).
 
----
+***
 
 ## 2026-06-03 — Validation UX & normalization (no format bump)
 
 > **No change to CWR-JSON v1.00 r0 field shapes.** Validation ergonomics and optional pre-validation cleanup.
 
 **Validation 1.1.1**
+
 - Optional **normalization** before validation: compact ISWC → `T-NNNNNNNNN-C`, split combined `own`/`coll` territory rows, strip invalid `own` on sub-publishers.
 - Validation results may include **warnings** for auto-fixed items; strict checks on raw exports can skip normalization.
 - Clearer error output: rule codes and deduplicated messages instead of repeated `[if]` / `[maxItems]` noise.
-- TIS lookup sourced from **CISAC TIS** export (see [TIS Territory Codes](../tis-territory-codes) and the [published lookup table](https://d7ap24707c.execute-api.eu-west-1.amazonaws.com/staging/api/v1/lookups/cwr_lookup_data_types_v1.0_r0.json)).
+- TIS lookup sourced from **CISAC TIS** export (see [TIS Territory Codes](./tis-territory-codes) and the [published lookup table](https://d7ap24707c.execute-api.eu-west-1.amazonaws.com/staging/api/v1/lookups/cwr_lookup_data_types_v1.0_r0.json)).
 
----
+***
 
 ## 2026-06-03 — Validation 1.1.0 (no format bump)
 
 > **No change to CWR-JSON v1.00 r0 field shapes.** Stricter JSON Schema and semantic validation only.
 
 **Validation 1.1.0**
+
 - Published [lookup table](https://d7ap24707c.execute-api.eu-west-1.amazonaws.com/staging/api/v1/lookups/cwr_lookup_data_types_v1.0_r0.json) (`cwr_lookup_data_types_v1.0_r0.json`): role codes, title types, identifier sources, full TIS table (CISAC groups + ISO 3166-1 numeric).
 - [JSON Schema](https://d7ap24707c.execute-api.eu-west-1.amazonaws.com/staging/api/v1/schemas/cwr-json-schema-v1.0.schema.json) (`cwr-json-schema-v1.0.schema.json`) injects lookup enums and field patterns.
 - Semantic rules in strict mode: TIS include/exclude overlap, sub-publisher no `own`, publisher `own` only for `E`, unique `submitterWorkNumber` per file.
 - **Advisory** validation mode unchanged (warnings without failing).
-- See [Schema Validation](../schema-validation) and [TIS Territory Codes](../tis-territory-codes).
+- See [Schema Validation](./schema-validation) and [TIS Territory Codes](./tis-territory-codes).
 
----
+***
 
 ## 2026-06-03 — Documentation errata (no format bump)
 
@@ -178,28 +192,31 @@ The format number is public when the changelog entry for that number is the rele
 
 - Removed incorrect **“CWR 3.x”** wording throughout the spec. There is no separate CWR 3.x EDI format; features such as publisher **relinquishment** come from **CWR 2.2 Revision 3** (`PWR` records).
 - Pipeline description aligned with the reference implementation: `buildWorkModel` → `projectCanonicalFromModel` → `schemaV1.convert()` (see [Introduction](./introduction#the-pipeline)).
-- [Schema Validation](../schema-validation) updated: published schema and lookup URLs, structural vs semantic validation rules.
+- [Schema Validation](./schema-validation) updated: published schema and lookup URLs, structural vs semantic validation rules.
 
-**Ownership vs collection territory placement** (see [Territories & Shares](../interested-parties/territories-shares))
-- **`shareTypes[].type: "own"`** (from `SWR` / `OWR` / `SPU` / `OPU`) is **not** scoped to TIS codes. It is stored in a `territories[]` entry with `territory.include: []` and `territory.exclude: []`.
-- **`shareTypes[].type: "coll"`** (from `SWT` / `OWT` / `SPT` / `OPT`) **is** scoped to TIS include/exclude on the same or separate `territories[]` entries.
+**Ownership vs collection territory placement** (see [Territories & Shares](./territories-shares))
+
+- `shareTypes[].type: "own"` (from `SWR` / `OWR` / `SPU` / `OPU`) is **not** scoped to TIS codes. It is stored in a `territories[]` entry with `territory.include: []` and `territory.exclude: []`.
+- `shareTypes[].type: "coll"` (from `SWT` / `OWT` / `SPT` / `OPT`) **is** scoped to TIS include/exclude on the same or separate `territories[]` entries.
 - **Sub-publishers** (`SE`, `AM`, `PA`) do **not** receive ownership shares in JSON — only **original publishers** (`E`) emit `own`. Sub-publishers may have `coll` territories only.
 - Integrators must not assume `own` and `coll` share the same `territory.include` array, or that sub-publishers mirror `SPU` ownership percentages.
 
----
+***
 
-## v1.00 r0 — Initial Release
+## v1.00 r0 — Initial Release _(current format)_
 
 > First public specification release for CWR-JSON v1.0.
 
 **Architecture**
+
 - Two-phase mapper: `buildWorkModel` → `projectCanonicalFromModel`
 - `PublisherRegistry` for publisher chain and PWR resolution
 - Territory helpers: `upsertOwnTerritory`, `upsertCollectionTerritory`
 
 **Format**
+
 - JSON encoding of **CWR 2.x** work-registration records (primary target: **CWR 2.2 Revision 3** EDI)
-- JSON Schema: [cwr-json-schema-v1.0.schema.json](https://d7ap24707c.execute-api.eu-west-1.amazonaws.com/staging/api/v1/schemas/cwr-json-schema-v1.0.schema.json) — published JSON Schema for format 1.0
+- JSON Schema: [cwr-json-schema-v1.0.schema.json](https://d7ap24707c.execute-api.eu-west-1.amazonaws.com/staging/api/v1/schemas/cwr-json-schema-v1.0.schema.json) - published JSON Schema for format 1.0
 - Lookup table: [cwr_lookup_data_types_v1.0_r0.json](https://d7ap24707c.execute-api.eu-west-1.amazonaws.com/staging/api/v1/lookups/cwr_lookup_data_types_v1.0_r0.json)
 - Optional root `$schema` for interchange (not emitted by Playground today)
 
@@ -207,10 +224,11 @@ The format number is public when the changelog entry for that number is the rele
 `HDR` `NWR` `REV` `ACK` `ALT` `NAT` `NWN` `NOW` `NPN` `SPU` `OPU` `SWR` `OWR` `PWR` `SWT` `OWT` `SPT` `OPT` `REC` `ARI` `XRF` `MSG`
 
 **Data model**
+
 - `parties`: writers at top level; publishers in `representedBy[]`; unlinked `E` publishers may appear at top level
 - `parties[].territories[]`: `shareTypes` `own` / `coll`
 - `recordings[]` with ISRC dedupe and `releases[].identifiers` (`ean`, `catalogNumber`)
-- `identifiers[]` from `NWR`/`REV` and **`XRF`** (society, submitter, ISWC, ISRC cross-refs)
+- `identifiers[]` from `NWR`/`REV` and `XRF` (society, submitter, ISWC, ISRC cross-refs)
 - GEMA `ARI` (035/GW) → `roleSplitM` / `roleSplitT` on `CA` writers
 - `NWN` / `NOW` / `NPN` → `nameDomestic` / `nameScript`
 - **CWR 2.2 Rev3** `PWR` relinquishment on publisher participants

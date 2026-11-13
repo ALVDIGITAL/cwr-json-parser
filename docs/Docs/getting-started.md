@@ -1,13 +1,25 @@
 ---
-title: Getting Started
-metadata:
-  robots: index
+appearance:
+  table_of_contents: default
+category:
+  uri: Docs
 content:
   excerpt: >-
     This guide takes you from a raw CWR EDI file to a CWR-JSON document in three
     steps using the **CWR-JSON Playground** reference implementation.
+  next:
+    pages:
+      - slug: schema-validation
+        title: Schema Validation
+        type: basic
+      - slug: work-metadata
+        title: Work Metadata
+        type: basic
+position: 1
 privacy:
   view: public
+slug: getting-started
+title: Getting Started
 ---
 ## Step 1. Upload your CWR file
 

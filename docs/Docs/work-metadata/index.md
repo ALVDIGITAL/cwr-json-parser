@@ -1,13 +1,17 @@
 ---
-title: Work Metadata
-metadata:
-  robots: index
+appearance:
+  table_of_contents: default
+category:
+  uri: Docs
 content:
   excerpt: >-
     Each entry in the `works` array corresponds to one `NWR` or `REV`
     transaction in the source CWR file.
+position: 3
 privacy:
   view: public
+slug: work-metadata
+title: Work Metadata
 ---
 ## Fields
 

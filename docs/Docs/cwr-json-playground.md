@@ -1,7 +1,8 @@
 ---
-title: CWR-JSON Playground
-metadata:
-  robots: index
+appearance:
+  table_of_contents: default
+category:
+  uri: Docs
 content:
   excerpt: >-
     Welcome to the **CWR-JSON Playground**, an interactive online developer
@@ -9,8 +10,11 @@ content:
     modern web technologies. This document serves as a comprehensive
     introduction and guide to the features, workflows, and core principles found
     within the Playground environment.
+position: 8
 privacy:
   view: public
+slug: cwr-json-playground
+title: CWR-JSON Playground
 ---
 ## 1. Introduction
 

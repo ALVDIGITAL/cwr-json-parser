@@ -1,4 +1,15 @@
 ---
+appearance:
+  table_of_contents: default
+category:
+  uri: Docs
+position: 4
+privacy:
+  view: public
+slug: interested-parties
+title: Interested Parties
+---
+---
 title: Interested Parties
 metadata:
   robots: index

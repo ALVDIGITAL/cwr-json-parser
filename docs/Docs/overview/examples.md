@@ -1,19 +1,21 @@
 ---
-title: Examples
-slug: example-simple-nwr
-metadata:
-  robots: index
+appearance:
+  table_of_contents: default
+category:
+  uri: Docs
+parent:
+  uri: overview
+position: 1
 privacy:
   view: public
-content:
-  excerpt: 'A minimal single-writer, single-publisher work registration.'
+slug: examples
+title: Examples
 ---
-
 # Example: Simple NWR
 
 A minimal work registration: one controlled writer (composer), one original publisher, world territory, performing and mechanical rights.
 
----
+***
 
 ## Source CWR (abbreviated)
 
@@ -28,7 +30,7 @@ SWT  00000000250  I  2136  005000  005000  000000
 REC  GB-EMI-75-00001  BOHEMIAN RHAPSODY    A NIGHT AT THE OPERA  EMI RECORDS  19751031
 ```
 
----
+***
 
 ## CWR-JSON output
 
@@ -51,12 +53,8 @@ REC  GB-EMI-75-00001  BOHEMIAN RHAPSODY    A NIGHT AT THE OPERA  EMI RECORDS  19
         { "value": "BOHEMIAN RHAPSODY", "type": "TT" }
       ],
       "identifiers": [
-        { "iswc": ["T-000.000.001-0"] },
-        {
-          "type": "submitterWorkId",
-          "value": "EMI-00042",
-          "source": { "type": "cwrSubmitter", "value": "00000000001", "name": "EMI" }
-        }
+        { "source": "iswc",                "value": "T-000.000.001-0" },
+        { "source": "submitterWorkNumber", "value": "EMI-00042" }
       ],
       "parties": [
         {
@@ -130,7 +128,7 @@ REC  GB-EMI-75-00001  BOHEMIAN RHAPSODY    A NIGHT AT THE OPERA  EMI RECORDS  19
       "recordings": [
         {
           "title": "BOHEMIAN RHAPSODY",
-          "isrc": ["GBEMI7500001"],
+          "isrc": "GB-EMI-75-00001",
           "releases": [
             {
               "title": "A NIGHT AT THE OPERA",

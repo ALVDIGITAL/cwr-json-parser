@@ -1,4 +1,21 @@
 ---
+appearance:
+  table_of_contents: default
+category:
+  uri: Docs
+content:
+  excerpt: >-
+    CISAC TIS numeric codes used in territory include/exclude and the bundled
+    lookup table.
+parent:
+  uri: interested-parties
+position: 2
+privacy:
+  view: public
+slug: tis-territory-codes
+title: TIS Territory Codes
+---
+---
 title: TIS Territory Codes
 slug: tis-territory-codes
 metadata:
@@ -14,7 +31,7 @@ Territory codes follow the **CISAC Territory Information System (TIS)**. They ap
 - `parties[].territories[].territory.include[]` / `exclude[]` (collection scope)
 - `parties[].relinquishment.scope.territories` (PWR relinquishment)
 
-**Ownership (`shareTypes[].type: "own"`)** must use empty `include` and `exclude` arrays — not TIS-scoped. See [Territories & Shares](./interested-parties/territories-shares).
+**Ownership (`shareTypes[].type: "own"`)** must use empty `include` and `exclude` arrays — not TIS-scoped. See [Territories & Shares](./territories-shares).
 
 ---
 

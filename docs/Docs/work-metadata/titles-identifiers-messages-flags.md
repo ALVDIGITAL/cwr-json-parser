@@ -1,9 +1,15 @@
 ---
-title: 'Titles, Identifiers, Messages, Flags'
-metadata:
-  robots: index
+appearance:
+  table_of_contents: default
+category:
+  uri: Docs
+parent:
+  uri: work-metadata
+position: 0
 privacy:
   view: public
+slug: titles-identifiers-messages-flags
+title: Titles, Identifiers, Messages, Flags
 ---
 # Titles
 
@@ -213,5 +219,3 @@ The `flags` object holds boolean and indicator fields extracted from the `NWR` /
   "aiUsage": "M"
 }
 ```
-
-<br />

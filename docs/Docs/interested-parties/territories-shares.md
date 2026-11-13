@@ -1,4 +1,17 @@
 ---
+appearance:
+  table_of_contents: default
+category:
+  uri: Docs
+parent:
+  uri: interested-parties
+position: 0
+privacy:
+  view: public
+slug: territories-shares
+title: Territories & Shares
+---
+---
 title: Territories & Shares
 metadata:
   robots: index
