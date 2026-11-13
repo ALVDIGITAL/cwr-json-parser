@@ -5,7 +5,7 @@ metadata:
 privacy:
   view: public
 ---
-The `parties` array is the **ownership and collection view** of a work. It lists interested parties — writers at the top level, with original publishers and sub-publishers nested via `representedBy`. **Ownership** (`own`) and **collection** (`coll`) shares both use `territories[]`, but only **collection** is tied to TIS codes; see [Territories & Shares](./territories-shares#ownership-vs-collection-important).
+The `parties` array is the **ownership and collection view** of a work. It lists interested parties — writers at the top level, with original publishers and sub-publishers nested via `representedBy`. **Ownership** (`own`) and **collection** (`coll`) shares both use `territories[]`, but only **collection** is tied to TIS codes; see [Territories & Shares](/docs/territories-shares#ownership-vs-collection-important).
 
 ***
 
@@ -37,7 +37,7 @@ Used throughout `parties[]` and inside `representedBy[]`.
 
 | Field             | Type   | Req | Description                                                                                        |
 | ----------------- | ------ | --- | -------------------------------------------------------------------------------------------------- |
-| `role`            | string | M   | Role code — see [Role Codes](./role-codes-rights-title-types#role-codes)                           |
+| `role`            | string | M   | Role code — see [Role Codes](/docs/role-codes-rights-types-title-types#role-codes)                           |
 | `roleName`        | string | O   | Human-readable role name                                                                           |
 | `name`            | string | O   | Legal name of the party (writers: `WriterLastName` + space + `WriterFirstName`)                    |
 | `ipi`             | string | O   | IPI Name Number or IPI Base Number (11-digit string)                                               |
@@ -45,11 +45,11 @@ Used throughout `parties[]` and inside `representedBy[]`.
 | `controlled`      | string | O   | `"yes"` if submitter-controlled (SPU/SWR/SPT/SWT); `"no"` otherwise                                |
 | `nameDomestic`    | string | O   | Non-Roman alphabet name from `NWN` / `NOW` / `NPN` records                                         |
 | `nameScript`      | string | O   | Language/script code for `nameDomestic` (e.g., `"JA"`, `"ZH"`, `"KO"`)                             |
-| `territories`     | array  | O   | Share breakdown — `own` without TIS scope; `coll` per TIS — [Territories & Shares](./territories-shares) |
+| `territories`     | array  | O   | Share breakdown — `own` without TIS scope; `coll` per TIS — [Territories & Shares](/docs/territories-shares) |
 | `representedBy`   | array  | O   | Publishers/sub-publishers in the ownership chain — same Participant structure                      |
 | `roleSplitM`      | number | O   | GEMA GW: composer percentage (0–100). Only on `CA` writers.                                        |
 | `roleSplitT`      | number | O   | GEMA GW: lyricist/author percentage (0–100). Only on `CA` writers.                                 |
-| `relinquishment`  | object | O   | CWR 2.2 Rev3 relinquishment from `PWR` — see [Sound Recordings](./sound-recordings#relinquishment) |
+| `relinquishment`  | object | O   | CWR 2.2 Rev3 relinquishment from `PWR` — see [Sound Recordings](/docs/sound-recordings#relinquishment) |
 | `agreementNumber` | object | O   | `{ source?, value }` — agreement number, typically for sub-publishers                              |
 
 ***

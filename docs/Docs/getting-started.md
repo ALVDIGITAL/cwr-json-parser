@@ -11,12 +11,12 @@ privacy:
 ---
 ## Step 1. Upload your CWR file
 
-Open the <Anchor target="_blank" href="https://cwr.alvdev.com/#/">Playground&#x20;</Anchor>and upload any `.cwr` or `.v21` file.
+Open the <Anchor target="_blank" href="https://cwr.alvdev.com/#/">Playground&#x20;</Anchor>and upload a CWR file (for example `.cwr`, `.v21` or `.v22`).
 
 Supported for conversion today:
 
 - `NWR` / `REV` work registration transactions
-- Related detail records (`ALT`, `NAT`, parties, territories, `REC`, `ARI`, `XRF`, `MSG`, etc.)
+- Related detail records (`ALT`, `NAT`, `SPU`/`OPU`, `SWR`/`OWR`, `PWR`, `SPT`/`OPT`, `SWT`/`OWT`, `REC`, `ARI`, `XRF`, `MSG`)
 
 Acknowledgement (`ACK`) files are supported for field-level EDI preview and for v1 JSON: each ACK transaction maps to a work with `messages.type: "ack"`, flat ACK fields on `messages`, and `MSG` rows in `messages.msgs[]`. Nested `NWR`/`REV` detail still fills titles, identifiers, parties, and flags.
 
@@ -46,12 +46,22 @@ Download the `.json` file for storage, APIs, or further processing.
 
 ## Minimal valid output
 
+Source CWR (one `NWR` with an ISWC and a submitter work number):
+
+```
+HDR00000000001XRF SAMPLE PUBLISHER                         02.202026063012000020260630
+GRHNWR0000102.20
+NWR0000000100000000XRF IDENTIFIER DEMO WORK                                      SW00000000001 T0000000010                    POP      U      ORI
+```
+
+Parser output (passes the published JSON Schema and the semantic rules in strict mode):
+
 ```json
 {
   "header": {
-    "senderIdentifier": "EMI",
-    "senderName": "EMI MUSIC PUBLISHING LTD",
-    "creationDate": "20260101",
+    "senderIdentifier": "00000000001",
+    "senderName": "XRF SAMPLE PUBLISHER",
+    "creationDate": "20260630",
     "creationTime": "120000"
   },
   "works": [
@@ -61,22 +71,32 @@ Download the `.json` file for storage, APIs, or further processing.
         "schema": "CWR-JSON Schema v1.0",
         "schemaDescription": "Complete canonical representation with both ownership and collection data. This schema preserves all CWR semantics including hierarchical ownership chains and territorial collection splits."
       },
+      "flags": {},
       "titles": [
-        { "value": "BOHEMIAN RHAPSODY", "type": "TT" }
+        { "value": "XRF IDENTIFIER DEMO WORK", "type": "TT" }
       ],
       "identifiers": [
         { "iswc": ["T-000.000.001-0"] },
         {
           "type": "submitterWorkId",
-          "value": "EMI-00042",
-          "source": { "type": "cwrSubmitter", "value": "00000000001", "name": "EMI" }
+          "value": "SW00000000001",
+          "source": { "type": "cwrSubmitter", "value": "00000000001", "name": "XRF SAMPLE PUBLISHER" }
         }
-      ]
+      ],
+      "parties": [],
+      "recordings": []
     }
   ]
 }
 ```
 
-> The Playground does not add a root `$schema` property today. For file exchange with societies, you may add `"$schema": "https://d7ap24707c.execute-api.eu-west-1.amazonaws.com/staging/api/v1/schemas/cwr-json-schema-v1.0.schema.json"` manually (see [Changelog](./changelog)).
+- The `NWR` ISWC `T0000000010` becomes one `{ "iswc": [...] }` entry, emitted in dotted form `T-NNN.NNN.NNN-C`.
+- The parser emits `flags`, `parties` and `recordings` even when they are empty. Both forms are valid; hand-built files may omit them.
+- `NWR.SubmitterWorkNumber` becomes `type: "submitterWorkId"`. `source.value` and `source.name` come from the `HDR` sender identifier and sender name.
+- `messages.schema` and `messages.schemaDescription` are required on every work.
+
+More complete outputs (parties, territories, recordings, ACK) are on the [Examples](/docs/example-simple-nwr) page.
+
+> Do not add a root `$schema` property. The format `1.0.1` schema does not allow extra root properties, so a file with `$schema` fails validation (`EXTRA_PROPERTY`). This is an open item for the CWR-JSON subgroup; see [Schema Validation](/docs/schema-validation#declaring-the-schema-version).
 
 <br />

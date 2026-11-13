@@ -36,7 +36,7 @@ An `XRF` `R` ISRC that matches no recording becomes its own recording, `{ "isrc"
 | ------------- | ------ | --- | ----------------- | ------------------------------- |
 | `title`       | string   | O   | `REC.AlbumTitle`           | Album or release title |
 | `label`       | string   | O   | `REC.RecordLabel`          | Record label name |
-| `releaseDate` | string   | O   | `REC.ReleaseDate`          | Format: `YYYYMMDD` |
+| `releaseDate` | string   | O   | `REC.ReleaseDate`          | Format: `YYYYMMDD`. An unknown EDI date (`00000000`) is kept as `"00000000"` |
 | `ean`         | string[] | O   | `REC.EAN` / `Ean` / `EanCode` / `EanNumber` | EAN barcodes |
 | `catno`       | string   | O   | `REC.ReleaseCatalogNumber` | Catalogue number. Not an identifier triple. |
 | `identifiers` | array    | O   | —                          | Other release ids. EAN is not copied here. |
@@ -95,10 +95,10 @@ The `relinquishment` object appears on a **publisher participant** when a `PWR` 
 
 ## Trigger condition
 
-Set when **all three** conditions are met on a `PWR` record:
+Set when **both** conditions are met on a `PWR` record:
 
 1. `RelinquishmentIndicator = "Y"`
-2. `PublisherIPNumber` resolves to a known publisher in `publishersByIp`
+2. `PublisherIPNumber` is present and resolves to a publisher already registered in the same writer block (controlled `SPU` for `SWR`, other `OPU` for `OWR`), matched by publisher sequence and IP number
 
 ***
 

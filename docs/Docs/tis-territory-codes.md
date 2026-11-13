@@ -14,7 +14,7 @@ Territory codes follow the **CISAC Territory Information System (TIS)**. They ap
 - `parties[].territories[].territory.include[]` / `exclude[]` (collection scope)
 - `parties[].relinquishment.scope.territories` (PWR relinquishment)
 
-**Ownership (`shareTypes[].type: "own"`)** must use empty `include` and `exclude` arrays — not TIS-scoped. See [Territories & Shares](./interested-parties/territories-shares).
+**Ownership (`shareTypes[].type: "own"`)** must use empty `include` and `exclude` arrays — not TIS-scoped. See [Territories & Shares](/docs/territories-shares).
 
 ---
 

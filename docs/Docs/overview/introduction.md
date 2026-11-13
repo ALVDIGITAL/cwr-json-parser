@@ -37,8 +37,10 @@ A CWR-JSON file produced by the **CWR-JSON Playground** reference implementation
 | Section | What it represents |
 |---|---|
 | `header` | File-level metadata from the CWR `HDR` record (sender, dates, CWR version, software) |
+| `header.conventions` | Optional. How the file represents writers and publisher shares. Supplied by the sender, not mapped from CWR EDI |
+| `header.tags`, `works[].messages.tags`, `recordings[].tags`, `releases[].tags` | Optional `{ name, value[] }` labels. Supplied by the sender, not mapped from CWR EDI |
 | `works[].titles` | All titles — original, alternate, non-Roman |
-| `works[].identifiers` | One `{ iswc: string[] }` entry, plus namespaced triples from `XRF` |
+| `works[].identifiers` | One `{ iswc: string[] }` entry, plus `{ type, value, source? }` entries for the submitter work number (`NWR`/`REV`) and `XRF` cross-references |
 | `works[].parties` | Ownership chain: writers → original publishers → sub-publishers; `own` shares without TIS scope, `coll` shares per TIS |
 | `works[].recordings` | Commercial recordings (ISRC, album, label, release date) |
 | `works[].messages` | Registration type, revocation flags, ACK messages, schema metadata |
@@ -76,7 +78,7 @@ schemaV1.convert             SchemaV1Output (Playground / download JSON)
 
 The Playground stores **`ParsedCwrFile`** after upload. The JSON tree and download apply **`schemaV1.convert()`**, which adds `messages.schema` and `messages.schemaDescription` on each work.
 
-Future **format** versions (e.g. v1.1) can add a new serialiser against the same canonical model — CWR line parsing does not need to change. Any format bump is a release entry under [Version governance](./changelog#version-governance). The format number is public when that entry is on the changelog.
+Future **format** versions (e.g. v1.1) can add a new serialiser against the same canonical model — CWR line parsing does not need to change. Any format bump is a release entry under [Version governance](/docs/changelog#version-governance). The format number is public when that entry is on the changelog.
 
 ---
 
@@ -97,11 +99,15 @@ Future **format** versions (e.g. v1.1) can add a new serialiser against the same
 | Property | Value |
 |---|---|
 | Document ID | `PUBCWRJSON21-0703` |
-| Format Version | `1.0.1` |
-| Revision | `0` |
-| Status | Published |
+| Technical format version | `1.0.1` |
+| Technical format status | Published (interchange format released in the [Changelog](/docs/changelog)) |
+| SPF formal approval status | Pending SPF confirmation |
+| Document revision | `0` |
+| JSON Schema file | [`cwr-json-schema-v1.0.schema.json`](https://d7ap24707c.execute-api.eu-west-1.amazonaws.com/staging/api/v1/schemas/cwr-json-schema-v1.0.schema.json) (filename unchanged for format `1.0.1`) |
+| Lookup table file | [`cwr_lookup_data_types_v1.0_r0.json`](https://d7ap24707c.execute-api.eu-west-1.amazonaws.com/staging/api/v1/lookups/cwr_lookup_data_types_v1.0_r0.json) |
+| Reference parser package | `@alvdigital/cwr-json-parser` `1.5.3` |
 | Prepared by | Society Publisher Forum (SPF) |
 | Related document | PUBCWRJSON21-0704 – CWR-JSON User Guide |
 | Reference implementation | CWR-JSON Playground — `src/cwr-sdk` in this repository |
 
-Format `1.0.1` is **Published**. When each version level changes: [Version governance](./changelog#version-governance).
+**Technical format status** says whether the JSON shape is released for interchange. Format `1.0.1` is Published: implementers can generate and validate it today. **SPF formal approval status** is the governance approval of this specification text by the SPF. The two are tracked separately. When each version level changes: [Version governance](/docs/changelog#version-governance).

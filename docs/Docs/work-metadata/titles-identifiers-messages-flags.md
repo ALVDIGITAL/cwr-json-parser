@@ -14,7 +14,7 @@ The `titles` array contains all title entries for the work. Each element comes f
 | Field      | Type   | Req | Description                                                                          |
 | ---------- | ------ | --- | ------------------------------------------------------------------------------------ |
 | `value`    | string | M   | The title text                                                                       |
-| `type`     | string | O   | CWR title type code — see [Title Types](./role-codes-rights-title-types#title-types) |
+| `type`     | string | O   | CWR title type code — see [Title Types](/docs/role-codes-rights-types-title-types#title-types) |
 | `language` | string | O   | ISO language code (e.g., `"JA"`, `"ZH"`, `"KO"`). Present on `NAT` titles only.      |
 
 ## Sources
@@ -110,7 +110,7 @@ The `messages` object carries registration metadata, status flags, and ACK messa
 | `type`                     | string | O   | `NWR` / `REV` / `ACK`         | `"nwr"`, `"rev"`, or `"ack"` (lowercased)       |
 | `revocation`               | object | O   | `NWR.RevocationIndicator`     | Present if the work was flagged for revocation  |
 | `revocation.indicator`     | string | M   | `NWR.RevocationIndicator`     | Raw indicator value                             |
-| `revocation.reason`        | string | O   | `NWR.RevocationReason`        | Human-readable reason                           |
+| `revocation.reason`        | string | O   | `NWR.RevocationReason`        | CISAC Revocation Reason code: `NE` non-existing work, `NM` non-musical work, `NC` existing work not claimed by sender, `AN` anomalous work |
 | `relinquishment`           | object | O   | `NWR.RelinquishmentIndicator` | Present if a relinquishment indicator appears   |
 | `relinquishment.indicator` | string | M   | `NWR.RelinquishmentIndicator` | Raw indicator value                             |
 | `creationDate`             | string | O   | `ACK.CreationDate`            | Original file creation date (ACK)               |
@@ -156,7 +156,7 @@ The `messages` object carries registration metadata, status flags, and ACK messa
   "type": "nwr",
   "revocation": {
     "indicator": "Y",
-    "reason": "Duplicate registration"
+    "reason": "NE"
   }
 }
 ```
@@ -200,16 +200,18 @@ The `flags` object holds boolean and indicator fields extracted from the `NWR` /
 | Field             | Type    | Req | Source Field                 | Description                                                                         |
 | ----------------- | ------- | --- | ---------------------------- | ----------------------------------------------------------------------------------- |
 | `anomalous`       | boolean | O   | `NWR.AnomalousWorkIndicator` | `true` if the work is marked anomalous (`"Y"` → `true`)                             |
-| `anomalousReason` | string  | O   | `NWR.AnomalousWorkReason`    | Reason text for the anomalous flag                                                  |
-| `aiUsage`         | string  | O   | `NWR.AIIndicator`            | AI content usage indicator. Values: `"M"` (music), `"T"` (text), `"B"` (both), etc. |
+| `anomalousReason` | string  | O   | `NWR.AnomalousWorkReason`    | CISAC Anomalous Work Reason code: `IPS` inaccurate IPs, `UNA` unauthorised version   |
+| `aiUsage`         | string  | O   | `NWR.AIIndicator`            | AI indicator from the CISAC CWR 2.2 Rev. 3 lookup: `"M"` (music), `"T"` (text), `"A"` (all: music and text). Raw EDI value is copied. |
 | `fraudulent`      | boolean | O   | _(reserved)_                 | Reserved for future use                                                             |
+
+> Senders should use only `M`, `T` or `A` for `aiUsage`. The published schema `1.0.1` also accepts `B`, `N`, `U` and `Y`, which are not in the CISAC lookup. Removing them is under review by the CWR-JSON subgroup.
 
 ## Example
 
 ```json
 "flags": {
   "anomalous": true,
-  "anomalousReason": "Non-standard work structure",
+  "anomalousReason": "IPS",
   "aiUsage": "M"
 }
 ```

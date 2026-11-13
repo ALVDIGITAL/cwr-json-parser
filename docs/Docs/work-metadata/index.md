@@ -4,7 +4,7 @@ metadata:
   robots: index
 content:
   excerpt: >-
-    Each entry in the `works` array corresponds to one `NWR` or `REV`
+    Each entry in the `works` array corresponds to one `NWR`, `REV` or `ACK`
     transaction in the source CWR file.
 privacy:
   view: public
@@ -29,7 +29,7 @@ Shares are represented inside `parties[].territories[]`:
 - `shareTypes[].type: "own"` — ownership from `SPU`/`OPU`/`SWR`/`OWR` (empty TIS scope, not territory-coded)
 - `shareTypes[].type: "coll"` — collection percentages for that territory
 
-See [Interested Parties](./interested-parties) and [Territories & Shares](./territories-shares).
+See [Interested Parties](/docs/interested-parties) and [Territories & Shares](/docs/territories-shares).
 
 ***
 
@@ -43,21 +43,23 @@ See [Interested Parties](./interested-parties) and [Territories & Shares](./terr
     "schemaDescription": "..."
   },
   "titles": [
-    { "value": "BOHEMIAN RHAPSODY", "type": "TT" }
+    { "value": "XRF IDENTIFIER DEMO WORK", "type": "TT" }
   ],
   "identifiers": [
     { "iswc": ["T-000.000.001-0"] },
     {
       "type": "submitterWorkId",
-      "value": "EMI-00042",
-      "source": { "type": "cwrSubmitter", "value": "00000000001", "name": "EMI" }
+      "value": "SW00000000001",
+      "source": { "type": "cwrSubmitter", "value": "00000000001", "name": "XRF SAMPLE PUBLISHER" }
     }
   ]
 }
 ```
 
+`source.value` and `source.name` on `submitterWorkId` repeat `header.senderIdentifier` and `header.senderName` of the same file.
+
 ***
 
 ## Complete work object
 
-See [Example: Simple NWR](./examples) for a full work with parties and recordings.
+See [Examples](/docs/example-simple-nwr) for complete parser-generated documents with parties, territories, recordings and an ACK.
