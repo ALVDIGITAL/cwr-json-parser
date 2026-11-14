@@ -24,7 +24,7 @@ Territory codes follow the **CISAC Territory Information System (TIS)**. They ap
 
 ---
 
-## Published lookup (validation 1.1.0)
+## Published lookup
 
 The machine-readable lookup table is published at:
 
@@ -32,7 +32,7 @@ The machine-readable lookup table is published at:
 
 | Field | Value |
 |---|---|
-| Source | CISAC TIS database export — 241 territories (Validation 1.1.1) |
+| Source | CISAC TIS database export — 241 territories |
 | Set key | `sets.tisNumericCodes` |
 | Schema | Enums injected into [cwr-json-schema-v1.0.schema.json](https://d7ap24707c.execute-api.eu-west-1.amazonaws.com/staging/api/v1/schemas/cwr-json-schema-v1.0.schema.json) |
 

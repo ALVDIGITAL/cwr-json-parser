@@ -68,15 +68,14 @@ Territorial **collection** data from `SWT` / `OWT` / `SPT` / `OPT` records is re
 
 ---
 
-## Document ID & Version
+## Document version
 
 | Property | Value |
 |---|---|
-| Document ID | `PUBCWRJSON21-0703` |
 | Technical format version | `1.0.1` |
 | Technical format status | Published (interchange format released in the [Changelog](/docs/changelog)) |
 | SPF formal approval status | Pending SPF confirmation |
-| Document revision | `0` |
+| Document revision | `1` |
 | JSON Schema file | [`cwr-json-schema-v1.0.schema.json`](https://d7ap24707c.execute-api.eu-west-1.amazonaws.com/staging/api/v1/schemas/cwr-json-schema-v1.0.schema.json) (filename unchanged for format `1.0.1`) |
 | Lookup table file | [`cwr_lookup_data_types_v1.0_r0.json`](https://d7ap24707c.execute-api.eu-west-1.amazonaws.com/staging/api/v1/lookups/cwr_lookup_data_types_v1.0_r0.json) |
 | Prepared by | Society Publisher Forum (SPF) |

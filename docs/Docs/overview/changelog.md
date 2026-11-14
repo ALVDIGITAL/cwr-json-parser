@@ -45,7 +45,7 @@ The format number is public when the changelog entry for that number is the rele
 
 ## 2026-11-12 — Documentation errata (no format bump)
 
-> Format `1.0.1`. Schema filename stays `cwr-json-schema-v1.0.schema.json`. No change to the schema or lookup table. Specification text only.
+> Format `1.0.1`. Schema filename stays `cwr-json-schema-v1.0.schema.json`. No change to the schema or lookup table. Specification text only. Document revision `1`.
 
 - [Introduction](/docs/introduction): the identity table separates the technical format status (`1.0.1`, Published) from the SPF formal approval status, and lists the schema and lookup files.
 - [Examples](/docs/examples): complete documents for real CWR EDI files: an `NWR` with `XRF`, a CWR 2.2 `REV` with publisher chains, and an `ACK` with `MSG`. A fourth example adds sender-supplied `conventions` and `tags`. Every block passes the published schema and the strict semantic rules.
