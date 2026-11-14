@@ -1,33 +1,36 @@
 ---
-title: Header Metadata
-metadata:
-  robots: index
+appearance:
+  table_of_contents: default
+category:
+  uri: Docs
 content:
   excerpt: >-
     This section defines the top-level CWR-JSON document structure and the
     metadata used to identify the sender, creation/transmission timestamps, and
     originating software.
+position: 6
 privacy:
   view: public
+slug: header-metadata
+title: Header Metadata
 ---
 ## Top-level object
 
-Every CWR-JSON file is a single JSON object. The reference implementation emits:
+Every CWR-JSON file is a single JSON object (outline, not valid JSON):
 
-```json
+```text
 {
   "header": { ... },
   "works":  [ ... ]
 }
 ```
 
-For interchange, a root `$schema` URL may be added (recommended; see [Schema Validation](./schema-validation)).
-
 | Key       | Type   | Req | Description                                                                  |
 | --------- | ------ | --- | ---------------------------------------------------------------------------- |
-| `$schema` | string | O   | URL of the JSON Schema used to validate this file (recommended for exchange) |
-| `header`  | object | O   | File-level metadata from the CWR `HDR` record                                |
-| `works`   | array  | M   | One object per NWR / REV transaction                                         |
+| `header`  | object | O   | File-level metadata from the CWR `HDR` record, plus optional sender-supplied fields |
+| `works`   | array  | M   | One object per `NWR` / `REV` / `ACK` transaction                             |
+
+No other root properties are allowed. In format `1.0.1` this includes `$schema`: a file with a root `$schema` fails validation (see [Schema Validation](/docs/schema-validation#declaring-the-schema-version)).
 
 ***
 
@@ -37,7 +40,7 @@ For interchange, a root `$schema` URL may be added (recommended; see [Schema Val
 | --------------------------------------------------------------------------------------------------- | --------- |
 | File must be parseable as valid JSON                                                                | ER        |
 | `works` must be present and an array                                                                | ER        |
-| Each work must include `messages` (with `schema` and `schemaDescription` in v1.0 Playground output) | TR / RR   |
+| Each work must include `messages`, with `schema` and `schemaDescription`                            | TR / RR   |
 | Transactions from multiple submitters cannot be co-mingled in one logical submission                | ER        |
 
 > CWR-JSON is a JSON document, not a sequence of EDI records. Validation refers to JSON structure and semantics, not “first line = HDR”.
@@ -46,7 +49,7 @@ For interchange, a root `$schema` URL may be added (recommended; see [Schema Val
 
 ## HDR → `header`
 
-The `header` object is derived from the CWR `HDR` record. The Playground currently maps these fields:
+The `header` object is derived from the CWR `HDR` record. Converters map these fields:
 
 | Field              | Type   | Req | CWR Source         | Description                                                                                        |
 | ------------------ | ------ | --- | ------------------ | -------------------------------------------------------------------------------------------------- |
@@ -59,11 +62,23 @@ The `header` object is derived from the CWR `HDR` record. The Playground current
 | `conventions`      | object | O   | —                  | File-level writer and publisher representation. Not mapped from `HDR`. Set on the JSON file.       |
 | `tags`             | array  | O   | —                  | File-level tags. `{ name, value[] }`. Not mapped from `HDR`. Set on the JSON file.                 |
 
-Additional HDR fields (`transmissionDate`, `characterSet`, `revision`, `softwarePackageVersion`) are defined in the TypeScript model and JSON Schema but are **not yet populated** by the mapper — see [Changelog](./changelog).
+Write each `HDR` field only when it is present in the source `HDR`. A short (CWR 2.1-length) `HDR` has no `version` or `softwarePackage`, so those keys are absent.
+
+The schema also allows `transmissionDate`, `characterSet`, `revision` and `softwarePackageVersion`. They correspond to the `HDR` fields of the same names. Format `1.0.1` does not require them, and the examples on these pages do not include them.
+
+### Mapped from CWR EDI vs supplied by the sender
+
+| Mapped from CWR EDI | Supplied by the sender on the JSON file |
+| --- | --- |
+| `header.senderIdentifier`, `senderName`, `creationDate`, `creationTime`, `version`, `softwarePackage` (from `HDR`) | `header.conventions` |
+| Everything under `works[]` except the items in the right column | `header.tags`, `works[].messages.tags`, `recordings[].tags`, `recordings[].releases[].tags` |
+| | `messages.schema`, `messages.schemaDescription` (set by the converter on every work) |
 
 ### `header.conventions`
 
-Optional. When present, both fields are required. The CWR EDI mapper does not emit this object.
+Optional. When present, both fields are required. Not mapped from CWR EDI; the sender sets it on the JSON file.
+
+Omit `conventions` when the file mixes representations, for example when some works list a writer as both `SWR` and `OWR` and others do not. A file without `conventions` makes no claim about how writers and publisher shares are represented; the recipient reads each work as it is.
 
 | Field             | Values                              | Meaning                                                                                          |
 | ----------------- | ----------------------------------- | ------------------------------------------------------------------------------------------------ |
@@ -91,14 +106,16 @@ Optional. Not mapped from the CWR `HDR` record. The sender sets them on the JSON
 
 ### Example
 
+`header` for the CWR 2.2 `HDR` of `BC-key008.V22` (see [Examples](/docs/examples)):
+
 ```json
 "header": {
-  "senderIdentifier": "EMI",
-  "senderName": "EMI MUSIC PUBLISHING LTD",
+  "senderIdentifier": "PB000000TST",
+  "senderName": "CWR-JSON TEST FIXTURE",
   "creationDate": "20260101",
   "creationTime": "120000",
-  "version": "2.1",
-  "softwarePackage": "CWR-JSON Playground"
+  "version": "2.2",
+  "softwarePackage": "CWR-JSON PLAYGROUND"
 }
 ```
 
@@ -120,13 +137,13 @@ All field values follow these type rules:
 | D    | string    | Date format `YYYYMMDD`. Use `"00000000"` when no date is available.                                                |
 | N    | number    | Decimal percentage, e.g., `50.00`. Omit if null and optional.                                                      |
 | T    | string    | Time/duration format `HHMMSS` (24-hour). Omit if null and optional.                                                |
-| L    | string    | Lookup value. Valid values from a code table — see [Role Codes & related tables](./role-codes-rights-title-types). |
+| L    | string    | Lookup value. Valid values from a code table — see [Role Codes & related tables](/docs/role-codes-rights-title-types). |
 
 ### Optional fields
 
 Optional fields (Req = **O**) **must be omitted** from the JSON object if they have no value — do not include them as `null`.
 
-```json
+```jsonc
 // ✅ Correct — omit optional fields with no value
 { "senderIdentifier": "EMI", "creationDate": "20260101" }
 

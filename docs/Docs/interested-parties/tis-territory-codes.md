@@ -1,24 +1,30 @@
 ---
-title: TIS Territory Codes
-slug: tis-territory-codes
-metadata:
-  robots: index
+appearance:
+  table_of_contents: default
+category:
+  uri: Docs
+content:
+  excerpt: >-
+    CISAC TIS numeric codes used in territory include/exclude and the bundled
+    lookup table.
+parent:
+  uri: interested-parties
+position: 2
 privacy:
   view: public
-content:
-  excerpt: CISAC TIS numeric codes used in territory include/exclude and the published lookup table.
+slug: tis-territory-codes
+title: TIS Territory Codes
 ---
-
 Territory codes follow the **CISAC Territory Information System (TIS)**. They appear in:
 
 - `parties[].territories[].territory.include[]` / `exclude[]` (collection scope)
 - `parties[].relinquishment.scope.territories` (PWR relinquishment)
 
-**Ownership (`shareTypes[].type: "own"`)** must use empty `include` and `exclude` arrays — not TIS-scoped. See [Territories & Shares](./interested-parties/territories-shares).
+**Ownership (`shareTypes[].type: "own"`)** must use empty `include` and `exclude` arrays — not TIS-scoped. See [Territories & Shares](/docs/territories-shares).
 
 ---
 
-## Published lookup (validation 1.1.0)
+## Published lookup
 
 The machine-readable lookup table is published at:
 
@@ -26,7 +32,7 @@ The machine-readable lookup table is published at:
 
 | Field | Value |
 |---|---|
-| Source | CISAC TIS database export — 241 territories (Validation 1.1.1) |
+| Source | CISAC TIS database export — 241 territories |
 | Set key | `sets.tisNumericCodes` |
 | Schema | Enums injected into [cwr-json-schema-v1.0.schema.json](https://d7ap24707c.execute-api.eu-west-1.amazonaws.com/staging/api/v1/schemas/cwr-json-schema-v1.0.schema.json) |
 

@@ -1,7 +1,8 @@
 ---
-title: CWR two-way conversion
-metadata:
-  robots: index
+appearance:
+  table_of_contents: default
+category:
+  uri: Docs
 content:
   excerpt: >-
     The CWR-JSON core schema is a faithful JSON expression of CWR 2.2 Revision
@@ -11,10 +12,12 @@ content:
     elements. It is intended to make the relationship between the original CWR
     structure and the CWR-JSON structure clear, so implementers can understand
     where each piece of data belongs.
+position: 7
 privacy:
   view: public
+slug: two-way-conversion
+title: CWR two-way conversion
 ---
-
 # NWR / REV — Work Registration Header
 
 The `NWR` and `REV` records are the root of every CWR transaction.
@@ -55,7 +58,7 @@ CWR 2.2 **`XRF`** records carry additional work identifiers (society work number
 | `IdentifierType = P`, 13-digit EAN | `recordings[].releases[].ean[]` | Its own recording with one release. Not attached to other recordings |
 | `IdentifierType = V` | — | Not mapped |
 | `OrganisationCode` `000` / `099` | — | Skipped |
-| `Validity` | — | Not emitted in JSON (all Y/N/U rows included) |
+| `Validity` | — | Not mapped to JSON. Rows with every value (`Y`/`N`/`U`) are mapped |
 
 ## Notes
 
