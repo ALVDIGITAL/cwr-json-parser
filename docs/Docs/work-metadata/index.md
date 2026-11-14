@@ -66,4 +66,4 @@ See [Interested Parties](/docs/interested-parties) and [Territories & Shares](/d
 
 ## Complete work object
 
-See [Examples](/docs/examples) for complete parser-generated documents with parties, territories, recordings and an ACK.
+See [Examples](/docs/examples) for complete documents with parties, territories, recordings and an ACK.

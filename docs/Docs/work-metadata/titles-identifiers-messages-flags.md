@@ -49,7 +49,7 @@ The `titles` array contains all title entries for the work. Each element comes f
 
 `identifiers[]` holds namespaced work ids and one ISWC entry. An ISWC entry is `{ "iswc": ["T-034.524.680-1"] }`. It is not a `{ type, value, source }` triple. `NWR` / `REV` `ISWC` and `XRF` org `ISW` with `IdentifierType` `W` append to that one array.
 
-Parser output writes every recognized ISWC as dotted ISO `T-NNN.NNN.NNN-C`. The schema also accepts compact `TNNNNNNNNNC` and intermediate `T-NNNNNNNNN-C`.
+Converters should write every ISWC as dotted ISO `T-NNN.NNN.NNN-C`. The schema also accepts compact `TNNNNNNNNNC` and intermediate `T-NNNNNNNNN-C`.
 
 Namespaced rows are `type`, then `value`, then optional `source`. Match on `source.type` and `source.value`. `source.name` is optional.
 
@@ -76,9 +76,9 @@ Namespaced rows are `type`, then `value`, then optional `source`. Match on `sour
 | `XRF` `P` + 13-digit EAN | — | its own recording `{ releases: [{ ean: [code] }] }` |
 | `XRF` `V` | _(skipped)_ | video / asset ids are not mapped yet |
 
-All `Validity` values (`Y`, `N`, `U`) are emitted. The same ISWC from `NWR` and `XRF` `ISW` is stored once. Triples match on `type`, `value`, `source.type`, and `source.value`.
+Map `XRF` rows with every `Validity` value (`Y`, `N`, `U`); `Validity` itself is not carried in JSON. Store the same ISWC from `NWR` and `XRF` `ISW` once. Deduplicate triples on `type`, `value`, `source.type`, and `source.value`.
 
-Recordings may carry `identifiers[]` when an asset id is present. Current EDI does not produce asset ids. The schema allows `{ "type": "assetId", "source": { "type": "dpid", "value": "..." } }`.
+Recordings may carry `identifiers[]` when an asset id is present. CWR EDI has no asset id field, so files converted from CWR do not carry them. The schema allows `{ "type": "assetId", "source": { "type": "dpid", "value": "..." } }`.
 
 ## Example
 
@@ -114,11 +114,11 @@ The `messages` object carries registration metadata, status flags, and ACK messa
 | Field                      | Type   | Req | Source                        | Description                                     |
 | -------------------------- | ------ | --- | ----------------------------- | ----------------------------------------------- |
 | `type`                     | string | O   | `NWR` / `REV` / `ACK`         | `"nwr"`, `"rev"`, or `"ack"` (lowercased)       |
-| `revocation`               | object | O   | `NWR.RevocationIndicator`     | Present if the work was flagged for revocation  |
-| `revocation.indicator`     | string | M   | `NWR.RevocationIndicator`     | Raw indicator value                             |
+| `revocation`               | object | O   | `NWR.RevocationIndicator`     | Present whenever the indicator field is non-blank, including `"N"`. Check `indicator` to know whether the work is revoked |
+| `revocation.indicator`     | string | M   | `NWR.RevocationIndicator`     | Raw indicator value (`"Y"` = revoked)           |
 | `revocation.reason`        | string | O   | `NWR.RevocationReason`        | CISAC Revocation Reason code: `NE` non-existing work, `NM` non-musical work, `NC` existing work not claimed by sender, `AN` anomalous work |
-| `relinquishment`           | object | O   | `NWR.RelinquishmentIndicator` | Present if a relinquishment indicator appears   |
-| `relinquishment.indicator` | string | M   | `NWR.RelinquishmentIndicator` | Raw indicator value                             |
+| `relinquishment`           | object | O   | —                             | Reserved. Allowed by the schema but has no CWR EDI source in format `1.0.1`; converters should omit it. CWR 2.2 carries the relinquishment indicator on `PWR`, which maps to `parties[].relinquishment` (see [Sound Recordings & Relinquishment](/docs/sound-recordings)) |
+| `relinquishment.indicator` | string | M   | —                             | Raw indicator value                             |
 | `creationDate`             | string | O   | `ACK.CreationDate`            | Original file creation date (ACK)               |
 | `creationTime`             | string | O   | `ACK.CreationTime`            | Original file creation time (ACK)               |
 | `originalGroupId`          | string | O   | `ACK.OriginalGroupId`         | Original GRH group id (ACK)                     |
@@ -130,8 +130,8 @@ The `messages` object carries registration metadata, status flags, and ACK messa
 | `processingDate`           | string | O   | `ACK.ProcessingDate`          | Date recipient processed the transaction        |
 | `transactionStatus`        | string | O   | `ACK.TransactionStatus`       | Status code (`RA`, `AS`, `AC`, `RJ`, …)         |
 | `msgs`                     | array  | O   | `MSG` records                 | ACK validation messages (see below)             |
-| `schema`                   | string | M   | _(injected by schemaV1)_      | Schema label used for this output               |
-| `schemaDescription`        | string | M   | _(injected by schemaV1)_      | Schema description                              |
+| `schema`                   | string | M   | — (set by the converter)      | Free-text label of the CWR-JSON schema the work follows, e.g. `"CWR-JSON Schema v1.0"` |
+| `schemaDescription`        | string | M   | — (set by the converter)      | Free-text description of that schema            |
 | `societySpecific`          | object | O   | _(reserved)_                  | Reserved for society-specific extension data    |
 | `tags`                     | array  | O   | —                             | `{ name, value[] }`. Not mapped from CWR EDI. Set on the JSON file. |
 
@@ -205,7 +205,7 @@ The `flags` object holds boolean and indicator fields extracted from the `NWR` /
 
 | Field             | Type    | Req | Source Field                 | Description                                                                         |
 | ----------------- | ------- | --- | ---------------------------- | ----------------------------------------------------------------------------------- |
-| `anomalous`       | boolean | O   | `NWR.AnomalousWorkIndicator` | `true` if the work is marked anomalous (`"Y"` → `true`)                             |
+| `anomalous`       | boolean | O   | `NWR.AnomalousWorkIndicator` | `"Y"` → `true`; any other non-blank value → `false`; omitted when the field is blank |
 | `anomalousReason` | string  | O   | `NWR.AnomalousWorkReason`    | CISAC Anomalous Work Reason code: `IPS` inaccurate IPs, `UNA` unauthorised version   |
 | `aiUsage`         | string  | O   | `NWR.AIIndicator`            | AI indicator from the CISAC CWR 2.2 Rev. 3 lookup: `"M"` (music), `"T"` (text), `"A"` (all: music and text). Raw EDI value is copied. |
 | `fraudulent`      | boolean | O   | _(reserved)_                 | Reserved for future use                                                             |

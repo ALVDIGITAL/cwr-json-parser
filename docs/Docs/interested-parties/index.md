@@ -42,9 +42,9 @@ Used throughout `parties[]` and inside `representedBy[]`.
 | Field             | Type   | Req | Description                                                                                        |
 | ----------------- | ------ | --- | -------------------------------------------------------------------------------------------------- |
 | `role`            | string | M   | Role code — see [Role Codes](/docs/role-codes-rights-title-types#role-codes)                           |
-| `roleName`        | string | O   | Human-readable role name                                                                           |
-| `name`            | string | O   | Legal name of the party (writers: `WriterLastName` + space + `WriterFirstName`)                    |
-| `ipi`             | string | O   | IPI Name Number or IPI Base Number (11-digit string)                                               |
+| `roleName`        | string | O   | Reserved. Allowed by the schema but has no CWR EDI source in format `1.0.1`. Converters should omit it |
+| `name`            | string | O   | Party name. Writers: `WriterFirstName` + space + `WriterLastName` (e.g. `"BILLY JOE SHAVER"`). Publishers: `PublisherName` |
+| `ipi`             | string | O   | IPI Name Number, exactly 11 digits. From CWR: `SWR`/`OWR.IPINameNumber` or `SPU`/`OPU.IPInameNumber`. Omit `ipi` when the CWR field is blank; do not write `""` or an IPI Base Number |
 | `partyId`         | string | O   | Interested Party Number from the source CWR record                                                 |
 | `controlled`      | string | O   | `"yes"` if submitter-controlled (SPU/SWR/SPT/SWT); `"no"` otherwise                                |
 | `nameDomestic`    | string | O   | Non-Roman alphabet name from `NWN` / `NOW` / `NPN` records                                         |
@@ -54,26 +54,27 @@ Used throughout `parties[]` and inside `representedBy[]`.
 | `roleSplitM`      | number | O   | GEMA GW: composer percentage (0–100). Only on `CA` writers.                                        |
 | `roleSplitT`      | number | O   | GEMA GW: lyricist/author percentage (0–100). Only on `CA` writers.                                 |
 | `relinquishment`  | object | O   | CWR 2.2 Rev3 relinquishment from `PWR` — see [Sound Recordings](/docs/sound-recordings#relinquishment) |
-| `agreementNumber` | object | O   | `{ source?, value }` — agreement number, typically for sub-publishers                              |
+| `agreementNumber` | object | O   | Reserved at party level. Allowed by the schema but has no CWR EDI source in format `1.0.1`. Converters should omit it and write agreement numbers on `territories[]` entries (see [Territories & Shares](/docs/territories-shares)) |
+| `shares`          | array  | O   | Reserved. Allowed by the schema but has no CWR EDI source in format `1.0.1`. Converters should omit it and write shares under `territories[].shareTypes[]` |
 
 ***
 
 ## Publisher nesting rules
 
-Publishers appear inside `representedBy[]` chains — not at the top level of `parties`.
+Converters must place publishers inside `representedBy[]` chains. The only publishers allowed at the top level of `parties[]` are original publishers (`E`) that no `PWR` links to a writer.
 
 | CWR role                 | Position                                     |
 | ------------------------ | -------------------------------------------- |
-| `E` (Original Publisher) | Inside writer's `representedBy[]`            |
-| `SE` / `AM` / `PA`       | Inside the `E` publisher's `representedBy[]` |
-| `AM` / `PA`              | Can also be an independent party at the top of the `parties[]` node |
+| `E` (Original Publisher) | Inside the writer's `representedBy[]` when a `PWR` links them; otherwise at the top level of `parties[]` |
+| `SE` / `AM` / `PA`       | Inside the `representedBy[]` of the preceding `E` in the same `SPU` / `OPU` block |
 
-**Assignment logic from&#x20;**`SPU`**&#x20;/&#x20;**`OPU`**&#x20;records:**
+**Building chains from `SPU` / `OPU` records:**
 
-- `PublisherType = E` → sets `lastEPublisher`; `lastSubPublisher` is reset
-- `PublisherType ∈ {SE, AM, PA}` → appended to `lastEPublisher.representedBy[]`; sets `lastSubPublisher`
+- `PublisherType = E` starts a new publisher chain.
+- `PublisherType` `SE`, `AM` or `PA` goes into the `representedBy[]` of the current chain's `E`. Add the same sub-publisher (same Interested Party Number) only once per chain.
+- `SPU` and `OPU` chains are separate: an `SE` / `AM` / `PA` in an `OPU` block attaches only to an `E` in that block.
 
-`PWR`**&#x20;records** link a writer (`WriterIPNumber`) to a publisher (`PublisherIPNumber`) via the writer's `representedBy[]`.
+**`PWR` records** link a writer to a publisher chain by `PublisherSequenceNumber` and `PublisherIPNumber`. Put the linked `E` (with its sub-publishers) in that writer's `representedBy[]`. Resolve `SWR` writers against `SPU` chains and `OWR` writers against `OPU` chains.
 
 ***
 
@@ -95,7 +96,7 @@ There is **no** default World (`2136`) row for ownership. If there are no `SPT`/
 "parties": [
   {
     "role": "C",
-    "name": "MERCURY FREDDIE",
+    "name": "FREDDIE MERCURY",
     "ipi": "00000000250",
     "partyId": "00000000250",
     "controlled": "yes",
@@ -157,7 +158,7 @@ There is **no** default World (`2136`) row for ownership. If there are no `SPT`/
                   {
                     "type": "coll",
                     "shares": [
-                      { "rightsType": "pr", "value": 50.00, "society": "058" }
+                      { "rightsType": "pr", "value": 50.00 }
                     ]
                   }
                 ],

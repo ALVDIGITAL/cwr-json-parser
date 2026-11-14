@@ -58,7 +58,7 @@ CWR 2.2 **`XRF`** records carry additional work identifiers (society work number
 | `IdentifierType = P`, 13-digit EAN | `recordings[].releases[].ean[]` | Its own recording with one release. Not attached to other recordings |
 | `IdentifierType = V` | — | Not mapped |
 | `OrganisationCode` `000` / `099` | — | Skipped |
-| `Validity` | — | Not emitted in JSON (all Y/N/U rows included) |
+| `Validity` | — | Not mapped to JSON. Rows with every value (`Y`/`N`/`U`) are mapped |
 
 ## Notes
 

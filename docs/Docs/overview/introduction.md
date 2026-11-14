@@ -38,7 +38,7 @@ CWR-JSON solves all four problems while remaining a **lossless representation** 
 
 ## What CWR-JSON Covers (v1.0)
 
-A CWR-JSON file produced by the **CWR-JSON Playground** reference implementation contains:
+A CWR-JSON file contains:
 
 | Section | What it represents |
 |---|---|
@@ -56,45 +56,13 @@ Territorial **collection** data from `SWT` / `OWT` / `SPT` / `OPT` records is re
 
 ---
 
-## The Pipeline
-
-```
-CWR EDI text
-    │
-    ▼
-tokenizer + recordParser     lines → { CWR field labels }
-    │
-    ▼
-buildWorkModel               internal WorkModel (per work block)
-    │
-    ▼
-projectCanonicalFromModel    ParsedCwrFile (CanonicalWork[])
-    │
-    ▼
-schemaV1.convert             SchemaV1Output (Playground / download JSON)
-```
-
-| Stage | Module |
-|--------|--------|
-| Parse lines | `src/cwr-sdk/parser/tokenizer.ts`, `recordParser.ts`, `blockExtractor.ts` |
-| Map semantics | `src/cwr-sdk/mapper/workModel/buildWorkModel.ts` |
-| Canonical JSON | `src/cwr-sdk/mapper/workModel/projectCanonical.ts` |
-| Public API | `src/cwr-sdk/mapper/canonicalMapper.ts` → `toCanonical()` / `toCanonicalFromLines()` |
-| v1.0 envelope | `src/cwr-sdk/mapper/schemas/schemaV1.ts` |
-
-The Playground stores **`ParsedCwrFile`** after upload. The JSON tree and download apply **`schemaV1.convert()`**, which adds `messages.schema` and `messages.schemaDescription` on each work.
-
-Future **format** versions (e.g. v1.1) can add a new serialiser against the same canonical model — CWR line parsing does not need to change. Any format bump is a release entry under [Version governance](/docs/changelog#version-governance). The format number is public when that entry is on the changelog.
-
----
-
 ## Relationship to Other Standards
 
 | Standard | Relationship |
 |---|---|
 | **CWR 2.x** (through **2.2 Rev3**) | Source EDI format — CWR-JSON is a JSON encoding of CWR registration data |
 | **CAF-JSON** | Sibling format — Common Agreement Format in JSON (agreements/shares between publishers and societies) |
-| **ISWC (ISO 15707)** | Work identifier in `works[].identifiers[]` as `{ iswc: string[] }`, emitted as `T-NNN.NNN.NNN-C` |
+| **ISWC (ISO 15707)** | Work identifier in `works[].identifiers[]` as `{ iswc: string[] }`, written as `T-NNN.NNN.NNN-C` |
 | **TIS Numeric Codes** | Territory identifier system used in `parties[].territories[]` |
 | **IPI Name/Base Numbers** | Interested Party identifier used in `parties[].ipi` |
 
@@ -111,9 +79,37 @@ Future **format** versions (e.g. v1.1) can add a new serialiser against the same
 | Document revision | `0` |
 | JSON Schema file | [`cwr-json-schema-v1.0.schema.json`](https://d7ap24707c.execute-api.eu-west-1.amazonaws.com/staging/api/v1/schemas/cwr-json-schema-v1.0.schema.json) (filename unchanged for format `1.0.1`) |
 | Lookup table file | [`cwr_lookup_data_types_v1.0_r0.json`](https://d7ap24707c.execute-api.eu-west-1.amazonaws.com/staging/api/v1/lookups/cwr_lookup_data_types_v1.0_r0.json) |
-| Reference parser package | `@alvdigital/cwr-json-parser` `1.5.3` |
 | Prepared by | Society Publisher Forum (SPF) |
-| Related document | PUBCWRJSON21-0704 – CWR-JSON User Guide |
-| Reference implementation | CWR-JSON Playground — `src/cwr-sdk` in this repository |
 
 **Technical format status** says whether the JSON shape is released for interchange. Format `1.0.1` is Published: implementers can generate and validate it today. **SPF formal approval status** is the governance approval of this specification text by the SPF. The two are tracked separately. When each version level changes: [Version governance](/docs/changelog#version-governance).
+
+---
+
+## Reference implementation (informative)
+
+> Not part of the specification. This section describes the ALV CWR-JSON Playground, one implementation of this spec. Integrators build their own converter from the [JSON Schema](/docs/schema-validation) and these pages; where this section and the specification pages differ, the specification pages apply.
+
+| Property | Value |
+|---|---|
+| Tool | <Anchor target="_blank" href="https://cwr.alvdev.com/#/">CWR-JSON Playground</Anchor> |
+| Package | `@alvdigital/cwr-json-parser` `1.5.3` (private) |
+
+The Playground converts in four stages:
+
+```text
+CWR EDI text
+    │
+    ▼
+tokenizer + recordParser     lines → { CWR field labels }
+    │
+    ▼
+buildWorkModel               internal WorkModel (per work block)
+    │
+    ▼
+projectCanonicalFromModel    ParsedCwrFile (CanonicalWork[])
+    │
+    ▼
+schemaV1.convert             CWR-JSON v1.0 (adds messages.schema and messages.schemaDescription)
+```
+
+Shares and territories are built by `upsertOwnTerritory` / `upsertCollectionTerritory`; publisher chains and `PWR` links are resolved by `PublisherRegistry`.

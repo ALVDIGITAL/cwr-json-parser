@@ -13,11 +13,11 @@ title: Examples
 ---
 # Examples
 
-Every example below was produced by the reference parser (`@alvdigital/cwr-json-parser` `1.5.3`, the same code as the [Playground](https://cwr.alvdev.com/#/)) from the CWR EDI shown above it. Each JSON block is a complete document: it parses as JSON and passes the published [JSON Schema](https://d7ap24707c.execute-api.eu-west-1.amazonaws.com/staging/api/v1/schemas/cwr-json-schema-v1.0.schema.json) and the semantic rules in strict mode. You can copy any block and validate it as is.
+Each example below is the CWR-JSON for the CWR EDI shown above it. Each JSON block is a complete document: it parses as JSON and passes the published [JSON Schema](https://d7ap24707c.execute-api.eu-west-1.amazonaws.com/staging/api/v1/schemas/cwr-json-schema-v1.0.schema.json) and the semantic rules in strict mode. You can copy any block and validate it as is.
 
-Two examples contain hand edits, each called out where it happens: Example 3 omits one empty value, and Example 4 adds sender-supplied fields.
+Example 4 adds sender-supplied fields, which are not mapped from CWR EDI. Trailing spaces in the EDI lines are trimmed here for readability.
 
-The EDI files live in the parser repository under `test/files/`. Trailing spaces in the EDI lines are trimmed here for readability.
+The examples were produced with the [CWR-JSON Playground](https://cwr.alvdev.com/#/) (informative; the rules are in this specification, not in any tool).
 
 ---
 
@@ -119,7 +119,7 @@ What to notice:
 - `NWR` ISWC `T0000000010` and `XRF` org `ISW` are the same ISWC. It is stored once in `{ "iswc": [...] }`, in dotted form.
 - `NWR.SubmitterWorkNumber` is `submitterWorkId`. Its `source` is the `HDR` sender (`cwrSubmitter`).
 - `XRF` org `035` (a CISAC society) is `societyWorkId` / `cisacSociety`. Org `EMI` (2–3 letters) is `publisherWorkId` / `cwrSubmitter`.
-- `XRF` validity `N` is still emitted (`SKIPPED-BAD`). Org `000` is skipped.
+- `XRF` validity `N` is still mapped (`SKIPPED-BAD`). Org `000` is skipped.
 - `XRF` `R` ISRC `USRC17607839` matches no `REC`, so it becomes its own recording with only `isrc`.
 
 ---
@@ -682,7 +682,7 @@ What to notice:
 - `REC` release date `00000000` (unknown) is kept as `releaseDate: "00000000"`.
 - `PER` (performer) is not mapped.
 
-> **Hand edit:** the `OWR` writer `PAUL GLEASON` has no IPI in the EDI. The current parser emits `"ipi": ""`, which fails the schema (`IPI_FORMAT`). The example omits `ipi` for that party, which is what the specification requires for an empty optional field. A parser fix is pending.
+> The `OWR` writer `PAUL GLEASON` has no IPI in the EDI, so `ipi` is omitted for that party. An empty optional field must be omitted; `"ipi": ""` fails the schema (`IPI_FORMAT`).
 
 ---
 

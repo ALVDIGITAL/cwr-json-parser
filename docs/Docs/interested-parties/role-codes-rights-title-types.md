@@ -55,9 +55,9 @@ Used in `shares[].rightsType`.
 
 Used in `titles[].type`.
 
-The reference parser emits three labels:
+Format `1.0.1` uses three labels for titles converted from CWR EDI:
 
-| Code | Meaning in parser output | CWR Source Record |
+| Code | Meaning in CWR-JSON | CWR Source Record |
 |---|---|---|
 | `TT` | Main work title | `NWR` / `REV` title |
 | `ALT` | Alternate title | `ALT` |
@@ -80,7 +80,7 @@ The schema also accepts the CISAC Title Type codes and `UT`:
 | `AL` | Alternative Title with National Characters |
 | `UT` | CWR-JSON extension (not in the CISAC table) |
 
-> The parser does not copy `ALT.TitleType` / `NAT.TitleType` from the EDI; it writes `ALT` or `NAT`. It also uses `TT` for the main title, while CISAC defines `TT` as "Original Title Translated". This is under review by the CWR-JSON subgroup.
+> In format `1.0.1`, `ALT` and `NAT` titles carry the label `ALT` or `NAT`, not the `ALT.TitleType` / `NAT.TitleType` value from the EDI. The main title uses `TT`, while CISAC defines `TT` as "Original Title Translated". This is under review by the CWR-JSON subgroup.
 
 ---
 
@@ -93,7 +93,7 @@ Used on `identifiers[].type`. ISWC, ISRC, and EAN are first-class string arrays,
 | `submitterWorkId` | `cwrSubmitter` | `NWR.SubmitterWorkNumber`. Source value is the `HDR` sender id |
 | `societyWorkId` | `cisacSociety` | Society work id from `XRF`. Source value is the society code |
 | `publisherWorkId` | `cwrSubmitter` or `ipiNameNumber` | Publisher work id. `XRF` 2–3 letter codes use `cwrSubmitter` |
-| `assetId` | `dpid` | Recording asset id. Allowed by schema; current EDI does not emit it |
+| `assetId` | `dpid` | Recording asset id. Allowed by schema; CWR EDI has no source field for it |
 | `proprietary` | _(omitted)_ | `XRF` row with no organisation code |
 
 `source.type` is `ipiNameNumber`, `cisacSociety`, `cwrSubmitter`, or `dpid`.

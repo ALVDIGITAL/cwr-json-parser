@@ -17,10 +17,10 @@ title: Schema Validation
 
 | Asset | File | Notes |
 |---|---|---|
-| JSON Schema | [cwr-json-schema-v1.0.schema.json](https://d7ap24707c.execute-api.eu-west-1.amazonaws.com/staging/api/v1/schemas/cwr-json-schema-v1.0.schema.json) | JSON Schema draft-07. Validates format `1.0.1`. The filename keeps `v1.0` for every `1.0.x` format (see [Version governance](/docs/changelog#version-governance)) |
+| JSON Schema | [cwr-json-schema-v1.0.schema.json](https://d7ap24707c.execute-api.eu-west-1.amazonaws.com/staging/api/v1/schemas/cwr-json-schema-v1.0.schema.json) | Validates format `1.0.1`. Written in JSON Schema language version draft-07, which Ajv 8 supports by default. The filename keeps `v1.0` for every `1.0.x` format (see [Version governance](/docs/changelog#version-governance)) |
 | Lookup table | [cwr_lookup_data_types_v1.0_r0.json](https://d7ap24707c.execute-api.eu-west-1.amazonaws.com/staging/api/v1/lookups/cwr_lookup_data_types_v1.0_r0.json) | Allowed value sets (role codes, TIS, title types, …). The file content reports `"revision": "r1"` (CISAC society, character set, language, revocation and anomalous-work sets added in Validation 1.1.2) |
 
-The schema embeds lookup enums and field patterns derived from the lookup table, so you only need the schema file to validate. CISAC CWR 2.x lookup tables (`CWR08-3615R2`, 2026-03-31) are the source for most enum sets; TIS codes come from the CISAC TIS export. Regenerate locally with `npm run schema:generate`.
+The schema embeds lookup enums and field patterns derived from the lookup table, so you only need the schema file to validate. CISAC CWR 2.x lookup tables (`CWR08-3615R2`, 2026-03-31) are the source for most enum sets; TIS codes come from the CISAC TIS export.
 
 ---
 
@@ -47,7 +47,7 @@ The schema embeds lookup enums and field patterns derived from the lookup table,
 
 `header.conventions` is not a lookup set. When the object is present, `writerControl` must be `swrOnly` or `swrOwr`, and `publisherShare` must be `summed` or `perWriterChain`.
 
-Additional CISAC reference sets (instruments, work types, transaction types, etc.) are bundled in the lookup JSON for tooling but are not yet enforced on JSON output fields until the parser exposes those properties.
+Additional CISAC reference sets (instruments, work types, transaction types, etc.) are bundled in the lookup JSON for reference. Format `1.0.1` has no fields that use them, so the schema does not enforce them.
 
 See also [TIS Territory Codes](/docs/tis-territory-codes).
 
@@ -63,7 +63,7 @@ See also [TIS Territory Codes](/docs/tis-territory-codes).
 { "iswc": ["T-034.524.680-1"] }
 ```
 
-Each ISWC must be dotted `T-NNN.NNN.NNN-C`, compact `TNNNNNNNNNC`, or intermediate `T-NNNNNNNNN-C`. Parser output always uses the dotted form.
+Each ISWC must be dotted `T-NNN.NNN.NNN-C`, compact `TNNNNNNNNNC`, or intermediate `T-NNNNNNNNN-C`. Converters should write the dotted form.
 
 **Namespaced entry** (`WorkIdentifier`): `type` and `value` are required; `source` is optional. No other properties are allowed.
 
@@ -90,24 +90,21 @@ ISRC and EAN are not identifier entries. They are string arrays on `recordings[]
 
 ## What to validate
 
-| Layer | Use when |
-|--------|----------|
-| **Playground / download JSON** | Full v1.0 envelope including `messages.schema` and `messages.schemaDescription` on each work |
-| **Canonical work data** | Internal or custom tooling; schema metadata optional |
-
-Validate against the [published JSON Schema](https://d7ap24707c.execute-api.eu-west-1.amazonaws.com/staging/api/v1/schemas/cwr-json-schema-v1.0.schema.json). For a complete check, also apply the semantic rules listed below — JSON Schema alone does not cover all business rules.
+Validate every complete CWR-JSON file (the full v1.0 envelope, including `messages.schema` and `messages.schemaDescription` on each work) against the [published JSON Schema](https://d7ap24707c.execute-api.eu-west-1.amazonaws.com/staging/api/v1/schemas/cwr-json-schema-v1.0.schema.json). For a complete check, also apply the semantic rules listed below — JSON Schema alone does not cover all business rules.
 
 ---
 
 ## Declaring the schema version
 
-Do **not** put a `$schema` property in the file. The format `1.0.1` schema sets `additionalProperties: false` on the root object, so a file with a root `$schema` fails validation:
+Do **not** put a `$schema` property at the root of a CWR-JSON data file. The root object allows only `header` and `works` (`additionalProperties: false`), so a data file with a root `$schema` fails validation:
 
 ```
 / [EXTRA_PROPERTY]: unexpected property "$schema"
 ```
 
-Agree the schema version out of band (for example in the API contract or file exchange agreement). Allowing a root `$schema` would be a schema change and is an open item for the CWR-JSON subgroup.
+Agree the schema version out of band (for example in the API contract or file exchange agreement).
+
+> **Not the same `$schema`:** the published schema file itself starts with `"$schema": "http://json-schema.org/draft-07/schema#"`. That line tells validators such as AJV which version of the JSON Schema language the schema is written in. "draft-07" is the official name of that JSON Schema language version; it does not mean CWR-JSON is a draft. It is not a property of CWR-JSON data, and you do not copy it into your files.
 
 ---
 
@@ -136,7 +133,7 @@ else console.log('Valid');
 
 Install with `npm install ajv ajv-formats`. Save the snippet as an `.mjs` file (top-level `await`). `strict: false` stops Ajv 8 from printing `strictTypes` warnings for the conditional territory rules; validation results are the same either way.
 
-AJV-only validation does not run the semantic rules below (territory overlap, sub-publisher `own`, duplicate submitter work ids). Apply the semantic pass separately or use a validator that implements the full rule set.
+AJV-only validation does not run the semantic rules below (territory overlap, sub-publisher `own`, duplicate submitter work ids). Implement the semantic pass separately.
 
 ---
 
@@ -162,17 +159,17 @@ AJV-only validation does not run the semantic rules below (territory overlap, su
 | `OWN_EMPTY_TIS` | Redundant check for `own` + non-empty TIS |
 | `SUBPUB_NO_OWN` | `SE`, `AM`, `PA` must not have `own` |
 | `PUB_OWN_E_ONLY` | Non-`E` publishers must not have `own` |
-| `ID_UNIQUE_SUBMITTER` | Across all `works[]` in one file, no two works may have a `works[].identifiers[]` entry with `type: "submitterWorkId"` and the same `value`. Only `value` is compared (`source` is ignored). The error text says "duplicate submitterWorkNumber", the CWR EDI field name |
+| `ID_UNIQUE_SUBMITTER` | Across all `works[]` in one file, no two works may have a `works[].identifiers[]` entry with `type: "submitterWorkId"` and the same `value`. Only `value` is compared (`source` is ignored). Corresponds to the CWR EDI field `SubmitterWorkNumber` |
 | `TIS_UNKNOWN` | Unknown TIS (when not caught by schema enum) |
 
-**Optional normalization (Validation 1.1.1)** — before validation:
+**Optional normalization** — a receiver may apply these fixes before validating files from other senders. Strict checks on your own output should skip it:
 
 - Recognized ISWC → dotted `T-NNN.NNN.NNN-C`
 - Split combined `own`/`coll` territory rows
 - Strip invalid `own` on sub-publishers
 - Strip empty and `000` society codes on shares
 
-**Still application-level** (not implemented):
+**Not covered** by the schema or the semantic rules (application-level):
 
 | Rule | Example |
 |---|---|

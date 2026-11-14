@@ -1,0 +1,9 @@
+---
+description: Rules for editing the CWR-JSON specification docs published to ReadMe
+globs: docs/Docs/**
+alwaysApply: false
+---
+
+Before editing any page under `docs/Docs/`, read and follow `docs/DOCS-GUIDE.md`.
+
+Key rule: the docs are a specification for integrators who build their own converter. State rules about the JSON ("Converters must / should write X"), never what our parser does. Implementation details belong only in the informative section of `docs/Docs/overview/introduction.md`.
